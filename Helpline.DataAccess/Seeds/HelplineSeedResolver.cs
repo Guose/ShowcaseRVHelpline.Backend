@@ -1,10 +1,21 @@
 ﻿using Helpline.Shared.Models;
-using Helpline.Shared.Types;
+using Microsoft.Extensions.Configuration;
+using System.Text.Json;
 
 namespace Helpline.DataAccess.Seeds
 {
     public class HelplineSeedResolver : IHelplineSeedResolver
     {
+        private readonly IConfiguration configuration;
+
+        public HelplineSeedResolver()
+        {
+            configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .Build();
+        }
+
         public List<Address> GetAddressSeeds()
         {
             throw new NotImplementedException();
@@ -77,19 +88,12 @@ namespace Helpline.DataAccess.Seeds
 
         public List<ApplicationUser> GetUserSeeds()
         {
-            List<ApplicationUser> users = new List<ApplicationUser>();
+            string? jsonFilePath = configuration.GetSection("JsonDataSettings:UserDataFilePath").Value;
+            string jsonData = File.ReadAllText(jsonFilePath!);
 
-            var user1 = ApplicationUserSeeds.CreateUserSeeds("Justin", "Elder", "4259234362", "justin@showcasemi.com", "guose", "5p3ctrum", RoleType.Admin, PermissionType.Admin);
-            var user2 = ApplicationUserSeeds.CreateUserSeeds("John", "Elder", "4253302032", "john@showcasemi.com", "JohnE", "Admin", RoleType.Employee, PermissionType.Admin);
-            var user3 = ApplicationUserSeeds.CreateUserSeeds("Keith", "McPherson", "3606319123", "keith.rvtech@gmail.com", "KeithM", "3422nesunset", RoleType.Technician, PermissionType.Limited);
-            var user4 = ApplicationUserSeeds.CreateUserSeeds("Eric", "Shaw", "4253087638", "eric@showcaservhub.com", "EricS", "Admin", RoleType.Customer, PermissionType.Limited);
-            var user5 = ApplicationUserSeeds.CreateUserSeeds("Jacob", "Skys", "4253068730", "jacob@skyautorepair.com", "Jacob_Skys", "password", RoleType.Dealership, PermissionType.Limited);
+            List<ApplicationUser> users = JsonSerializer.Deserialize<List<ApplicationUser>>(jsonData)!;
 
-            users.Add(user1);
-            users.Add(user2);
-            users.Add(user3);
-            users.Add(user4);
-            users.Add(user5);
+            ApplicationUserSeeds.CreateUserSeeds(users);
 
             return users;
         }

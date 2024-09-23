@@ -86,6 +86,7 @@ namespace Helpline.DataAccess.Helpers
         {
             var seedData = new HelplineSeedResolver();
 
+            modelBuilder.Entity<ApplicationUser>().HasData(seedData.GetUserSeeds());
             modelBuilder.Entity<Address>().HasData(seedData.GetAddressSeeds());
             modelBuilder.Entity<Customer>().HasData(seedData.GetCustomerSeeds());
             modelBuilder.Entity<CustomerVehicle>().HasData(seedData.GetCustomerVehicleSeeds());
@@ -100,7 +101,6 @@ namespace Helpline.DataAccess.Helpers
             modelBuilder.Entity<ServiceCaseCall>().HasData(seedData.GetServiceCaseCallSeeds());
             modelBuilder.Entity<Subscription>().HasData(seedData.GetSubscriptionSeeds());
             modelBuilder.Entity<Technician>().HasData(seedData.GetTechnicianSeeds());
-            modelBuilder.Entity<ApplicationUser>().HasData(seedData.GetUserSeeds());
         }
     }
 }

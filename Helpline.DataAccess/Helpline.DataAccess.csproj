@@ -49,6 +49,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Seeds\.jsonData\" />
     <Folder Include="sql-scripts\" />
   </ItemGroup>
 

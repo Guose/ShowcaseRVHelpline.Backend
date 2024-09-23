@@ -11,6 +11,7 @@ namespace Helpline.Shared.Models
         [Required]
         public string Address1 { get; set; } = string.Empty;
         public string? Address2 { get; set; }
+        
         public string? City { get; set; }
         public string? State { get; set; }
         [Required]
@@ -18,6 +19,8 @@ namespace Helpline.Shared.Models
         public string? County { get; set; }
         public string? Country { get; set; }
 
+        [Required]
+        [ForeignKey("UserId")]
         public string? UserId { get; set; }
         public ApplicationUser? User { get; set; }
     }

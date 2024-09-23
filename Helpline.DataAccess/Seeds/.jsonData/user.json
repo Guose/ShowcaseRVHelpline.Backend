@@ -1,0 +1,52 @@
+[
+  {
+    "firstName": "Justin",
+    "lastName": "Elder",
+    "phoneNumber": "4259234362",
+    "email": "justin@showcasemi.com",
+    "userName": "guose",
+    "password": "5p3ctrum",
+    "role": 1,
+    "permissions": 1
+  },
+  {
+    "firstName": "John",
+    "lastName": "Elder",
+    "phoneNumber": "4253302032",
+    "email": "john@showcasemi.com",
+    "userName": "JohnE",
+    "password": "Admin",
+    "role": 2,
+    "permissions": 1
+  },
+  {
+    "firstName": "Keith",
+    "lastName": "McPherson",
+    "phoneNumber": "3606319123",
+    "email": "keith.rvtech@gmail.com",
+    "userName": "KeithM",
+    "password": "3422nesunset",
+    "role": 5,
+    "permissions": 2
+  },
+  {
+    "firstName": "Eric",
+    "lastName": "Shaw",
+    "phoneNumber": "4253087638",
+    "email": "eric@showcaservhub.com",
+    "userName": "EricS",
+    "password": "Admin",
+    "role": 3,
+    "permissions": 1
+  },
+  {
+    "firstName": "Jacob",
+    "lastName": "Skys",
+    "phoneNumber": "4253068730",
+    "email": "jacob@skyautorepair.com",
+    "userName": "Jacob_Skys",
+    "password": "password",
+    "role": 4,
+    "permissions": 2
+  }
+]

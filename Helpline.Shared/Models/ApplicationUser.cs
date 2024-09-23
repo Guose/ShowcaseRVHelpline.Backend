@@ -25,5 +25,8 @@ namespace Helpline.Shared.Models
         public Employee? Employee { get; set; }
         public Technician? Technician { get; set; }
         public DealershipContact? DealershipContact { get; set; }
+
+        [NotMapped]
+        public string? Password { get; set; }
     }
 }
