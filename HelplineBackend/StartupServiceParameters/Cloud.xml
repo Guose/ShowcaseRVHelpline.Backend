@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<StartupServices xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/2011/01/fabric">
+  <Parameters>
+    <Parameter Name="Helpline.NodeJS_InstanceCount" Value="-1" />
+    <Parameter Name="Helpline.Express_InstanceCount" Value="-1" />
+    <Parameter Name="Helpline.Domain_InstanceCount" Value="-1" />
+    <Parameter Name="Helpline.DataAccess_InstanceCount" Value="-1" />
+    <Parameter Name="Helpline.WebAPI_InstanceCount" Value="-1" />
+  </Parameters>
+</StartupServices>
