@@ -36,5 +36,6 @@ namespace Helpline.Shared.Models
         public Technician? Technician { get; set; }
 
         public ICollection<ServiceCaseCall>? ServiceCaseCalls { get; set; }
+        public ICollection<ServiceCaseTag>? ServiceCaseTags { get; set; }
     }
 }

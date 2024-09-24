@@ -11,7 +11,6 @@ namespace Helpline.DataAccess.Seeds
         List<DealershipContact> GetDealershipContactSeeds();
         List<Employee> GetEmployeeSeeds();
         List<KnowledgeBaseLibrary> GetKnowledgeBaseLibrarySeeds();
-        List<RVPartsDepartment> GetRVPartsDepartmentSeeds();
         List<RVRental> GetRVRentalsSeeds();
         List<ServiceDetail> GetRVServicesSeeds();
         List<ServiceCase> GetServiceCaseSeeds();

@@ -33,6 +33,18 @@ namespace Helpline.DataAccess.Helpers
                 .HasForeignKey<DealershipContact>(d => d.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<RVRental>()
+                .HasOne(c => c.Checkout)
+                .WithOne(r => r.Rental)
+                .HasForeignKey<RVRental>(c => c.CheckoutId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<RVRental>()
+                .HasOne(r => r.Return)
+                .WithOne(rent => rent.Rental)
+                .HasForeignKey<RVRental>(r => r.ReturnId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             // ONE-TO-MANY RELATIONSHIPS
             // User to Addresses
             modelBuilder.Entity<ApplicationUser>()
@@ -81,6 +93,40 @@ namespace Helpline.DataAccess.Helpers
                 .HasMany(d => d.DealershipContacts)
                 .WithOne(dc => dc.Dealership)
                 .HasForeignKey(dc => dc.DealershipId);
+
+            // Many to Many relationship between Rv and Rental
+            modelBuilder.Entity<VehicleRvRenter>()
+            .HasKey(vr => new { vr.RenterId, vr.VehicleId });
+            modelBuilder.Entity<VehicleRvRenter>()
+                .HasOne(vr => vr.Renter)
+                .WithMany(r => r.VehicleRvRenters)
+                .HasForeignKey(vr => vr.RenterId);
+            modelBuilder.Entity<VehicleRvRenter>()
+                .HasOne(vr => vr.Vehicle)
+                .WithMany(v => v.VehicleRvRenters)
+                .HasForeignKey(vr => vr.VehicleId);
+
+            modelBuilder.Entity<ServiceCaseTag>()
+                .HasKey(sct => new { sct.ServiceCaseId, sct.TagId });
+            modelBuilder.Entity<ServiceCaseTag>()
+                .HasOne(sc => sc.ServiceCase)
+                .WithMany(sct => sct.ServiceCaseTags)
+                .HasForeignKey(sct => sct.ServiceCaseId);
+            modelBuilder.Entity<ServiceCaseTag>()
+                .HasOne(t => t.Tag)
+                .WithMany(sct => sct.ServiceCaseTags)
+                .HasForeignKey(sct => sct.TagId);
+
+            modelBuilder.Entity<KnowledgeBaseTag>()
+                .HasKey(kbt => new { kbt.KnowledgeBaseId, kbt.TagId });
+            modelBuilder.Entity<KnowledgeBaseTag>()
+                .HasOne(kb => kb.KnowledgeBaseLibrary)
+                .WithMany(kbt => kbt.KnowledgeBaseTags)
+                .HasForeignKey(kbt => kbt.KnowledgeBaseId);
+            modelBuilder.Entity<KnowledgeBaseTag>()
+                .HasOne(t => t.Tag)
+                .WithMany(kbt => kbt.KnowledgeBaseTags)
+                .HasForeignKey(kbt => kbt.TagId);
         }
         public static void ModelSeeds(this ModelBuilder modelBuilder)
         {
@@ -94,7 +140,6 @@ namespace Helpline.DataAccess.Helpers
             modelBuilder.Entity<DealershipContact>().HasData(seedData.GetDealershipContactSeeds());
             modelBuilder.Entity<Employee>().HasData(seedData.GetEmployeeSeeds());
             modelBuilder.Entity<KnowledgeBaseLibrary>().HasData(seedData.GetKnowledgeBaseLibrarySeeds());
-            modelBuilder.Entity<RVPartsDepartment>().HasData(seedData.GetRVPartsDepartmentSeeds());
             modelBuilder.Entity<RVRental>().HasData(seedData.GetRVRentalsSeeds());
             modelBuilder.Entity<ServiceDetail>().HasData(seedData.GetRVServicesSeeds());
             modelBuilder.Entity<ServiceCase>().HasData(seedData.GetServiceCaseSeeds());

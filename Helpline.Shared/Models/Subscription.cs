@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using Helpline.Shared.Types;
+using Microsoft.EntityFrameworkCore;
 
 namespace Helpline.Shared.Models
 {
@@ -12,6 +12,7 @@ namespace Helpline.Shared.Models
 
         [DataType(DataType.Currency)]
         [DisplayFormat(DataFormatString = "{0:C}", ApplyFormatInEditMode = true)]
+        [Precision(10, 2)]
         public decimal Price { get; set; }
 
         public ICollection<Customer>? Customers { get; set; }

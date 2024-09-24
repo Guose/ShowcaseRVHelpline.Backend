@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace Helpline.DataAccess.Factory
 {
@@ -16,37 +17,43 @@ namespace Helpline.DataAccess.Factory
                             .AddJsonFile("appsettings.json")
                             .Build();
 
-            if (args!.Length > 0)
+            // Create a DbContextOptionsBuilder
+            var optionsBuilder = new DbContextOptionsBuilder<HelplineContext>();
+
+            // Default to SqlServer if no args are provided
+            if (args == null || args.Length == 0)
             {
-                for (int i = 0; i < args!.Length; i++)
+                // Use SQL Server as default if no argument is passed
+                var connectionString = configuration.GetConnectionString("SqlServerConnection");
+
+                optionsBuilder.UseSqlServer(connectionString)
+                              .EnableSensitiveDataLogging();
+            }
+            else
+            {
+                // Check arguments for specific database
+                for (int i = 0; i < args.Length; i++)
                 {
                     if (args[i] == "SqlServer")
-                    {                       
-
+                    {
                         var connectionString = configuration.GetConnectionString("SqlServerConnection");
 
-                        helplineCtx = new HelplineContext(new DbContextOptionsBuilder()
-                            .UseSqlServer(connectionString)
-                            .EnableSensitiveDataLogging()
-                            .Options);
+                        optionsBuilder.UseSqlServer(connectionString)
+                                      .EnableSensitiveDataLogging();
                     }
                     else if (args[i] == "pgAdmin")
                     {
                         var connectionString = configuration.GetConnectionString("PgAdminConnection");
 
-                        helplineCtx = new HelplineContext(new DbContextOptionsBuilder()
-                            .UseNpgsql(connectionString)
-                            .EnableSensitiveDataLogging()
-                            .Options);
+                        optionsBuilder.UseNpgsql(connectionString)
+                                      .EnableSensitiveDataLogging();
                     }
+                    // You can add more database providers here if needed
                 }
             }
-            else
-            {
-                throw new ArgumentNullException($"{nameof(HelplineDesignTimeDbContextFactory)} - {nameof(CreateDbContext)}", "\'args\' parameter cannot be null.");
-            }
 
-            return helplineCtx;
+            // Create and return the HelplineContext with the configured options
+            return new HelplineContext(optionsBuilder.Options);
         }
     }
 }

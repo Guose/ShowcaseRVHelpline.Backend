@@ -11,6 +11,8 @@ namespace Helpline.Shared.Models
         public Customer? Customer { get; set; }
 
         public ICollection<ServiceCase>? ServiceCases { get; set; }
+        public ICollection<RVRental>? Rentals { get; set; }
+        public ICollection<VehicleRvRenter>? VehicleRvRenters { get; set; }
 
         [Required]
         public int Year { get; set; }
