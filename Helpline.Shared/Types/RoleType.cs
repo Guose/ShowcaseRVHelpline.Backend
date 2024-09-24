@@ -8,5 +8,6 @@
         Dealership = 4,
         Technician = 5,
         Contractor = 6,
+        RVRenter = 7,
     }
 }

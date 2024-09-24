@@ -51,11 +51,6 @@ namespace Helpline.DataAccess.Seeds
             throw new NotImplementedException();
         }
 
-        public List<RVPartsDepartment> GetRVPartsDepartmentSeeds()
-        {
-            throw new NotImplementedException();
-        }
-
         public List<RVRental> GetRVRentalsSeeds()
         {
             throw new NotImplementedException();
