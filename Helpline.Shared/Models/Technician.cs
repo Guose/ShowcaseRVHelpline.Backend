@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using Helpline.Shared.Types;
 
 namespace Helpline.Shared.Models
 {
@@ -14,7 +13,7 @@ namespace Helpline.Shared.Models
         public string? UserId { get; set; }
         public ApplicationUser? User { get; set; }
 
-        public ICollection<ServiceType>? Services { get; set; }
+        public ICollection<RVService>? Services { get; set; }
         public ICollection<ServiceCase>? ServiceCases { get; set; }
     }
 }

@@ -19,9 +19,12 @@ namespace Helpline.Shared.Models
         public string? County { get; set; }
         public string? Country { get; set; }
 
-        [Required]
         [ForeignKey("UserId")]
         public string? UserId { get; set; }
         public ApplicationUser? User { get; set; }
+
+        [ForeignKey("DealershipId")]
+        public int? DealershipId { get; set; }
+        public Dealership? Dealership { get; set; }
     }
 }

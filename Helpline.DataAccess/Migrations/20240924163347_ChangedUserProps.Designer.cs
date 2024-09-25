@@ -4,6 +4,7 @@ using Helpline.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Helpline.DataAccess.Migrations
 {
     [DbContext(typeof(HelplineContext))]
-    partial class HelplineContextModelSnapshot : ModelSnapshot
+    [Migration("20240924163347_ChangedUserProps")]
+    partial class ChangedUserProps
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,9 +49,6 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("County")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("DealershipId")
-                        .HasColumnType("int");
-
                     b.Property<string>("PostalCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -57,9 +57,12 @@ namespace Helpline.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Addresses");
                 });
@@ -70,9 +73,6 @@ namespace Helpline.DataAccess.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AddressId")
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -141,9 +141,6 @@ namespace Helpline.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AddressId")
-                        .IsUnique();
-
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -171,9 +168,6 @@ namespace Helpline.DataAccess.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -311,9 +305,6 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<double?>("Height")
                         .HasColumnType("float");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsBooked")
                         .HasColumnType("bit");
 
@@ -388,9 +379,6 @@ namespace Helpline.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AddressId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Attachments")
                         .HasColumnType("nvarchar(max)");
 
@@ -403,9 +391,6 @@ namespace Helpline.DataAccess.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -421,9 +406,6 @@ namespace Helpline.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AddressId")
-                        .IsUnique();
 
                     b.ToTable("Dealerships");
                 });
@@ -450,9 +432,6 @@ namespace Helpline.DataAccess.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -500,9 +479,6 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
                     b.Property<string>("JobTitle")
                         .HasColumnType("nvarchar(max)");
 
@@ -513,6 +489,9 @@ namespace Helpline.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ReferralCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Services")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
@@ -543,9 +522,6 @@ namespace Helpline.DataAccess.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -619,9 +595,6 @@ namespace Helpline.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<bool>("IsACChecked")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsAwningChecked")
@@ -700,9 +673,6 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
@@ -758,9 +728,6 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsRepeatRenter")
                         .HasColumnType("bit");
 
@@ -813,9 +780,6 @@ namespace Helpline.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsACChecked")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsAwningChecked")
@@ -877,50 +841,6 @@ namespace Helpline.DataAccess.Migrations
                     b.ToTable("Returns");
                 });
 
-            modelBuilder.Entity("Helpline.Shared.Models.RVService", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Attachments")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<byte>("Name")
-                        .HasColumnType("tinyint");
-
-                    b.Property<string>("Notes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("TechnicianId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.HasIndex("TechnicianId");
-
-                    b.ToTable("Services");
-                });
-
             modelBuilder.Entity("Helpline.Shared.Models.ServiceCase", b =>
                 {
                     b.Property<int>("Id")
@@ -958,9 +878,6 @@ namespace Helpline.DataAccess.Migrations
 
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -1019,9 +936,6 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
                     b.Property<int>("KnowledgeBaseLibraryId")
                         .HasColumnType("int");
 
@@ -1050,23 +964,6 @@ namespace Helpline.DataAccess.Migrations
                     b.HasIndex("ServiceCaseId");
 
                     b.ToTable("ServiceCaseCalls");
-                });
-
-            modelBuilder.Entity("Helpline.Shared.Models.ServiceCaseCallServiceType", b =>
-                {
-                    b.Property<int?>("ServiceCaseCallId")
-                        .HasColumnType("int")
-                        .HasColumnOrder(0);
-
-                    b.Property<int?>("ServiceTypeId")
-                        .HasColumnType("int")
-                        .HasColumnOrder(1);
-
-                    b.HasKey("ServiceCaseCallId", "ServiceTypeId");
-
-                    b.HasIndex("ServiceTypeId");
-
-                    b.ToTable("ServiceCaseCallServiceTypes");
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.ServiceCaseTag", b =>
@@ -1116,9 +1013,6 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<double>("GrossProfitPercent")
                         .HasColumnType("float");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
@@ -1166,9 +1060,6 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
@@ -1207,9 +1098,6 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
@@ -1245,9 +1133,6 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsW9OnFile")
                         .HasColumnType("bit");
 
@@ -1258,6 +1143,9 @@ namespace Helpline.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ReferralCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Services")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
@@ -1428,15 +1316,15 @@ namespace Helpline.DataAccess.Migrations
                     b.ToTable("UserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Helpline.Shared.Models.ApplicationUser", b =>
+            modelBuilder.Entity("Helpline.Shared.Models.Address", b =>
                 {
-                    b.HasOne("Helpline.Shared.Models.Address", "Address")
-                        .WithOne("User")
-                        .HasForeignKey("Helpline.Shared.Models.ApplicationUser", "AddressId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                    b.HasOne("Helpline.Shared.Models.ApplicationUser", "User")
+                        .WithMany("Addresses")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Address");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.Customer", b =>
@@ -1464,17 +1352,6 @@ namespace Helpline.DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("Customer");
-                });
-
-            modelBuilder.Entity("Helpline.Shared.Models.Dealership", b =>
-                {
-                    b.HasOne("Helpline.Shared.Models.Address", "Address")
-                        .WithOne("Dealership")
-                        .HasForeignKey("Helpline.Shared.Models.Dealership", "AddressId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Address");
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.DealershipContact", b =>
@@ -1585,17 +1462,6 @@ namespace Helpline.DataAccess.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Helpline.Shared.Models.RVService", b =>
-                {
-                    b.HasOne("Helpline.Shared.Models.Employee", null)
-                        .WithMany("Services")
-                        .HasForeignKey("EmployeeId");
-
-                    b.HasOne("Helpline.Shared.Models.Technician", null)
-                        .WithMany("Services")
-                        .HasForeignKey("TechnicianId");
-                });
-
             modelBuilder.Entity("Helpline.Shared.Models.ServiceCase", b =>
                 {
                     b.HasOne("Helpline.Shared.Models.Customer", "Customer")
@@ -1648,25 +1514,6 @@ namespace Helpline.DataAccess.Migrations
                     b.Navigation("KnowledgeBaseLibrary");
 
                     b.Navigation("ServiceCase");
-                });
-
-            modelBuilder.Entity("Helpline.Shared.Models.ServiceCaseCallServiceType", b =>
-                {
-                    b.HasOne("Helpline.Shared.Models.ServiceCaseCall", "ServiceCaseCall")
-                        .WithMany("ServiceCaseCallServiceTypes")
-                        .HasForeignKey("ServiceCaseCallId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Helpline.Shared.Models.RVService", "ServiceType")
-                        .WithMany("ServiceCaseCallServiceTypes")
-                        .HasForeignKey("ServiceTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ServiceCaseCall");
-
-                    b.Navigation("ServiceType");
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.ServiceCaseTag", b =>
@@ -1768,15 +1615,10 @@ namespace Helpline.DataAccess.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Helpline.Shared.Models.Address", b =>
-                {
-                    b.Navigation("Dealership");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Helpline.Shared.Models.ApplicationUser", b =>
                 {
+                    b.Navigation("Addresses");
+
                     b.Navigation("Customer");
 
                     b.Navigation("DealershipContact");
@@ -1808,8 +1650,6 @@ namespace Helpline.DataAccess.Migrations
             modelBuilder.Entity("Helpline.Shared.Models.Employee", b =>
                 {
                     b.Navigation("ServiceCases");
-
-                    b.Navigation("Services");
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.KnowledgeBaseLibrary", b =>
@@ -1834,11 +1674,6 @@ namespace Helpline.DataAccess.Migrations
                     b.Navigation("Rental");
                 });
 
-            modelBuilder.Entity("Helpline.Shared.Models.RVService", b =>
-                {
-                    b.Navigation("ServiceCaseCallServiceTypes");
-                });
-
             modelBuilder.Entity("Helpline.Shared.Models.ServiceCase", b =>
                 {
                     b.Navigation("ServiceCaseCalls");
@@ -1848,8 +1683,6 @@ namespace Helpline.DataAccess.Migrations
 
             modelBuilder.Entity("Helpline.Shared.Models.ServiceCaseCall", b =>
                 {
-                    b.Navigation("ServiceCaseCallServiceTypes");
-
                     b.Navigation("ServiceCases");
                 });
 
@@ -1868,8 +1701,6 @@ namespace Helpline.DataAccess.Migrations
             modelBuilder.Entity("Helpline.Shared.Models.Technician", b =>
                 {
                     b.Navigation("ServiceCases");
-
-                    b.Navigation("Services");
                 });
 #pragma warning restore 612, 618
         }

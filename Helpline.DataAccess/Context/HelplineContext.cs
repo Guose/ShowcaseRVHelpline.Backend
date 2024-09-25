@@ -11,6 +11,7 @@ namespace Helpline.DataAccess.Context
         public HelplineContext(DbContextOptions options) : base(options) { }
 
         public DbSet<Address> Addresses => Set<Address>();
+        public DbSet<ApplicationUser> ApplicationUsers => Set<ApplicationUser>();
         public DbSet<Customer> Customers => Set<Customer>();
         public DbSet<CustomerVehicle> CustomerVehicles => Set<CustomerVehicle>();
         public DbSet<Dealership> Dealerships => Set<Dealership>();
@@ -20,15 +21,16 @@ namespace Helpline.DataAccess.Context
         public DbSet<RVRental> RVRentals => Set<RVRental>();
         public DbSet<RVReturn> Returns => Set<RVReturn>();
         public DbSet<RVCheckout> Checkouts => Set<RVCheckout>();
+        public DbSet<RVService> Services => Set<RVService>();
         public DbSet<ServiceDetail> ServiceDetails => Set<ServiceDetail>();
         public DbSet<ServiceCase> ServiceCases => Set<ServiceCase>();
         public DbSet<ServiceCaseCall> ServiceCaseCalls => Set<ServiceCaseCall>();
         public DbSet<Subscription> Subscriptions => Set<Subscription>();
         public DbSet<Tag> Tags => Set<Tag>();
-        public DbSet<ApplicationUser> ApplicationUsers => Set<ApplicationUser>();
         public DbSet<VehicleRvRenter> VehicleRvRenters => Set<VehicleRvRenter>();
         public DbSet<ServiceCaseTag> ServiceCaseTags => Set<ServiceCaseTag>();
         public DbSet<KnowledgeBaseTag> KnowledgeBaseTags => Set<KnowledgeBaseTag>();
+        public DbSet<ServiceCaseCallServiceType> ServiceCaseCallServiceTypes => Set<ServiceCaseCallServiceType>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

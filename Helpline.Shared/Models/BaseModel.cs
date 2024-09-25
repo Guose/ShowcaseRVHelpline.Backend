@@ -13,6 +13,7 @@ namespace Helpline.Shared.Models
         [Required]
         public DateTime CreatedOn { get; set; }
         public DateTime? ModifiedOn { get; set; }
+        public bool IsActive { get; set; }
         public ICollection<string>? Attachments { get; set; }
     }
 }

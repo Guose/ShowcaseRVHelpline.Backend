@@ -3,7 +3,7 @@
     public enum ServiceType : byte
     {
         None = 0,
-        Unknown = 1,
+        Automotive = 1,
         Generator = 2,
         WaterHeater = 3,
         Refrigerator = 4,

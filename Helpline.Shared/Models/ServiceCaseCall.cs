@@ -18,5 +18,6 @@ namespace Helpline.Shared.Models
 
 
         public ICollection<ServiceCase>? ServiceCases { get; set; }
+        public ICollection<ServiceCaseCallServiceType>? ServiceCaseCallServiceTypes { get; set; }
     }
 }

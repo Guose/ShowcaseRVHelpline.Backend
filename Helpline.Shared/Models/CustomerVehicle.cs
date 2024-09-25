@@ -10,10 +10,6 @@ namespace Helpline.Shared.Models
         public int CustomerId { get; set; }
         public Customer? Customer { get; set; }
 
-        public ICollection<ServiceCase>? ServiceCases { get; set; }
-        public ICollection<RVRental>? Rentals { get; set; }
-        public ICollection<VehicleRvRenter>? VehicleRvRenters { get; set; }
-
         [Required]
         public int Year { get; set; }
         [Required]
@@ -62,5 +58,9 @@ namespace Helpline.Shared.Models
         public bool HasSnowChains { get; set; }
         public bool HasFireplace { get; set; }
         public bool IsBooked { get; set; } = false;
+
+        public ICollection<ServiceCase>? ServiceCases { get; set; }
+        public ICollection<RVRental>? Rentals { get; set; }
+        public ICollection<VehicleRvRenter>? VehicleRvRenters { get; set; }
     }
 }

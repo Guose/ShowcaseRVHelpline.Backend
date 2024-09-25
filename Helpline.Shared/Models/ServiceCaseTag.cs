@@ -10,7 +10,7 @@ namespace Helpline.Shared.Models
 
         [Key, Column(Order = 1)]
         public int? TagId { get; set; }
-        public DateTime DateAdded { get; set; } = DateTime.Now;
+        public DateTime DateAdded { get; set; }
 
         [InverseProperty("ServiceCaseTags")]
         public Tag? Tag { get; set; }

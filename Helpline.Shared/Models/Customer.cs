@@ -8,7 +8,7 @@ namespace Helpline.Shared.Models
         public SubscriptionType SubscriptionType { get; set; }
         public DateTime? SubscriptionStartDate { get; set; }
         public DateTime? SubscriptionEndDate { get; set; }
-        public bool SubscriptionStatus { get; set; } = false;
+        public bool SubscriptionStatus { get; set; }
         
 
         [ForeignKey("UserId")]

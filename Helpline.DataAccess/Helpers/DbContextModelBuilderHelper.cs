@@ -9,6 +9,18 @@ namespace Helpline.DataAccess.Helpers
         public static void ModelCreator(this ModelBuilder modelBuilder)
         {
             // ONE-TO-ONE RELATIONSHIP
+            modelBuilder.Entity<ApplicationUser>()
+                .HasOne(a => a.Address)
+                .WithOne(u => u.User)
+                .HasForeignKey<ApplicationUser>(a => a.AddressId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Dealership>()
+                .HasOne(a => a.Address)
+                .WithOne(d => d.Dealership)
+                .HasForeignKey<Dealership>(a => a.AddressId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             modelBuilder.Entity<Customer>()
                 .HasOne(c => c.User)
                 .WithOne(u => u.Customer)
@@ -46,12 +58,6 @@ namespace Helpline.DataAccess.Helpers
                 .OnDelete(DeleteBehavior.Restrict);
 
             // ONE-TO-MANY RELATIONSHIPS
-            // User to Addresses
-            modelBuilder.Entity<ApplicationUser>()
-                .HasMany(a => a.Addresses)
-                .WithOne(au => au.User)
-                .HasForeignKey(au => au.UserId);
-
             // Customer to Vehicles
             modelBuilder.Entity<Customer>()
                 .HasMany(c => c.CustomerVehicles)
@@ -94,7 +100,29 @@ namespace Helpline.DataAccess.Helpers
                 .WithOne(dc => dc.Dealership)
                 .HasForeignKey(dc => dc.DealershipId);
 
+            modelBuilder.Entity<Technician>()
+                .HasMany(s => s.Services)
+                .WithOne();
+            
+            modelBuilder.Entity<Employee>()
+                .HasMany(s => s.Services)
+                .WithOne();
+
+
             // Many to Many relationship between Rv and Rental
+            // ServiceCaseCall-to-ServiceType (Many-to-Many)
+            modelBuilder.Entity<ServiceCaseCallServiceType>()
+                .HasKey(sc => new { sc.ServiceCaseCallId, sc.ServiceTypeId });
+            modelBuilder.Entity<ServiceCaseCallServiceType>()
+                .HasOne(sc => sc.ServiceCaseCall)
+                .WithMany(s => s.ServiceCaseCallServiceTypes)
+                .HasForeignKey(sc => sc.ServiceCaseCallId);
+            modelBuilder.Entity<ServiceCaseCallServiceType>()
+                .HasOne(sc => sc.ServiceType)
+                .WithMany(s => s.ServiceCaseCallServiceTypes)
+                .HasForeignKey(sc => sc.ServiceTypeId);
+
+            // CustomerVehicle-to-Renter (Many-to-Many)
             modelBuilder.Entity<VehicleRvRenter>()
             .HasKey(vr => new { vr.RenterId, vr.VehicleId });
             modelBuilder.Entity<VehicleRvRenter>()
@@ -106,6 +134,7 @@ namespace Helpline.DataAccess.Helpers
                 .WithMany(v => v.VehicleRvRenters)
                 .HasForeignKey(vr => vr.VehicleId);
 
+            // ServiceCase-to-Tag (Many-to-Many)
             modelBuilder.Entity<ServiceCaseTag>()
                 .HasKey(sct => new { sct.ServiceCaseId, sct.TagId });
             modelBuilder.Entity<ServiceCaseTag>()
@@ -141,7 +170,7 @@ namespace Helpline.DataAccess.Helpers
             modelBuilder.Entity<Employee>().HasData(seedData.GetEmployeeSeeds());
             modelBuilder.Entity<KnowledgeBaseLibrary>().HasData(seedData.GetKnowledgeBaseLibrarySeeds());
             modelBuilder.Entity<RVRental>().HasData(seedData.GetRVRentalsSeeds());
-            modelBuilder.Entity<ServiceDetail>().HasData(seedData.GetRVServicesSeeds());
+            modelBuilder.Entity<ServiceDetail>().HasData(seedData.GetServiceDetailSeeds());
             modelBuilder.Entity<ServiceCase>().HasData(seedData.GetServiceCaseSeeds());
             modelBuilder.Entity<ServiceCaseCall>().HasData(seedData.GetServiceCaseCallSeeds());
             modelBuilder.Entity<Subscription>().HasData(seedData.GetSubscriptionSeeds());

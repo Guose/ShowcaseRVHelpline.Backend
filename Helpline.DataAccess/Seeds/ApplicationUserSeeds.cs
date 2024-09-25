@@ -5,27 +5,31 @@ namespace Helpline.DataAccess.Seeds
 {
     public class ApplicationUserSeeds
     {
-        public static List<ApplicationUser> CreateUserSeeds(List<ApplicationUser> users)
+        public static List<ApplicationUser> CreateUserSeeds(List<ApplicationUser> users, List<Address> addresses)
         {
             List<ApplicationUser> userSeeds = [];
+            int index = 0;
 
             foreach (var user in users)
             {
                 var newUser = new ApplicationUser
                 {
-                    Firstname = user.Firstname,
-                    Lastname = user.Lastname,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
                     PhoneNumber = user.PhoneNumber,
                     Email = user.Email,
                     UserName = user.UserName,
+                    Password = user.Password,
                     Role = user.Role,
                     Permssions = user.Permssions,
+                    AddressId = user.AddressId,
+                    Address = addresses[index],
                 };
 
-                var passwordHasher = new PasswordHasher<ApplicationUser>();
-                newUser.PasswordHash = passwordHasher.HashPassword(newUser, user.Password!);
+                newUser.PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(newUser, user.Password!);
 
                 userSeeds.Add(newUser);
+                index++;
             }
 
             return userSeeds;

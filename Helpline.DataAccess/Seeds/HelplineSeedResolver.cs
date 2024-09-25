@@ -7,6 +7,7 @@ namespace Helpline.DataAccess.Seeds
     public class HelplineSeedResolver : IHelplineSeedResolver
     {
         private readonly IConfiguration configuration;
+        public string? JsonFilePath => configuration.GetSection("JsonDataSettings:UserDataFilePath").Value;
 
         public HelplineSeedResolver()
         {
@@ -18,17 +19,17 @@ namespace Helpline.DataAccess.Seeds
 
         public List<Address> GetAddressSeeds()
         {
-            throw new NotImplementedException();
+            return JsonSerializer.Deserialize<List<Address>>(JsonFilePath + "address.json")!;
         }
 
         public List<Customer> GetCustomerSeeds()
         {
-            throw new NotImplementedException();
+            return JsonSerializer.Deserialize<List<Customer>>(JsonFilePath + "customer.json")!;
         }
 
         public List<CustomerVehicle> GetCustomerVehicleSeeds()
         {
-            throw new NotImplementedException();
+            return JsonSerializer.Deserialize<List<CustomerVehicle>>(JsonFilePath + "customerVehicle.json")!;
         }
 
         public List<DealershipContact> GetDealershipContactSeeds()
@@ -38,7 +39,7 @@ namespace Helpline.DataAccess.Seeds
 
         public List<Dealership> GetDealershipSeeds()
         {
-            throw new NotImplementedException();
+            return JsonSerializer.Deserialize<List<Dealership>>(JsonFilePath + "dealerships.json")!;
         }
 
         public List<Employee> GetEmployeeSeeds()
@@ -56,9 +57,9 @@ namespace Helpline.DataAccess.Seeds
             throw new NotImplementedException();
         }
 
-        public List<ServiceDetail> GetRVServicesSeeds()
+        public List<ServiceDetail> GetServiceDetailSeeds()
         {
-            throw new NotImplementedException();
+            return JsonSerializer.Deserialize<List<ServiceDetail>>(JsonFilePath + "serviceDetail.json")!;
         }
 
         public List<ServiceCaseCall> GetServiceCaseCallSeeds()
@@ -73,7 +74,7 @@ namespace Helpline.DataAccess.Seeds
 
         public List<Subscription> GetSubscriptionSeeds()
         {
-            throw new NotImplementedException();
+            return JsonSerializer.Deserialize<List<Subscription>>(JsonFilePath + "subscription.json")!;
         }
 
         public List<Technician> GetTechnicianSeeds()
@@ -83,14 +84,12 @@ namespace Helpline.DataAccess.Seeds
 
         public List<ApplicationUser> GetUserSeeds()
         {
-            string? jsonFilePath = configuration.GetSection("JsonDataSettings:UserDataFilePath").Value;
-            string jsonData = File.ReadAllText(jsonFilePath!);
+            List<Address> addresses = GetAddressSeeds();
+            string jsonData = File.ReadAllText(JsonFilePath + "user.json");
 
             List<ApplicationUser> users = JsonSerializer.Deserialize<List<ApplicationUser>>(jsonData)!;
 
-            ApplicationUserSeeds.CreateUserSeeds(users);
-
-            return users;
+            return ApplicationUserSeeds.CreateUserSeeds(users, addresses);
         }
     }
 }

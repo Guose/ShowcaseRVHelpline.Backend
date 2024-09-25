@@ -1,52 +1,57 @@
 [
   {
-    "firstName": "Justin",
-    "lastName": "Elder",
-    "phoneNumber": "4259234362",
-    "email": "justin@showcasemi.com",
-    "userName": "guose",
-    "password": "5p3ctrum",
-    "role": 1,
-    "permissions": 1
+    "FirstName": "Justin",
+    "LastName": "Elder",
+    "PhoneNumber": "4259234362",
+    "Email": "justin@showcasemi.com",
+    "UserName": "guose",
+    "Password": "5p3ctrum",
+    "Role": 1,
+    "Permissions": 1,
+    "AddressId": -1
   },
   {
-    "firstName": "John",
-    "lastName": "Elder",
-    "phoneNumber": "4253302032",
-    "email": "john@showcasemi.com",
-    "userName": "JohnE",
-    "password": "Admin",
-    "role": 2,
-    "permissions": 1
+    "FirstName": "John",
+    "LastName": "Elder",
+    "PhoneNumber": "4253302032",
+    "Email": "john@showcasemi.com",
+    "UserName": "JohnE",
+    "Password": "Admin",
+    "Role": 2,
+    "Permissions": 1,
+    "AddressId": -2
   },
   {
-    "firstName": "Keith",
-    "lastName": "McPherson",
-    "phoneNumber": "3606319123",
-    "email": "keith.rvtech@gmail.com",
-    "userName": "KeithM",
-    "password": "3422nesunset",
-    "role": 5,
-    "permissions": 2
+    "FirstName": "Keith",
+    "LastName": "McPherson",
+    "PhoneNumber": "3606319123",
+    "Email": "keith.rvtech@gmail.com",
+    "UserName": "KeithM",
+    "Password": "3422nesunset",
+    "Role": 5,
+    "Permissions": 2,
+    "AddressId": -3
   },
   {
-    "firstName": "Eric",
-    "lastName": "Shaw",
-    "phoneNumber": "4253087638",
-    "email": "eric@showcaservhub.com",
-    "userName": "EricS",
-    "password": "Admin",
-    "role": 3,
-    "permissions": 1
+    "FirstName": "Eric",
+    "LastName": "Shaw",
+    "PhoneNumber": "4253087638",
+    "Email": "eric@showcaservhub.com",
+    "UserName": "EricS",
+    "Password": "Admin",
+    "Role": 3,
+    "Permissions": 1,
+    "AddressId": -4
   },
   {
-    "firstName": "Jacob",
-    "lastName": "Skys",
-    "phoneNumber": "4253068730",
-    "email": "jacob@skyautorepair.com",
-    "userName": "Jacob_Skys",
-    "password": "password",
-    "role": 4,
-    "permissions": 2
+    "FirstName": "Jacob",
+    "LastName": "Skys",
+    "PhoneNumber": "4253068730",
+    "Email": "jacob@skyautorepair.com",
+    "UserName": "Jacob_Skys",
+    "Password": "Password",
+    "Role": 4,
+    "Permissions": 2,
+    "AddressId": -5
   }
 ]
