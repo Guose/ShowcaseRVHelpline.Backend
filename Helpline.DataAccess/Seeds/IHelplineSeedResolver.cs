@@ -12,7 +12,7 @@ namespace Helpline.DataAccess.Seeds
         List<Employee> GetEmployeeSeeds();
         List<KnowledgeBaseLibrary> GetKnowledgeBaseLibrarySeeds();
         List<RVRental> GetRVRentalsSeeds();
-        List<ServiceDetail> GetServiceDetailSeeds();
+        List<RVService> GetServiceDetailSeeds();
         List<ServiceCase> GetServiceCaseSeeds();
         List<ServiceCaseCall> GetServiceCaseCallSeeds();
         List<Subscription> GetSubscriptionSeeds();

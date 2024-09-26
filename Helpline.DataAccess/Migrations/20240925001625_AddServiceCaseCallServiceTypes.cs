@@ -12,11 +12,11 @@ namespace Helpline.DataAccess.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Services",
+                name: "ServiceTypes",
                 table: "Technician");
 
             migrationBuilder.DropColumn(
-                name: "Services",
+                name: "ServiceTypes",
                 table: "Employees");
 
             migrationBuilder.AddColumn<bool>(
@@ -153,7 +153,7 @@ namespace Helpline.DataAccess.Migrations
                 nullable: true);
 
             migrationBuilder.CreateTable(
-                name: "Services",
+                name: "ServiceTypes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -202,7 +202,7 @@ namespace Helpline.DataAccess.Migrations
                     table.ForeignKey(
                         name: "FK_ServiceCaseCallServiceTypes_Services_ServiceTypeId",
                         column: x => x.ServiceTypeId,
-                        principalTable: "Services",
+                        principalTable: "ServiceTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -220,12 +220,12 @@ namespace Helpline.DataAccess.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Services_EmployeeId",
-                table: "Services",
+                table: "ServiceTypes",
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Services_TechnicianId",
-                table: "Services",
+                table: "ServiceTypes",
                 column: "TechnicianId");
 
             migrationBuilder.AddForeignKey(
@@ -248,7 +248,7 @@ namespace Helpline.DataAccess.Migrations
                 name: "ServiceCaseCallServiceTypes");
 
             migrationBuilder.DropTable(
-                name: "Services");
+                name: "ServiceTypes");
 
             migrationBuilder.DropIndex(
                 name: "IX_Dealerships_AddressId",
@@ -327,13 +327,13 @@ namespace Helpline.DataAccess.Migrations
                 table: "Addresses");
 
             migrationBuilder.AddColumn<string>(
-                name: "Services",
+                name: "ServiceTypes",
                 table: "Technician",
                 type: "nvarchar(max)",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "Services",
+                name: "ServiceTypes",
                 table: "Employees",
                 type: "nvarchar(max)",
                 nullable: true);

@@ -18,19 +18,22 @@ namespace Helpline.DataAccess.Context
         public DbSet<DealershipContact> DealershipContacts => Set<DealershipContact>();
         public DbSet<Employee> Employees => Set<Employee>();
         public DbSet<KnowledgeBaseLibrary> KnowledgeBaseLibraries => Set<KnowledgeBaseLibrary>();
-        public DbSet<RVRental> RVRentals => Set<RVRental>();
-        public DbSet<RVReturn> Returns => Set<RVReturn>();
+        public DbSet<KnowledgeBaseTag> KnowledgeBaseTags => Set<KnowledgeBaseTag>();
         public DbSet<RVCheckout> Checkouts => Set<RVCheckout>();
-        public DbSet<RVService> Services => Set<RVService>();
-        public DbSet<ServiceDetail> ServiceDetails => Set<ServiceDetail>();
+        public DbSet<RVRental> RVRentals => Set<RVRental>();
+        public DbSet<RVRenter> RVRenters => Set<RVRenter>();
+        public DbSet<RVReturn> Returns => Set<RVReturn>();
         public DbSet<ServiceCase> ServiceCases => Set<ServiceCase>();
         public DbSet<ServiceCaseCall> ServiceCaseCalls => Set<ServiceCaseCall>();
+        public DbSet<ServiceCaseCallServiceType> ServiceCaseCallServiceTypes => Set<ServiceCaseCallServiceType>();
+        public DbSet<ServiceCaseTag> ServiceCaseTags => Set<ServiceCaseTag>();
+        public DbSet<RVService> RVServices => Set<RVService>();
+        public DbSet<ServiceClass> ServiceTypes => Set<ServiceClass>();
         public DbSet<Subscription> Subscriptions => Set<Subscription>();
         public DbSet<Tag> Tags => Set<Tag>();
+        public DbSet<Technician> Technicians => Set<Technician>();
+        public DbSet<TechnicianService> TechnicianServices => Set<TechnicianService>();
         public DbSet<VehicleRvRenter> VehicleRvRenters => Set<VehicleRvRenter>();
-        public DbSet<ServiceCaseTag> ServiceCaseTags => Set<ServiceCaseTag>();
-        public DbSet<KnowledgeBaseTag> KnowledgeBaseTags => Set<KnowledgeBaseTag>();
-        public DbSet<ServiceCaseCallServiceType> ServiceCaseCallServiceTypes => Set<ServiceCaseCallServiceType>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

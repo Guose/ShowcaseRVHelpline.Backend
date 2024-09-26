@@ -15,6 +15,6 @@ namespace Helpline.Shared.Models
         public ServiceCaseCall? ServiceCaseCall { get; set; }
 
         [InverseProperty("ServiceCaseCallServiceTypes")]
-        public RVService? ServiceType { get; set; }
+        public ServiceClass? ServiceType { get; set; }
     }
 }

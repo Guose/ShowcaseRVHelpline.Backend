@@ -100,14 +100,6 @@ namespace Helpline.DataAccess.Helpers
                 .WithOne(dc => dc.Dealership)
                 .HasForeignKey(dc => dc.DealershipId);
 
-            modelBuilder.Entity<Technician>()
-                .HasMany(s => s.Services)
-                .WithOne();
-            
-            modelBuilder.Entity<Employee>()
-                .HasMany(s => s.Services)
-                .WithOne();
-
 
             // Many to Many relationship between Rv and Rental
             // ServiceCaseCall-to-ServiceType (Many-to-Many)
@@ -146,6 +138,7 @@ namespace Helpline.DataAccess.Helpers
                 .WithMany(sct => sct.ServiceCaseTags)
                 .HasForeignKey(sct => sct.TagId);
 
+            // KnowledgeBaseLibrary-to-Tag (Many-to-Many)
             modelBuilder.Entity<KnowledgeBaseTag>()
                 .HasKey(kbt => new { kbt.KnowledgeBaseId, kbt.TagId });
             modelBuilder.Entity<KnowledgeBaseTag>()
@@ -156,6 +149,30 @@ namespace Helpline.DataAccess.Helpers
                 .HasOne(t => t.Tag)
                 .WithMany(kbt => kbt.KnowledgeBaseTags)
                 .HasForeignKey(kbt => kbt.TagId);
+
+            // Employee-to-Service (Many-to-Many)
+            modelBuilder.Entity<EmployeeService>()
+                .HasKey(es => new { es.EmployeeId, es.ServiceId });
+            modelBuilder.Entity<EmployeeService>()
+                .HasOne(e => e.Employee)
+                .WithMany(es => es.EmployeeServices)
+                .HasForeignKey(es => es.EmployeeId);
+            modelBuilder.Entity<EmployeeService>()
+                .HasOne(s => s.Service)
+                .WithMany(es => es.EmployeeServices)
+                .HasForeignKey(es => es.ServiceId);
+
+            // Technician-to-Service (Many-to-Many)
+            modelBuilder.Entity<TechnicianService>()
+                .HasKey(ts => new {ts.TechnicianId, ts.ServiceId});
+            modelBuilder.Entity<TechnicianService>()
+                .HasOne(t => t.Technician)
+                .WithMany(ts => ts.TechnicianServices)
+                .HasForeignKey(ts => ts.TechnicianId);
+            modelBuilder.Entity<TechnicianService>()
+                .HasOne(s => s.Service)
+                .WithMany(ts => ts.TechnicianServices)
+                .HasForeignKey(ts => ts.ServiceId);
         }
         public static void ModelSeeds(this ModelBuilder modelBuilder)
         {
@@ -170,7 +187,7 @@ namespace Helpline.DataAccess.Helpers
             modelBuilder.Entity<Employee>().HasData(seedData.GetEmployeeSeeds());
             modelBuilder.Entity<KnowledgeBaseLibrary>().HasData(seedData.GetKnowledgeBaseLibrarySeeds());
             modelBuilder.Entity<RVRental>().HasData(seedData.GetRVRentalsSeeds());
-            modelBuilder.Entity<ServiceDetail>().HasData(seedData.GetServiceDetailSeeds());
+            modelBuilder.Entity<RVService>().HasData(seedData.GetServiceDetailSeeds());
             modelBuilder.Entity<ServiceCase>().HasData(seedData.GetServiceCaseSeeds());
             modelBuilder.Entity<ServiceCaseCall>().HasData(seedData.GetServiceCaseCallSeeds());
             modelBuilder.Entity<Subscription>().HasData(seedData.GetSubscriptionSeeds());

@@ -495,7 +495,7 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("ReferralCode")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Services")
+                    b.Property<string>("ServiceTypes")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
@@ -1149,7 +1149,7 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("ReferralCode")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Services")
+                    b.Property<string>("ServiceTypes")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")

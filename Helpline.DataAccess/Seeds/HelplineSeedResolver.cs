@@ -57,9 +57,9 @@ namespace Helpline.DataAccess.Seeds
             throw new NotImplementedException();
         }
 
-        public List<ServiceDetail> GetServiceDetailSeeds()
+        public List<RVService> GetServiceDetailSeeds()
         {
-            return JsonSerializer.Deserialize<List<ServiceDetail>>(JsonFilePath + "serviceDetail.json")!;
+            return JsonSerializer.Deserialize<List<RVService>>(JsonFilePath + "serviceDetail.json")!;
         }
 
         public List<ServiceCaseCall> GetServiceCaseCallSeeds()

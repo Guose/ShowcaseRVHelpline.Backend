@@ -12,7 +12,7 @@ namespace Helpline.Shared.Models
         public string? UserId { get; set; }
         public ApplicationUser? User { get; set; }
 
-        public ICollection<RVService>? Services { get; set; }
+        public ICollection<EmployeeService>? EmployeeServices { get; set; }
         public ICollection<ServiceCase>? ServiceCases { get; set; }
     }
 }
