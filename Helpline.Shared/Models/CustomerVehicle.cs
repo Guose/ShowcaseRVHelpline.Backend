@@ -10,6 +10,8 @@ namespace Helpline.Shared.Models
         public int CustomerId { get; set; }
         public Customer? Customer { get; set; }
 
+        public ICollection<BedType>? BedTypes { get; set; }
+
         [Required]
         public int Year { get; set; }
         [Required]

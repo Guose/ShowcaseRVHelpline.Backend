@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using Helpline.Shared.Types;
 
 namespace Helpline.Shared.Models
 {
@@ -11,7 +10,6 @@ namespace Helpline.Shared.Models
 
         [Key, Column(Order = 1)]
         public int? VehicleId { get; set; }
-        public VehicleRentalStatus RentalStatus { get; set; }
 
         [InverseProperty("VehicleRvRenters")]
         public RVRenter? Renter { get; set; }

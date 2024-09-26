@@ -1,6 +1,6 @@
 ﻿namespace Helpline.Shared.Types
 {
-    public enum VehicleRentalStatus
+    public enum RentalStatusType
     {
         None = 0,
         Booked = 1,

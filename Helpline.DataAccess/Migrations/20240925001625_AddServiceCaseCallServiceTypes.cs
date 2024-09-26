@@ -49,7 +49,7 @@ namespace Helpline.DataAccess.Migrations
 
             migrationBuilder.AddColumn<bool>(
                 name: "IsActive",
-                table: "ServiceCases",
+                table: "RelatedServiceCases",
                 type: "bit",
                 nullable: false,
                 defaultValue: false);
@@ -272,7 +272,7 @@ namespace Helpline.DataAccess.Migrations
 
             migrationBuilder.DropColumn(
                 name: "IsActive",
-                table: "ServiceCases");
+                table: "RelatedServiceCases");
 
             migrationBuilder.DropColumn(
                 name: "IsActive",

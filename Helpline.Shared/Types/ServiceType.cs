@@ -22,5 +22,6 @@
         Stove = 17,
         Tires = 18,
         WasteTanks = 19,
+        Brakes = 20,
     }
 }

@@ -721,7 +721,7 @@ namespace Helpline.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ServiceCases",
+                name: "RelatedServiceCases",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -791,7 +791,7 @@ namespace Helpline.DataAccess.Migrations
                     table.ForeignKey(
                         name: "FK_ServiceCaseTags_ServiceCases_ServiceCaseId",
                         column: x => x.ServiceCaseId,
-                        principalTable: "ServiceCases",
+                        principalTable: "RelatedServiceCases",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -909,27 +909,27 @@ namespace Helpline.DataAccess.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_ServiceCases_CustomerId",
-                table: "ServiceCases",
+                table: "RelatedServiceCases",
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ServiceCases_CustomerVehicleId",
-                table: "ServiceCases",
+                table: "RelatedServiceCases",
                 column: "CustomerVehicleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ServiceCases_EmployeeId",
-                table: "ServiceCases",
+                table: "RelatedServiceCases",
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ServiceCases_ServiceCaseCallId",
-                table: "ServiceCases",
+                table: "RelatedServiceCases",
                 column: "ServiceCaseCallId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ServiceCases_TechnicianId",
-                table: "ServiceCases",
+                table: "RelatedServiceCases",
                 column: "TechnicianId");
 
             migrationBuilder.CreateIndex(
@@ -980,7 +980,7 @@ namespace Helpline.DataAccess.Migrations
                 name: "FK_ServiceCaseCalls_ServiceCases_ServiceCaseId",
                 table: "ServiceCaseCalls",
                 column: "ServiceCaseId",
-                principalTable: "ServiceCases",
+                principalTable: "RelatedServiceCases",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
         }
@@ -1010,7 +1010,7 @@ namespace Helpline.DataAccess.Migrations
 
             migrationBuilder.DropForeignKey(
                 name: "FK_ServiceCases_Customers_CustomerId",
-                table: "ServiceCases");
+                table: "RelatedServiceCases");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_KnowledgeBaseLibraries_Tags_TagsId",
@@ -1022,11 +1022,11 @@ namespace Helpline.DataAccess.Migrations
 
             migrationBuilder.DropForeignKey(
                 name: "FK_ServiceCases_CustomerVehicles_CustomerVehicleId",
-                table: "ServiceCases");
+                table: "RelatedServiceCases");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_ServiceCases_Employees_EmployeeId",
-                table: "ServiceCases");
+                table: "RelatedServiceCases");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_ServiceCaseCalls_ServiceCases_ServiceCaseId",
@@ -1105,7 +1105,7 @@ namespace Helpline.DataAccess.Migrations
                 name: "Employees");
 
             migrationBuilder.DropTable(
-                name: "ServiceCases");
+                name: "RelatedServiceCases");
 
             migrationBuilder.DropTable(
                 name: "ServiceCaseCalls");

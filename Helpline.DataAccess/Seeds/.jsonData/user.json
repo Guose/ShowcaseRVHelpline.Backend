@@ -17,7 +17,7 @@
     "Email": "john@showcasemi.com",
     "UserName": "JohnE",
     "Password": "Admin",
-    "Role": 2,
+    "Role": 8,
     "Permissions": 1,
     "AddressId": -2
   },
@@ -51,7 +51,17 @@
     "UserName": "Jacob_Skys",
     "Password": "Password",
     "Role": 4,
-    "Permissions": 2,
+    "Permissions": 4,
     "AddressId": -5
+  },
+  {
+    "FirstName": "Nicole",
+    "LastName": "McPherson",
+    "PhoneNumber": "3605728448",
+    "Email": "nicole@showcaservhub.com",
+    "UserName": "NicoleM",
+    "Password": "Admin",
+    "Role": 2,
+    "Permissions": 2
   }
 ]

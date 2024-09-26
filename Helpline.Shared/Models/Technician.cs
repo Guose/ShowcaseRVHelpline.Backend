@@ -6,7 +6,7 @@ namespace Helpline.Shared.Models
     {
         public string? Company { get; set; }
         public string? ReferralCode { get; set; }
-        public bool IsW9OnFile { get; set; } = false;
+        public bool IsW9OnFile { get; set; }
         public string? Website { get; set; }
 
         [ForeignKey("UserId")]

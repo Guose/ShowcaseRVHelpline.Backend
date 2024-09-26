@@ -1,9 +1,11 @@
-﻿namespace Helpline.Shared.Models
+﻿using Helpline.Shared.Types;
+
+namespace Helpline.Shared.Models
 {
     public class KnowledgeBaseLibrary : BaseModel
     {
         public string? Title { get; set; }
-        public Tag? Tags { get; set; }
+        public ServiceType ServiceType { get; set; }
         public string? VideoURL { get; set; }
         public string? VideoDIY { get; set; }
 

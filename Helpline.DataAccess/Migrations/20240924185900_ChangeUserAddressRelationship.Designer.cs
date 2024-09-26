@@ -920,7 +920,7 @@ namespace Helpline.DataAccess.Migrations
 
                     b.HasIndex("TechnicianId");
 
-                    b.ToTable("ServiceCases");
+                    b.ToTable("RelatedServiceCases");
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.ServiceCaseCall", b =>
@@ -955,7 +955,7 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<int>("ServiceCaseId")
                         .HasColumnType("int");
 
-                    b.Property<byte>("ServiceKType")
+                    b.Property<byte>("ServiceType")
                         .HasColumnType("tinyint");
 
                     b.Property<string>("Status")
@@ -1473,21 +1473,21 @@ namespace Helpline.DataAccess.Migrations
                         .HasForeignKey("CustomerId");
 
                     b.HasOne("Helpline.Shared.Models.CustomerVehicle", "CustomerVehicle")
-                        .WithMany("ServiceCases")
+                        .WithMany("RelatedServiceCases")
                         .HasForeignKey("CustomerVehicleId");
 
                     b.HasOne("Helpline.Shared.Models.Employee", "Employee")
-                        .WithMany("ServiceCases")
+                        .WithMany("RelatedServiceCases")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Helpline.Shared.Models.ServiceCaseCall", null)
-                        .WithMany("ServiceCases")
+                        .WithMany("RelatedServiceCases")
                         .HasForeignKey("ServiceCaseCallId");
 
                     b.HasOne("Helpline.Shared.Models.Technician", "Technician")
-                        .WithMany("ServiceCases")
+                        .WithMany("RelatedServiceCases")
                         .HasForeignKey("TechnicianId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1644,7 +1644,7 @@ namespace Helpline.DataAccess.Migrations
                 {
                     b.Navigation("Rentals");
 
-                    b.Navigation("ServiceCases");
+                    b.Navigation("RelatedServiceCases");
 
                     b.Navigation("VehicleRvRenters");
                 });
@@ -1656,7 +1656,7 @@ namespace Helpline.DataAccess.Migrations
 
             modelBuilder.Entity("Helpline.Shared.Models.Employee", b =>
                 {
-                    b.Navigation("ServiceCases");
+                    b.Navigation("RelatedServiceCases");
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.KnowledgeBaseLibrary", b =>
@@ -1690,7 +1690,7 @@ namespace Helpline.DataAccess.Migrations
 
             modelBuilder.Entity("Helpline.Shared.Models.ServiceCaseCall", b =>
                 {
-                    b.Navigation("ServiceCases");
+                    b.Navigation("RelatedServiceCases");
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.Subscription", b =>
@@ -1707,7 +1707,7 @@ namespace Helpline.DataAccess.Migrations
 
             modelBuilder.Entity("Helpline.Shared.Models.Technician", b =>
                 {
-                    b.Navigation("ServiceCases");
+                    b.Navigation("RelatedServiceCases");
                 });
 #pragma warning restore 612, 618
         }
