@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace Helpline.Shared.Models
 {
@@ -8,9 +9,19 @@ namespace Helpline.Shared.Models
         [Required] public string ServiceMethod { get; set; } = string.Empty;
         [Required] public string ServiceCode { get; set; } = string.Empty;
         [Required] public string Frequency { get; set; } = string.Empty;
-        public double RetailPrice { get; set; }
+
+        [DataType(DataType.Currency)]
+        [DisplayFormat(DataFormatString = "{0:C}", ApplyFormatInEditMode = true)]
+        [Precision(10, 2)]
+        public decimal RetailPrice { get; set; }
         [Required] public string UOM { get; set; } = string.Empty;
-        public double CostPercent { get; set; }
-        public double GrossProfitPercent { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:P2}", ApplyFormatInEditMode = true)]
+        [Precision(5, 1)]
+        public decimal CostPercent { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:P2}", ApplyFormatInEditMode = true)]
+        [Precision(5, 1)]
+        public decimal GrossProfitPercent { get; set; }
     }
 }

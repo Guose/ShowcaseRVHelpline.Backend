@@ -1,19 +1,41 @@
 ﻿using Helpline.DataAccess.Seeds;
 using Helpline.Shared.Models;
+using Helpline.Shared.Types;
 
 namespace ConsoleApp1
 {
     internal class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             HelplineSeedResolver seedResolver = new HelplineSeedResolver();
 
-            List<ApplicationUser> users = seedResolver.GetUserSeeds();
+            var rvRentals = seedResolver.LoadJsonDataAsync<RVRental>("rental.json");
 
-            foreach (ApplicationUser user in users)
+            List<RVRental> rentalSeeds = [];
+            DateTime start = new DateTime();
+
+            foreach (var rental in rvRentals)
             {
-                Console.WriteLine(user.PasswordHash);
+                switch (rental.RentalStatus)
+                {
+                    case RentalStatusType.Booked:
+                        start = DateTime.Now.AddMonths(3);
+                        break;
+                    case RentalStatusType.OnTrip:
+                        start = DateTime.Now.AddDays(-10);
+                        break;
+                    case RentalStatusType.Completed:
+                        start = DateTime.Now.AddMonths(-10);
+                        break;
+                    default:
+                        break;
+                }
+
+                rental.RentalStart = start;
+                rental.RentalEnd = start.AddDays(30);
+
+                rentalSeeds.Add(rental);
             }
         }
     }

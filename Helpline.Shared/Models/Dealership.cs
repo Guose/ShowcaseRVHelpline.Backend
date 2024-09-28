@@ -10,10 +10,10 @@ namespace Helpline.Shared.Models
         [Required]
         public string PhoneNumber { get; set; } = string.Empty;
         public string? WebPage { get; set; }
-        [Required]
+
         [ForeignKey("AddressId")]
         public int AddressId { get; set; }
-        public Address Address { get; set; } = new();
+        public Address? Address { get; set; }
 
         public ICollection<DealershipContact>? DealershipContacts { get; set; }
     }

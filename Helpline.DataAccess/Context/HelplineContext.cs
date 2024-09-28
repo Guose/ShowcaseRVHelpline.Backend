@@ -48,7 +48,7 @@ namespace Helpline.DataAccess.Context
             modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims");
 
             modelBuilder.ModelCreator();
-            //modelBuilder.ModelSeeds();
+            // modelBuilder.ModelSeeds();
         }
     }
 }

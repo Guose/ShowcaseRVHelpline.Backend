@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Helpline.DataAccess.Migrations
 {
     [DbContext(typeof(HelplineContext))]
-    [Migration("20240924163347_ChangedUserProps")]
-    partial class ChangedUserProps
+    [Migration("20240928210158_SeedManyToMany")]
+    partial class SeedManyToMany
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,6 +49,9 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("County")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("DealershipId")
+                        .HasColumnType("int");
+
                     b.Property<string>("PostalCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -56,13 +59,7 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("State")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Addresses");
                 });
@@ -73,6 +70,9 @@ namespace Helpline.DataAccess.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AddressId")
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -141,6 +141,8 @@ namespace Helpline.DataAccess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AddressId");
+
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -169,19 +171,22 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("SubscriptionEndDate")
+                    b.Property<DateTime>("SubscriptionEndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("SubscriptionId")
+                    b.Property<int>("SubscriptionId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("SubscriptionStartDate")
+                    b.Property<DateTime>("SubscriptionStartDate")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("SubscriptionStatus")
@@ -191,6 +196,7 @@ namespace Helpline.DataAccess.Migrations
                         .HasColumnType("tinyint");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -198,8 +204,7 @@ namespace Helpline.DataAccess.Migrations
                     b.HasIndex("SubscriptionId");
 
                     b.HasIndex("UserId")
-                        .IsUnique()
-                        .HasFilter("[UserId] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Customers");
                 });
@@ -213,6 +218,9 @@ namespace Helpline.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Attachments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BedTypes")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Chassis")
@@ -305,6 +313,9 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<double?>("Height")
                         .HasColumnType("float");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsBooked")
                         .HasColumnType("bit");
 
@@ -379,6 +390,9 @@ namespace Helpline.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("AddressId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Attachments")
                         .HasColumnType("nvarchar(max)");
 
@@ -391,6 +405,9 @@ namespace Helpline.DataAccess.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -406,6 +423,9 @@ namespace Helpline.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AddressId")
+                        .IsUnique();
 
                     b.ToTable("Dealerships");
                 });
@@ -432,6 +452,9 @@ namespace Helpline.DataAccess.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -479,6 +502,9 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("JobTitle")
                         .HasColumnType("nvarchar(max)");
 
@@ -491,9 +517,6 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("ReferralCode")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ServiceTypes")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
@@ -504,6 +527,33 @@ namespace Helpline.DataAccess.Migrations
                         .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("Employees");
+                });
+
+            modelBuilder.Entity("Helpline.Shared.Models.EmployeeService", b =>
+                {
+                    b.Property<int?>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ServiceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EmployeeId", "ServiceId");
+
+                    b.HasIndex("ServiceId");
+
+                    b.ToTable("EmployeeService");
+
+                    b.HasData(
+                        new
+                        {
+                            EmployeeId = -1,
+                            ServiceId = 2
+                        },
+                        new
+                        {
+                            EmployeeId = -1,
+                            ServiceId = 6
+                        });
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.KnowledgeBaseLibrary", b =>
@@ -523,14 +573,17 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TagsId")
-                        .HasColumnType("int");
+                    b.Property<byte>("ServiceType")
+                        .HasColumnType("tinyint");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
@@ -543,29 +596,44 @@ namespace Helpline.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TagsId");
-
                     b.ToTable("KnowledgeBaseLibraries");
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.KnowledgeBaseTag", b =>
                 {
                     b.Property<int?>("KnowledgeBaseId")
-                        .HasColumnType("int")
-                        .HasColumnOrder(0);
+                        .HasColumnType("int");
 
                     b.Property<int?>("TagId")
-                        .HasColumnType("int")
-                        .HasColumnOrder(1);
-
-                    b.Property<DateTime>("DateAdded")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("int");
 
                     b.HasKey("KnowledgeBaseId", "TagId");
 
                     b.HasIndex("TagId");
 
                     b.ToTable("KnowledgeBaseTags");
+
+                    b.HasData(
+                        new
+                        {
+                            KnowledgeBaseId = -2,
+                            TagId = -5
+                        },
+                        new
+                        {
+                            KnowledgeBaseId = -2,
+                            TagId = -2
+                        },
+                        new
+                        {
+                            KnowledgeBaseId = -1,
+                            TagId = -3
+                        },
+                        new
+                        {
+                            KnowledgeBaseId = -1,
+                            TagId = -1
+                        });
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.RVCheckout", b =>
@@ -588,6 +656,9 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("FreshWater")
+                        .HasColumnType("int");
+
                     b.Property<int>("FuelLevel")
                         .HasColumnType("int");
 
@@ -595,6 +666,9 @@ namespace Helpline.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<bool>("IsACChecked")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsAwningChecked")
@@ -661,7 +735,7 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Attachments")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CheckoutId")
+                    b.Property<int?>("CheckoutId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
@@ -670,8 +744,11 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EmployeeId")
+                    b.Property<int?>("EmployeeId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -685,26 +762,31 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<DateTime>("RentalStart")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("RenterId")
+                    b.Property<int>("RentalStatus")
                         .HasColumnType("int");
 
-                    b.Property<int>("ReturnId")
+                    b.Property<int?>("RenterId")
                         .HasColumnType("int");
 
-                    b.Property<int>("VehicleId")
+                    b.Property<int?>("ReturnId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("VehicleId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CheckoutId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[CheckoutId] IS NOT NULL");
 
                     b.HasIndex("EmployeeId");
 
                     b.HasIndex("RenterId");
 
                     b.HasIndex("ReturnId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[ReturnId] IS NOT NULL");
 
                     b.HasIndex("VehicleId");
 
@@ -728,13 +810,30 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsRepeatRenter")
                         .HasColumnType("bit");
+
+                    b.Property<string>("MobilePhone")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RentalPortal")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
@@ -744,7 +843,7 @@ namespace Helpline.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("RVRenter");
+                    b.ToTable("RVRenters");
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.RVReturn", b =>
@@ -780,6 +879,9 @@ namespace Helpline.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsACChecked")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsAwningChecked")
@@ -841,6 +943,69 @@ namespace Helpline.DataAccess.Migrations
                     b.ToTable("Returns");
                 });
 
+            modelBuilder.Entity("Helpline.Shared.Models.RVService", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Attachments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("CostPercent")
+                        .HasPrecision(5, 1)
+                        .HasColumnType("decimal(5,1)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Frequency")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("GrossProfitPercent")
+                        .HasPrecision(5, 1)
+                        .HasColumnType("decimal(5,1)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("RetailPrice")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<string>("Service")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ServiceCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ServiceMethod")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UOM")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RVServices");
+                });
+
             modelBuilder.Entity("Helpline.Shared.Models.ServiceCase", b =>
                 {
                     b.Property<int>("Id")
@@ -849,25 +1014,16 @@ namespace Helpline.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AssignedTo")
-                        .HasColumnType("int");
-
                     b.Property<string>("Attachments")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte?>("CallType")
-                        .HasColumnType("tinyint");
-
-                    b.Property<string>("Caller")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("CustomerId")
+                    b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CustomerVehicleId")
+                    b.Property<int>("CustomerVehicleId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -879,23 +1035,20 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OpenedBy")
-                        .HasColumnType("int");
-
                     b.Property<int?>("ServiceCaseCallId")
                         .HasColumnType("int");
 
                     b.Property<int>("Sev")
                         .HasColumnType("int");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("TechnicianId")
                         .HasColumnType("int");
@@ -916,7 +1069,7 @@ namespace Helpline.DataAccess.Migrations
 
                     b.HasIndex("TechnicianId");
 
-                    b.ToTable("RelatedServiceCases");
+                    b.ToTable("ServiceCases");
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.ServiceCaseCall", b =>
@@ -930,10 +1083,22 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Attachments")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<byte?>("CallType")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("Caller")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Item")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("KnowledgeBaseLibraryId")
@@ -954,8 +1119,8 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<byte>("ServiceType")
                         .HasColumnType("tinyint");
 
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -966,27 +1131,76 @@ namespace Helpline.DataAccess.Migrations
                     b.ToTable("ServiceCaseCalls");
                 });
 
+            modelBuilder.Entity("Helpline.Shared.Models.ServiceCaseCallServiceType", b =>
+                {
+                    b.Property<int?>("ServiceCaseCallId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ServiceTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ServiceCaseCallId", "ServiceTypeId");
+
+                    b.HasIndex("ServiceTypeId");
+
+                    b.ToTable("ServiceCaseCallServiceTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            ServiceCaseCallId = -2,
+                            ServiceTypeId = 7
+                        },
+                        new
+                        {
+                            ServiceCaseCallId = -1,
+                            ServiceTypeId = 18
+                        },
+                        new
+                        {
+                            ServiceCaseCallId = -2,
+                            ServiceTypeId = 9
+                        });
+                });
+
             modelBuilder.Entity("Helpline.Shared.Models.ServiceCaseTag", b =>
                 {
                     b.Property<int?>("ServiceCaseId")
-                        .HasColumnType("int")
-                        .HasColumnOrder(0);
+                        .HasColumnType("int");
 
                     b.Property<int?>("TagId")
-                        .HasColumnType("int")
-                        .HasColumnOrder(1);
-
-                    b.Property<DateTime>("DateAdded")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("int");
 
                     b.HasKey("ServiceCaseId", "TagId");
 
                     b.HasIndex("TagId");
 
                     b.ToTable("ServiceCaseTags");
+
+                    b.HasData(
+                        new
+                        {
+                            ServiceCaseId = -1,
+                            TagId = -5
+                        },
+                        new
+                        {
+                            ServiceCaseId = -1,
+                            TagId = -2
+                        },
+                        new
+                        {
+                            ServiceCaseId = -2,
+                            TagId = -3
+                        },
+                        new
+                        {
+                            ServiceCaseId = -2,
+                            TagId = -1
+                        });
                 });
 
-            modelBuilder.Entity("Helpline.Shared.Models.ServiceDetail", b =>
+            modelBuilder.Entity("Helpline.Shared.Models.ServiceClass", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -997,21 +1211,14 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Attachments")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("CostPercent")
-                        .HasColumnType("float");
-
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Frequency")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("GrossProfitPercent")
-                        .HasColumnType("float");
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -1019,28 +1226,12 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("RetailPrice")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Service")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ServiceCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ServiceMethod")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UOM")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte>("ServiceType")
+                        .HasColumnType("tinyint");
 
                     b.HasKey("Id");
 
-                    b.ToTable("ServiceDetails");
+                    b.ToTable("ServiceTypes");
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.Subscription", b =>
@@ -1059,6 +1250,9 @@ namespace Helpline.DataAccess.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -1098,6 +1292,9 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
@@ -1106,9 +1303,12 @@ namespace Helpline.DataAccess.Migrations
 
                     b.Property<string>("TagName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("TagName")
+                        .IsUnique();
 
                     b.ToTable("Tags");
                 });
@@ -1133,6 +1333,9 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsW9OnFile")
                         .HasColumnType("bit");
 
@@ -1143,9 +1346,6 @@ namespace Helpline.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ReferralCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ServiceTypes")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
@@ -1160,20 +1360,122 @@ namespace Helpline.DataAccess.Migrations
                         .IsUnique()
                         .HasFilter("[UserId] IS NOT NULL");
 
-                    b.ToTable("Technician");
+                    b.ToTable("Technicians");
+                });
+
+            modelBuilder.Entity("Helpline.Shared.Models.TechnicianService", b =>
+                {
+                    b.Property<int?>("TechnicianId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ServiceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TechnicianId", "ServiceId");
+
+                    b.HasIndex("ServiceId");
+
+                    b.ToTable("TechnicianServices");
+
+                    b.HasData(
+                        new
+                        {
+                            TechnicianId = -1,
+                            ServiceId = 6
+                        },
+                        new
+                        {
+                            TechnicianId = -1,
+                            ServiceId = 1
+                        },
+                        new
+                        {
+                            TechnicianId = -1,
+                            ServiceId = 2
+                        },
+                        new
+                        {
+                            TechnicianId = -1,
+                            ServiceId = 3
+                        },
+                        new
+                        {
+                            TechnicianId = -1,
+                            ServiceId = 4
+                        },
+                        new
+                        {
+                            TechnicianId = -1,
+                            ServiceId = 5
+                        },
+                        new
+                        {
+                            TechnicianId = -1,
+                            ServiceId = 8
+                        },
+                        new
+                        {
+                            TechnicianId = -1,
+                            ServiceId = 9
+                        },
+                        new
+                        {
+                            TechnicianId = -1,
+                            ServiceId = 10
+                        },
+                        new
+                        {
+                            TechnicianId = -1,
+                            ServiceId = 11
+                        },
+                        new
+                        {
+                            TechnicianId = -1,
+                            ServiceId = 12
+                        },
+                        new
+                        {
+                            TechnicianId = -1,
+                            ServiceId = 13
+                        },
+                        new
+                        {
+                            TechnicianId = -1,
+                            ServiceId = 14
+                        },
+                        new
+                        {
+                            TechnicianId = -1,
+                            ServiceId = 15
+                        },
+                        new
+                        {
+                            TechnicianId = -1,
+                            ServiceId = 17
+                        },
+                        new
+                        {
+                            TechnicianId = -1,
+                            ServiceId = 19
+                        },
+                        new
+                        {
+                            TechnicianId = -2,
+                            ServiceId = 18
+                        },
+                        new
+                        {
+                            TechnicianId = -2,
+                            ServiceId = 20
+                        });
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.VehicleRvRenter", b =>
                 {
                     b.Property<int?>("RenterId")
-                        .HasColumnType("int")
-                        .HasColumnOrder(0);
+                        .HasColumnType("int");
 
                     b.Property<int?>("VehicleId")
-                        .HasColumnType("int")
-                        .HasColumnOrder(1);
-
-                    b.Property<int>("RentalStatus")
                         .HasColumnType("int");
 
                     b.HasKey("RenterId", "VehicleId");
@@ -1181,6 +1483,28 @@ namespace Helpline.DataAccess.Migrations
                     b.HasIndex("VehicleId");
 
                     b.ToTable("VehicleRvRenters");
+
+                    b.HasData(
+                        new
+                        {
+                            RenterId = -1,
+                            VehicleId = -1
+                        },
+                        new
+                        {
+                            RenterId = -2,
+                            VehicleId = -3
+                        },
+                        new
+                        {
+                            RenterId = -2,
+                            VehicleId = -2
+                        },
+                        new
+                        {
+                            RenterId = -3,
+                            VehicleId = -2
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -1316,27 +1640,30 @@ namespace Helpline.DataAccess.Migrations
                     b.ToTable("UserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Helpline.Shared.Models.Address", b =>
+            modelBuilder.Entity("Helpline.Shared.Models.ApplicationUser", b =>
                 {
-                    b.HasOne("Helpline.Shared.Models.ApplicationUser", "User")
-                        .WithMany("Addresses")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("Helpline.Shared.Models.Address", "Address")
+                        .WithMany("Users")
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("Address");
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.Customer", b =>
                 {
                     b.HasOne("Helpline.Shared.Models.Subscription", "Subscription")
                         .WithMany("Customers")
-                        .HasForeignKey("SubscriptionId");
+                        .HasForeignKey("SubscriptionId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("Helpline.Shared.Models.ApplicationUser", "User")
                         .WithOne("Customer")
                         .HasForeignKey("Helpline.Shared.Models.Customer", "UserId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Subscription");
 
@@ -1348,10 +1675,21 @@ namespace Helpline.DataAccess.Migrations
                     b.HasOne("Helpline.Shared.Models.Customer", "Customer")
                         .WithMany("CustomerVehicles")
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("Helpline.Shared.Models.Dealership", b =>
+                {
+                    b.HasOne("Helpline.Shared.Models.Address", "Address")
+                        .WithOne("Dealership")
+                        .HasForeignKey("Helpline.Shared.Models.Dealership", "AddressId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Address");
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.DealershipContact", b =>
@@ -1359,13 +1697,13 @@ namespace Helpline.DataAccess.Migrations
                     b.HasOne("Helpline.Shared.Models.Dealership", "Dealership")
                         .WithMany("DealershipContacts")
                         .HasForeignKey("DealershipId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Helpline.Shared.Models.ApplicationUser", "User")
                         .WithOne("DealershipContact")
                         .HasForeignKey("Helpline.Shared.Models.DealershipContact", "UserId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Dealership");
 
@@ -1377,18 +1715,28 @@ namespace Helpline.DataAccess.Migrations
                     b.HasOne("Helpline.Shared.Models.ApplicationUser", "User")
                         .WithOne("Employee")
                         .HasForeignKey("Helpline.Shared.Models.Employee", "UserId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Helpline.Shared.Models.KnowledgeBaseLibrary", b =>
+            modelBuilder.Entity("Helpline.Shared.Models.EmployeeService", b =>
                 {
-                    b.HasOne("Helpline.Shared.Models.Tag", "Tags")
-                        .WithMany()
-                        .HasForeignKey("TagsId");
+                    b.HasOne("Helpline.Shared.Models.Employee", "Employee")
+                        .WithMany("EmployeeServices")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
-                    b.Navigation("Tags");
+                    b.HasOne("Helpline.Shared.Models.ServiceClass", "Service")
+                        .WithMany("EmployeeServices")
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Service");
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.KnowledgeBaseTag", b =>
@@ -1396,13 +1744,13 @@ namespace Helpline.DataAccess.Migrations
                     b.HasOne("Helpline.Shared.Models.KnowledgeBaseLibrary", "KnowledgeBaseLibrary")
                         .WithMany("KnowledgeBaseTags")
                         .HasForeignKey("KnowledgeBaseId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Helpline.Shared.Models.Tag", "Tag")
                         .WithMany("KnowledgeBaseTags")
                         .HasForeignKey("TagId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("KnowledgeBaseLibrary");
@@ -1415,32 +1763,24 @@ namespace Helpline.DataAccess.Migrations
                     b.HasOne("Helpline.Shared.Models.RVCheckout", "Checkout")
                         .WithOne("Rental")
                         .HasForeignKey("Helpline.Shared.Models.RVRental", "CheckoutId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Helpline.Shared.Models.Employee", "Employee")
                         .WithMany()
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EmployeeId");
 
                     b.HasOne("Helpline.Shared.Models.RVRenter", "Renter")
                         .WithMany()
-                        .HasForeignKey("RenterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RenterId");
 
                     b.HasOne("Helpline.Shared.Models.RVReturn", "Return")
                         .WithOne("Rental")
                         .HasForeignKey("Helpline.Shared.Models.RVRental", "ReturnId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Helpline.Shared.Models.CustomerVehicle", "Vehicle")
                         .WithMany("Rentals")
-                        .HasForeignKey("VehicleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("VehicleId");
 
                     b.Navigation("Checkout");
 
@@ -1465,17 +1805,21 @@ namespace Helpline.DataAccess.Migrations
             modelBuilder.Entity("Helpline.Shared.Models.ServiceCase", b =>
                 {
                     b.HasOne("Helpline.Shared.Models.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId");
+                        .WithMany("ServiceCases")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("Helpline.Shared.Models.CustomerVehicle", "CustomerVehicle")
-                        .WithMany("RelatedServiceCases")
-                        .HasForeignKey("CustomerVehicleId");
+                        .WithMany("ServiceCases")
+                        .HasForeignKey("CustomerVehicleId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("Helpline.Shared.Models.Employee", "Employee")
-                        .WithMany("RelatedServiceCases")
+                        .WithMany("ServiceCases")
                         .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Helpline.Shared.Models.ServiceCaseCall", null)
@@ -1483,9 +1827,9 @@ namespace Helpline.DataAccess.Migrations
                         .HasForeignKey("ServiceCaseCallId");
 
                     b.HasOne("Helpline.Shared.Models.Technician", "Technician")
-                        .WithMany("RelatedServiceCases")
+                        .WithMany("ServiceCases")
                         .HasForeignKey("TechnicianId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Customer");
@@ -1502,13 +1846,13 @@ namespace Helpline.DataAccess.Migrations
                     b.HasOne("Helpline.Shared.Models.KnowledgeBaseLibrary", "KnowledgeBaseLibrary")
                         .WithMany("ServiceCaseCalls")
                         .HasForeignKey("KnowledgeBaseLibraryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Helpline.Shared.Models.ServiceCase", "ServiceCase")
                         .WithMany("ServiceCaseCalls")
                         .HasForeignKey("ServiceCaseId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("KnowledgeBaseLibrary");
@@ -1516,18 +1860,37 @@ namespace Helpline.DataAccess.Migrations
                     b.Navigation("ServiceCase");
                 });
 
+            modelBuilder.Entity("Helpline.Shared.Models.ServiceCaseCallServiceType", b =>
+                {
+                    b.HasOne("Helpline.Shared.Models.ServiceCaseCall", "ServiceCaseCall")
+                        .WithMany("ServiceCaseCallServiceTypes")
+                        .HasForeignKey("ServiceCaseCallId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Helpline.Shared.Models.ServiceClass", "ServiceType")
+                        .WithMany("ServiceCaseCallServiceTypes")
+                        .HasForeignKey("ServiceTypeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("ServiceCaseCall");
+
+                    b.Navigation("ServiceType");
+                });
+
             modelBuilder.Entity("Helpline.Shared.Models.ServiceCaseTag", b =>
                 {
                     b.HasOne("Helpline.Shared.Models.ServiceCase", "ServiceCase")
                         .WithMany("ServiceCaseTags")
                         .HasForeignKey("ServiceCaseId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Helpline.Shared.Models.Tag", "Tag")
                         .WithMany("ServiceCaseTags")
                         .HasForeignKey("TagId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("ServiceCase");
@@ -1540,9 +1903,28 @@ namespace Helpline.DataAccess.Migrations
                     b.HasOne("Helpline.Shared.Models.ApplicationUser", "User")
                         .WithOne("Technician")
                         .HasForeignKey("Helpline.Shared.Models.Technician", "UserId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Helpline.Shared.Models.TechnicianService", b =>
+                {
+                    b.HasOne("Helpline.Shared.Models.ServiceClass", "Service")
+                        .WithMany("TechnicianServices")
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Helpline.Shared.Models.Technician", "Technician")
+                        .WithMany("TechnicianServices")
+                        .HasForeignKey("TechnicianId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Service");
+
+                    b.Navigation("Technician");
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.VehicleRvRenter", b =>
@@ -1550,13 +1932,13 @@ namespace Helpline.DataAccess.Migrations
                     b.HasOne("Helpline.Shared.Models.RVRenter", "Renter")
                         .WithMany("VehicleRvRenters")
                         .HasForeignKey("RenterId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Helpline.Shared.Models.CustomerVehicle", "Vehicle")
                         .WithMany("VehicleRvRenters")
                         .HasForeignKey("VehicleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Renter");
@@ -1615,10 +1997,15 @@ namespace Helpline.DataAccess.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Helpline.Shared.Models.Address", b =>
+                {
+                    b.Navigation("Dealership");
+
+                    b.Navigation("Users");
+                });
+
             modelBuilder.Entity("Helpline.Shared.Models.ApplicationUser", b =>
                 {
-                    b.Navigation("Addresses");
-
                     b.Navigation("Customer");
 
                     b.Navigation("DealershipContact");
@@ -1631,13 +2018,15 @@ namespace Helpline.DataAccess.Migrations
             modelBuilder.Entity("Helpline.Shared.Models.Customer", b =>
                 {
                     b.Navigation("CustomerVehicles");
+
+                    b.Navigation("ServiceCases");
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.CustomerVehicle", b =>
                 {
                     b.Navigation("Rentals");
 
-                    b.Navigation("RelatedServiceCases");
+                    b.Navigation("ServiceCases");
 
                     b.Navigation("VehicleRvRenters");
                 });
@@ -1649,7 +2038,9 @@ namespace Helpline.DataAccess.Migrations
 
             modelBuilder.Entity("Helpline.Shared.Models.Employee", b =>
                 {
-                    b.Navigation("RelatedServiceCases");
+                    b.Navigation("EmployeeServices");
+
+                    b.Navigation("ServiceCases");
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.KnowledgeBaseLibrary", b =>
@@ -1684,6 +2075,17 @@ namespace Helpline.DataAccess.Migrations
             modelBuilder.Entity("Helpline.Shared.Models.ServiceCaseCall", b =>
                 {
                     b.Navigation("RelatedServiceCases");
+
+                    b.Navigation("ServiceCaseCallServiceTypes");
+                });
+
+            modelBuilder.Entity("Helpline.Shared.Models.ServiceClass", b =>
+                {
+                    b.Navigation("EmployeeServices");
+
+                    b.Navigation("ServiceCaseCallServiceTypes");
+
+                    b.Navigation("TechnicianServices");
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.Subscription", b =>
@@ -1700,7 +2102,9 @@ namespace Helpline.DataAccess.Migrations
 
             modelBuilder.Entity("Helpline.Shared.Models.Technician", b =>
                 {
-                    b.Navigation("RelatedServiceCases");
+                    b.Navigation("ServiceCases");
+
+                    b.Navigation("TechnicianServices");
                 });
 #pragma warning restore 612, 618
         }

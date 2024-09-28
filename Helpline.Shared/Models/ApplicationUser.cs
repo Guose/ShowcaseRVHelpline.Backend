@@ -18,10 +18,10 @@ namespace Helpline.Shared.Models
         [Required]
         public PermissionType Permssions { get; set; }
         public bool IsRemembered { get; set; } = false;
-        [Required]
+
         [ForeignKey("AddressId")]
         public int AddressId { get; set; }
-        public Address Address { get; set; } = new();
+        public Address? Address { get; set; }
 
         public Customer? Customer { get; set; }
         public Employee? Employee { get; set; }

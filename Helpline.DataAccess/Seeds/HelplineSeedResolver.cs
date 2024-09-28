@@ -1,13 +1,15 @@
 ﻿using Helpline.Shared.Models;
+using Helpline.Shared.Types;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using System.Text.Json;
 
 namespace Helpline.DataAccess.Seeds
 {
-    public class HelplineSeedResolver : IHelplineSeedResolver
+    public class HelplineSeedResolver
     {
-        private readonly IConfiguration configuration;
-        public string? JsonFilePath => configuration.GetSection("JsonDataSettings:UserDataFilePath").Value;
+        private readonly IConfiguration? configuration;
+        public string? JsonFilePath => configuration!.GetSection("AppSettings:JsonDataFilePath").Value;
 
         public HelplineSeedResolver()
         {
@@ -17,79 +19,113 @@ namespace Helpline.DataAccess.Seeds
                 .Build();
         }
 
-        public List<Address> GetAddressSeeds()
+        public List<T> LoadJsonDataAsync<T>(string fileName)
         {
-            return JsonSerializer.Deserialize<List<Address>>(JsonFilePath + "address.json")!;
+            string filePath = JsonFilePath + fileName;
+            using var reader = new StreamReader(filePath);
+            var json = reader.ReadToEnd();
+
+            return JsonSerializer.Deserialize<List<T>>(json)!;
         }
 
-        public List<Customer> GetCustomerSeeds()
+        public List<T> UpdateCreatedOnData<T>(List<T> items) where T : IHasCreatedOn
         {
-            return JsonSerializer.Deserialize<List<Customer>>(JsonFilePath + "customer.json")!;
+            List<T> updatedItems = [];
+
+            foreach (var item in items)
+            {
+                item.CreatedOn = DateTime.Now;
+                updatedItems.Add(item);
+            }
+
+            return updatedItems;
         }
 
-        public List<CustomerVehicle> GetCustomerVehicleSeeds()
+        public List<RVRental> UpdateStartAndEndDates(List<RVRental> rentals)
         {
-            return JsonSerializer.Deserialize<List<CustomerVehicle>>(JsonFilePath + "customerVehicle.json")!;
+            List<RVRental> rentalSeeds = [];
+            DateTime start = new DateTime();
+
+            foreach(var rental in rentals)
+            {
+                switch (rental.RentalStatus)
+                {
+                    case RentalStatusType.Booked:
+                        start = DateTime.Now.AddMonths(3);
+                        break;
+                    case RentalStatusType.OnTrip:
+                        start = DateTime.Now.AddDays(-10);
+                        break;
+                    case RentalStatusType.Completed:
+                        start = DateTime.Now.AddMonths(-10);
+                        break;
+                    default:
+                        break;
+                }
+
+                rental.CreatedOn = DateTime.Now;
+                rental.RentalStart = start;
+                rental.RentalEnd = start.AddDays(30);
+
+                rentalSeeds.Add(rental);
+            }
+
+            return rentalSeeds;
         }
 
-        public List<DealershipContact> GetDealershipContactSeeds()
+        public List<ServiceCase> ServiceUpdateData(List<ServiceCase> customers)
         {
-            throw new NotImplementedException();
+            List<ServiceCase> custsomerSeeds = [];
+
+            foreach (var item in customers)
+            {
+
+                item.DueDate = DateTime.Now.AddMonths(10);
+                item.CreatedOn = DateTime.Now;
+
+                custsomerSeeds.Add(item);
+            }
+
+            return custsomerSeeds;
         }
 
-        public List<Dealership> GetDealershipSeeds()
+        public List<Customer> CustomerUpdateData(List<Customer> customers)
         {
-            return JsonSerializer.Deserialize<List<Dealership>>(JsonFilePath + "dealerships.json")!;
+            List<Customer> custsomerSeeds = [];
+            int month = 0;
+            int count = 1;
+
+            foreach (var item in customers)
+            {
+                if (count <= 1)
+                {
+                    month = -6;
+                    count++;
+                }
+                else
+                    month = -4;
+
+                item.SubscriptionStartDate = DateTime.Now.AddMonths(month);
+                item.SubscriptionEndDate = item.SubscriptionStartDate.AddMonths(12);
+                item.CreatedOn = DateTime.Now;
+                
+                custsomerSeeds.Add(item);
+            }
+
+            return custsomerSeeds;
         }
 
-        public List<Employee> GetEmployeeSeeds()
+        public List<ApplicationUser> GetUserSeeds(List<ApplicationUser> users)
         {
-            throw new NotImplementedException();
+            List<ApplicationUser> userSeeds = [];
+            foreach ( var user in users)
+            {
+                user.PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(user, user.Password!);
+                userSeeds.Add(user);
+            }
+
+            return userSeeds;
         }
 
-        public List<KnowledgeBaseLibrary> GetKnowledgeBaseLibrarySeeds()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<RVRental> GetRVRentalsSeeds()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<RVService> GetServiceDetailSeeds()
-        {
-            return JsonSerializer.Deserialize<List<RVService>>(JsonFilePath + "serviceDetail.json")!;
-        }
-
-        public List<ServiceCaseCall> GetServiceCaseCallSeeds()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<ServiceCase> GetServiceCaseSeeds()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Subscription> GetSubscriptionSeeds()
-        {
-            return JsonSerializer.Deserialize<List<Subscription>>(JsonFilePath + "subscription.json")!;
-        }
-
-        public List<Technician> GetTechnicianSeeds()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<ApplicationUser> GetUserSeeds()
-        {
-            List<Address> addresses = GetAddressSeeds();
-            string jsonData = File.ReadAllText(JsonFilePath + "user.json");
-
-            List<ApplicationUser> users = JsonSerializer.Deserialize<List<ApplicationUser>>(jsonData)!;
-
-            return ApplicationUserSeeds.CreateUserSeeds(users, addresses);
-        }
     }
 }

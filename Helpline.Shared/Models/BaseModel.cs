@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Helpline.Shared.Models
 {
-    public abstract class BaseModel
+    public abstract class BaseModel : IHasCreatedOn
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

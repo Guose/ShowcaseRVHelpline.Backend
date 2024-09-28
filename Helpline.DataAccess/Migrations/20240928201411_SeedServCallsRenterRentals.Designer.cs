@@ -4,6 +4,7 @@ using Helpline.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Helpline.DataAccess.Migrations
 {
     [DbContext(typeof(HelplineContext))]
-    partial class HelplineContextModelSnapshot : ModelSnapshot
+    [Migration("20240928201411_SeedServCallsRenterRentals")]
+    partial class SeedServCallsRenterRentals
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -539,18 +542,6 @@ namespace Helpline.DataAccess.Migrations
                     b.HasIndex("ServiceId");
 
                     b.ToTable("EmployeeService");
-
-                    b.HasData(
-                        new
-                        {
-                            EmployeeId = -1,
-                            ServiceId = 2
-                        },
-                        new
-                        {
-                            EmployeeId = -1,
-                            ServiceId = 6
-                        });
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.KnowledgeBaseLibrary", b =>
@@ -609,28 +600,6 @@ namespace Helpline.DataAccess.Migrations
                     b.HasIndex("TagId");
 
                     b.ToTable("KnowledgeBaseTags");
-
-                    b.HasData(
-                        new
-                        {
-                            KnowledgeBaseId = -2,
-                            TagId = -5
-                        },
-                        new
-                        {
-                            KnowledgeBaseId = -2,
-                            TagId = -2
-                        },
-                        new
-                        {
-                            KnowledgeBaseId = -1,
-                            TagId = -3
-                        },
-                        new
-                        {
-                            KnowledgeBaseId = -1,
-                            TagId = -1
-                        });
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.RVCheckout", b =>
@@ -718,6 +687,9 @@ namespace Helpline.DataAccess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("RentalId")
+                        .IsUnique();
+
                     b.ToTable("Checkouts");
                 });
 
@@ -773,21 +745,54 @@ namespace Helpline.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CheckoutId")
-                        .IsUnique()
-                        .HasFilter("[CheckoutId] IS NOT NULL");
-
                     b.HasIndex("EmployeeId");
 
                     b.HasIndex("RenterId");
 
-                    b.HasIndex("ReturnId")
-                        .IsUnique()
-                        .HasFilter("[ReturnId] IS NOT NULL");
-
                     b.HasIndex("VehicleId");
 
                     b.ToTable("RVRentals");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1,
+                            CheckoutId = -1,
+                            CreatedOn = new DateTime(2024, 9, 28, 13, 14, 11, 5, DateTimeKind.Local).AddTicks(4643),
+                            EmployeeId = -1,
+                            IsActive = false,
+                            RentalEnd = new DateTime(2023, 12, 28, 13, 14, 11, 5, DateTimeKind.Local).AddTicks(4625),
+                            RentalStart = new DateTime(2023, 11, 28, 13, 14, 11, 5, DateTimeKind.Local).AddTicks(4625),
+                            RentalStatus = 3,
+                            RenterId = -1,
+                            ReturnId = -1,
+                            VehicleId = -1
+                        },
+                        new
+                        {
+                            Id = -2,
+                            CheckoutId = -2,
+                            CreatedOn = new DateTime(2024, 9, 28, 13, 14, 11, 5, DateTimeKind.Local).AddTicks(4657),
+                            EmployeeId = -1,
+                            IsActive = false,
+                            RentalEnd = new DateTime(2024, 10, 18, 13, 14, 11, 5, DateTimeKind.Local).AddTicks(4655),
+                            RentalStart = new DateTime(2024, 9, 18, 13, 14, 11, 5, DateTimeKind.Local).AddTicks(4655),
+                            RentalStatus = 2,
+                            RenterId = -2,
+                            VehicleId = -3
+                        },
+                        new
+                        {
+                            Id = -3,
+                            CreatedOn = new DateTime(2024, 9, 28, 13, 14, 11, 5, DateTimeKind.Local).AddTicks(4663),
+                            EmployeeId = -1,
+                            IsActive = false,
+                            RentalEnd = new DateTime(2025, 1, 27, 13, 14, 11, 5, DateTimeKind.Local).AddTicks(4660),
+                            RentalStart = new DateTime(2024, 12, 28, 13, 14, 11, 5, DateTimeKind.Local).AddTicks(4660),
+                            RentalStatus = 1,
+                            RenterId = -3,
+                            VehicleId = -2
+                        });
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.RVRenter", b =>
@@ -841,6 +846,35 @@ namespace Helpline.DataAccess.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("RVRenters");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1,
+                            CreatedOn = new DateTime(2024, 9, 28, 13, 14, 11, 5, DateTimeKind.Local).AddTicks(3438),
+                            FullName = "Paul Csicsila",
+                            IsActive = true,
+                            IsRepeatRenter = false,
+                            RentalPortal = "RV Share"
+                        },
+                        new
+                        {
+                            Id = -2,
+                            CreatedOn = new DateTime(2024, 9, 28, 13, 14, 11, 5, DateTimeKind.Local).AddTicks(3461),
+                            FullName = "Robert Jensen",
+                            IsActive = true,
+                            IsRepeatRenter = true,
+                            RentalPortal = "Good Sams"
+                        },
+                        new
+                        {
+                            Id = -3,
+                            CreatedOn = new DateTime(2024, 9, 28, 13, 14, 11, 5, DateTimeKind.Local).AddTicks(3464),
+                            FullName = "Erica Rayter",
+                            IsActive = true,
+                            IsRepeatRenter = false,
+                            RentalPortal = "Outdoorsy"
+                        });
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.RVReturn", b =>
@@ -936,6 +970,9 @@ namespace Helpline.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("RentalId")
+                        .IsUnique();
 
                     b.ToTable("Returns");
                 });
@@ -1126,6 +1163,34 @@ namespace Helpline.DataAccess.Migrations
                     b.HasIndex("ServiceCaseId");
 
                     b.ToTable("ServiceCaseCalls");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1,
+                            CallType = (byte)3,
+                            Caller = "John Doe",
+                            CreatedOn = new DateTime(2024, 9, 28, 13, 14, 11, 5, DateTimeKind.Local).AddTicks(2186),
+                            IsActive = false,
+                            KnowledgeBaseLibraryId = -1,
+                            ResolveDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ServiceCaseId = -1,
+                            ServiceType = (byte)10,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = -2,
+                            CallType = (byte)4,
+                            Caller = "Jane Doe",
+                            CreatedOn = new DateTime(2024, 9, 28, 13, 14, 11, 5, DateTimeKind.Local).AddTicks(2245),
+                            IsActive = false,
+                            KnowledgeBaseLibraryId = -2,
+                            ResolveDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ServiceCaseId = -2,
+                            ServiceType = (byte)18,
+                            Status = 0
+                        });
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.ServiceCaseCallServiceType", b =>
@@ -1141,23 +1206,6 @@ namespace Helpline.DataAccess.Migrations
                     b.HasIndex("ServiceTypeId");
 
                     b.ToTable("ServiceCaseCallServiceTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            ServiceCaseCallId = -2,
-                            ServiceTypeId = 7
-                        },
-                        new
-                        {
-                            ServiceCaseCallId = -1,
-                            ServiceTypeId = 18
-                        },
-                        new
-                        {
-                            ServiceCaseCallId = -2,
-                            ServiceTypeId = 9
-                        });
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.ServiceCaseTag", b =>
@@ -1173,28 +1221,6 @@ namespace Helpline.DataAccess.Migrations
                     b.HasIndex("TagId");
 
                     b.ToTable("ServiceCaseTags");
-
-                    b.HasData(
-                        new
-                        {
-                            ServiceCaseId = -1,
-                            TagId = -5
-                        },
-                        new
-                        {
-                            ServiceCaseId = -1,
-                            TagId = -2
-                        },
-                        new
-                        {
-                            ServiceCaseId = -2,
-                            TagId = -3
-                        },
-                        new
-                        {
-                            ServiceCaseId = -2,
-                            TagId = -1
-                        });
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.ServiceClass", b =>
@@ -1373,98 +1399,6 @@ namespace Helpline.DataAccess.Migrations
                     b.HasIndex("ServiceId");
 
                     b.ToTable("TechnicianServices");
-
-                    b.HasData(
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 6
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 1
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 2
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 3
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 4
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 5
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 8
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 9
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 10
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 11
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 12
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 13
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 14
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 15
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 17
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 19
-                        },
-                        new
-                        {
-                            TechnicianId = -2,
-                            ServiceId = 18
-                        },
-                        new
-                        {
-                            TechnicianId = -2,
-                            ServiceId = 20
-                        });
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.VehicleRvRenter", b =>
@@ -1480,28 +1414,6 @@ namespace Helpline.DataAccess.Migrations
                     b.HasIndex("VehicleId");
 
                     b.ToTable("VehicleRvRenters");
-
-                    b.HasData(
-                        new
-                        {
-                            RenterId = -1,
-                            VehicleId = -1
-                        },
-                        new
-                        {
-                            RenterId = -2,
-                            VehicleId = -3
-                        },
-                        new
-                        {
-                            RenterId = -2,
-                            VehicleId = -2
-                        },
-                        new
-                        {
-                            RenterId = -3,
-                            VehicleId = -2
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -1755,13 +1667,19 @@ namespace Helpline.DataAccess.Migrations
                     b.Navigation("Tag");
                 });
 
+            modelBuilder.Entity("Helpline.Shared.Models.RVCheckout", b =>
+                {
+                    b.HasOne("Helpline.Shared.Models.RVRental", "Rental")
+                        .WithOne("Checkout")
+                        .HasForeignKey("Helpline.Shared.Models.RVCheckout", "RentalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Rental");
+                });
+
             modelBuilder.Entity("Helpline.Shared.Models.RVRental", b =>
                 {
-                    b.HasOne("Helpline.Shared.Models.RVCheckout", "Checkout")
-                        .WithOne("Rental")
-                        .HasForeignKey("Helpline.Shared.Models.RVRental", "CheckoutId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
                     b.HasOne("Helpline.Shared.Models.Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeId");
@@ -1770,22 +1688,13 @@ namespace Helpline.DataAccess.Migrations
                         .WithMany()
                         .HasForeignKey("RenterId");
 
-                    b.HasOne("Helpline.Shared.Models.RVReturn", "Return")
-                        .WithOne("Rental")
-                        .HasForeignKey("Helpline.Shared.Models.RVRental", "ReturnId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
                     b.HasOne("Helpline.Shared.Models.CustomerVehicle", "Vehicle")
                         .WithMany("Rentals")
                         .HasForeignKey("VehicleId");
 
-                    b.Navigation("Checkout");
-
                     b.Navigation("Employee");
 
                     b.Navigation("Renter");
-
-                    b.Navigation("Return");
 
                     b.Navigation("Vehicle");
                 });
@@ -1797,6 +1706,17 @@ namespace Helpline.DataAccess.Migrations
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Helpline.Shared.Models.RVReturn", b =>
+                {
+                    b.HasOne("Helpline.Shared.Models.RVRental", "Rental")
+                        .WithOne("Return")
+                        .HasForeignKey("Helpline.Shared.Models.RVReturn", "RentalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Rental");
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.ServiceCase", b =>
@@ -2047,19 +1967,16 @@ namespace Helpline.DataAccess.Migrations
                     b.Navigation("ServiceCaseCalls");
                 });
 
-            modelBuilder.Entity("Helpline.Shared.Models.RVCheckout", b =>
+            modelBuilder.Entity("Helpline.Shared.Models.RVRental", b =>
                 {
-                    b.Navigation("Rental");
+                    b.Navigation("Checkout");
+
+                    b.Navigation("Return");
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.RVRenter", b =>
                 {
                     b.Navigation("VehicleRvRenters");
-                });
-
-            modelBuilder.Entity("Helpline.Shared.Models.RVReturn", b =>
-                {
-                    b.Navigation("Rental");
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.ServiceCase", b =>

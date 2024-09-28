@@ -4,6 +4,7 @@ using Helpline.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Helpline.DataAccess.Migrations
 {
     [DbContext(typeof(HelplineContext))]
-    partial class HelplineContextModelSnapshot : ModelSnapshot
+    [Migration("20240927045715_SeedInitalData")]
+    partial class SeedInitalData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,6 +62,99 @@ namespace Helpline.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Addresses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1,
+                            Address1 = "1606 Rock Creek Ridge Blvd SW",
+                            City = "North Bend",
+                            Country = "USA",
+                            County = "King",
+                            PostalCode = "98045",
+                            State = "WA"
+                        },
+                        new
+                        {
+                            Id = -2,
+                            Address1 = "11310 S Lake Stevens Rd",
+                            City = "Lake Stevens",
+                            Country = "USA",
+                            County = "Snohomish",
+                            PostalCode = "98258",
+                            State = "WA"
+                        },
+                        new
+                        {
+                            Id = -3,
+                            Address1 = "215 100th St SW D105",
+                            City = "Everett",
+                            Country = "USA",
+                            County = "Snohomish",
+                            PostalCode = "98240",
+                            State = "WA"
+                        },
+                        new
+                        {
+                            Id = -4,
+                            Address1 = "13102 43rd Ave NE",
+                            City = "Marysville",
+                            Country = "USA",
+                            County = "Snohomish",
+                            PostalCode = "98271",
+                            State = "WA"
+                        },
+                        new
+                        {
+                            Id = -5,
+                            Address1 = "12803 Hwy 99",
+                            City = "Everett",
+                            Country = "USA",
+                            County = "Snohomish",
+                            PostalCode = "98204",
+                            State = "WA"
+                        },
+                        new
+                        {
+                            Id = -6,
+                            Address1 = "1535 Walton Dr",
+                            Country = "USA",
+                            DealershipId = -1,
+                            PostalCode = "98233"
+                        },
+                        new
+                        {
+                            Id = -7,
+                            Address1 = "11572 Clear Creek Rd NW",
+                            City = "Silverdale",
+                            Country = "USA",
+                            County = "Kitsap",
+                            DealershipId = -2,
+                            PostalCode = "98383",
+                            State = "WA"
+                        },
+                        new
+                        {
+                            Id = -8,
+                            Address1 = "4650 16th St E",
+                            City = "Fife",
+                            Country = "USA",
+                            County = "Pierce",
+                            DealershipId = -3,
+                            PostalCode = "98424",
+                            State = "WA"
+                        },
+                        new
+                        {
+                            Id = -9,
+                            Address1 = "15855 Smokey Point Blvd",
+                            City = "Marysville",
+                            Country = "USA",
+                            County = "Snohomish",
+                            DealershipId = -4,
+                            PostalCode = "98271",
+                            State = "WA"
+                        });
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.ApplicationUser", b =>
@@ -149,6 +245,134 @@ namespace Helpline.DataAccess.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("Users", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "c26288f9-dd3a-48d6-b50f-58f7741732d5",
+                            AccessFailedCount = 0,
+                            AddressId = -1,
+                            ConcurrencyStamp = "e83b733e-4946-48fa-a52e-9f172a8f1cf3",
+                            Email = "justin@showcasemi.com",
+                            EmailConfirmed = false,
+                            FirstName = "Justin",
+                            IsRemembered = false,
+                            LastName = "Elder",
+                            LockoutEnabled = false,
+                            PasswordHash = "AQAAAAIAAYagAAAAEIk2i+wftXtKvSd1Nh82Dz1dseJVjvVHCLjLbBanyY/E8tCF5tlt0nggsIr9ZkqphA==",
+                            Permssions = (byte)0,
+                            PhoneNumber = "4259234362",
+                            PhoneNumberConfirmed = false,
+                            Role = (byte)1,
+                            SecurityStamp = "ce1fca8e-6289-4731-b02c-a34407d074a5",
+                            TwoFactorEnabled = false,
+                            UserName = "guose"
+                        },
+                        new
+                        {
+                            Id = "bc5a677b-c200-408f-9baa-52d7258256ae",
+                            AccessFailedCount = 0,
+                            AddressId = -2,
+                            ConcurrencyStamp = "999ec8b8-e97e-4171-90be-4c46ab24d989",
+                            Email = "john@showcasemi.com",
+                            EmailConfirmed = false,
+                            FirstName = "John",
+                            IsRemembered = false,
+                            LastName = "Elder",
+                            LockoutEnabled = false,
+                            PasswordHash = "AQAAAAIAAYagAAAAEKYcBtgVjsiJ57p3JovwQWvehR8zJBIc1+Xh8k2aBnsHb86dUBwm82MBsWLCM+MbFg==",
+                            Permssions = (byte)0,
+                            PhoneNumber = "4253302032",
+                            PhoneNumberConfirmed = false,
+                            Role = (byte)8,
+                            SecurityStamp = "9f8df77d-fa74-4e11-a57d-073e378343b4",
+                            TwoFactorEnabled = false,
+                            UserName = "JohnE"
+                        },
+                        new
+                        {
+                            Id = "b9ca97e2-1969-4181-b0b3-099c560a2125",
+                            AccessFailedCount = 0,
+                            AddressId = -3,
+                            ConcurrencyStamp = "1dfc5207-ae4a-408e-9b9a-e7e40f9024fb",
+                            Email = "keith.rvtech@gmail.com",
+                            EmailConfirmed = false,
+                            FirstName = "Keith",
+                            IsRemembered = false,
+                            LastName = "McPherson",
+                            LockoutEnabled = false,
+                            PasswordHash = "AQAAAAIAAYagAAAAEL8JzBCDFK46D2aWkaoFWHfVAC+Zxx46P1ZKMyc1gDOUVuqriVRTkYwUJAliiXxayQ==",
+                            Permssions = (byte)0,
+                            PhoneNumber = "3606319123",
+                            PhoneNumberConfirmed = false,
+                            Role = (byte)5,
+                            SecurityStamp = "b2e8a89f-bc07-4070-ac36-ce86b9a503a7",
+                            TwoFactorEnabled = false,
+                            UserName = "KeithM"
+                        },
+                        new
+                        {
+                            Id = "45a55c7e-de7a-41ab-aceb-bc3d1701ccf1",
+                            AccessFailedCount = 0,
+                            AddressId = -4,
+                            ConcurrencyStamp = "12505b18-5957-4579-93e7-cf7b1c091d90",
+                            Email = "eric@showcaservhub.com",
+                            EmailConfirmed = false,
+                            FirstName = "Eric",
+                            IsRemembered = false,
+                            LastName = "Shaw",
+                            LockoutEnabled = false,
+                            PasswordHash = "AQAAAAIAAYagAAAAENkxw5GTLknA9nHuC95VEqXZQvbTV/OPX+jiXoMAJpahaC+B9AVCxNhwlFurB05LVQ==",
+                            Permssions = (byte)0,
+                            PhoneNumber = "4253087638",
+                            PhoneNumberConfirmed = false,
+                            Role = (byte)3,
+                            SecurityStamp = "c038cf83-2ce7-4dd3-ae41-73aba47aef99",
+                            TwoFactorEnabled = false,
+                            UserName = "EricS"
+                        },
+                        new
+                        {
+                            Id = "69f01f45-545b-4e46-820f-2ace9794875f",
+                            AccessFailedCount = 0,
+                            AddressId = -5,
+                            ConcurrencyStamp = "fad6b3dc-e306-48a1-b515-e921237e2ea0",
+                            Email = "jacob@skyautorepair.com",
+                            EmailConfirmed = false,
+                            FirstName = "Jacob",
+                            IsRemembered = false,
+                            LastName = "Skys",
+                            LockoutEnabled = false,
+                            PasswordHash = "AQAAAAIAAYagAAAAEOti+pAY8fSm9hzMuVTo5MSf58AlbFSjkYEEpi11dU5ijM5iLBRHRFMIEudotRtcOQ==",
+                            Permssions = (byte)0,
+                            PhoneNumber = "4253068730",
+                            PhoneNumberConfirmed = false,
+                            Role = (byte)4,
+                            SecurityStamp = "427f7835-2e8d-4b85-85b3-bc603b11644b",
+                            TwoFactorEnabled = false,
+                            UserName = "Jacob_Skys"
+                        },
+                        new
+                        {
+                            Id = "4c57ce2c-78cc-4d35-9ae7-bf29b6ce2a46",
+                            AccessFailedCount = 0,
+                            AddressId = -3,
+                            ConcurrencyStamp = "42540be8-e60c-43d3-9db6-85c1acb3a0d9",
+                            Email = "nicole@showcaservhub.com",
+                            EmailConfirmed = false,
+                            FirstName = "Nicole",
+                            IsRemembered = false,
+                            LastName = "McPherson",
+                            LockoutEnabled = false,
+                            PasswordHash = "AQAAAAIAAYagAAAAEN+WwQIU9ltt0/SJLb3gqaUFAe0bZI6ZqTWUAP0qJ2AyPnc9hlVS01mw8RZwUdI3Bg==",
+                            Permssions = (byte)0,
+                            PhoneNumber = "3605728448",
+                            PhoneNumberConfirmed = false,
+                            Role = (byte)2,
+                            SecurityStamp = "1c6f29ad-c3b2-4b2e-abce-d19e74552954",
+                            TwoFactorEnabled = false,
+                            UserName = "NicoleM"
+                        });
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.Customer", b =>
@@ -177,13 +401,13 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("SubscriptionEndDate")
+                    b.Property<DateTime?>("SubscriptionEndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("SubscriptionId")
+                    b.Property<int?>("SubscriptionId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("SubscriptionStartDate")
+                    b.Property<DateTime?>("SubscriptionStartDate")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("SubscriptionStatus")
@@ -193,7 +417,6 @@ namespace Helpline.DataAccess.Migrations
                         .HasColumnType("tinyint");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -201,7 +424,8 @@ namespace Helpline.DataAccess.Migrations
                     b.HasIndex("SubscriptionId");
 
                     b.HasIndex("UserId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("Customers");
                 });
@@ -539,18 +763,6 @@ namespace Helpline.DataAccess.Migrations
                     b.HasIndex("ServiceId");
 
                     b.ToTable("EmployeeService");
-
-                    b.HasData(
-                        new
-                        {
-                            EmployeeId = -1,
-                            ServiceId = 2
-                        },
-                        new
-                        {
-                            EmployeeId = -1,
-                            ServiceId = 6
-                        });
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.KnowledgeBaseLibrary", b =>
@@ -609,28 +821,6 @@ namespace Helpline.DataAccess.Migrations
                     b.HasIndex("TagId");
 
                     b.ToTable("KnowledgeBaseTags");
-
-                    b.HasData(
-                        new
-                        {
-                            KnowledgeBaseId = -2,
-                            TagId = -5
-                        },
-                        new
-                        {
-                            KnowledgeBaseId = -2,
-                            TagId = -2
-                        },
-                        new
-                        {
-                            KnowledgeBaseId = -1,
-                            TagId = -3
-                        },
-                        new
-                        {
-                            KnowledgeBaseId = -1,
-                            TagId = -1
-                        });
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.RVCheckout", b =>
@@ -652,9 +842,6 @@ namespace Helpline.DataAccess.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("FreshWater")
-                        .HasColumnType("int");
 
                     b.Property<int>("FuelLevel")
                         .HasColumnType("int");
@@ -982,7 +1169,7 @@ namespace Helpline.DataAccess.Migrations
                         .HasPrecision(10, 2)
                         .HasColumnType("decimal(10,2)");
 
-                    b.Property<string>("Service")
+                    b.Property<string>("ServiceType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -1001,6 +1188,203 @@ namespace Helpline.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("RVServices");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CostPercent = 65m,
+                            CreatedOn = new DateTime(2024, 9, 27, 4, 57, 13, 752, DateTimeKind.Utc).AddTicks(768),
+                            Description = "Top off fluids, clean terminals and posts, test amps/volts, and apply anti-corrosive (up to 3 batteries).",
+                            Frequency = "As needed",
+                            GrossProfitPercent = 35m,
+                            IsActive = true,
+                            RetailPrice = 135.00m,
+                            Service = "Battery ServiceType",
+                            ServiceCode = "M00001",
+                            ServiceMethod = "Mobile",
+                            UOM = "3 batteries"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CostPercent = 65m,
+                            CreatedOn = new DateTime(2024, 9, 27, 4, 57, 13, 752, DateTimeKind.Utc).AddTicks(771),
+                            Description = "Clean and check battery and connections; visual inspection of exhaust system; clean spark arrester; replace air filter, change oil and filter; perform load test; replace fuel filter as necessary.",
+                            Frequency = "150 hours",
+                            GrossProfitPercent = 35m,
+                            IsActive = true,
+                            RetailPrice = 240.00m,
+                            Service = "Generator Tuneups",
+                            ServiceCode = "M00002",
+                            ServiceMethod = "Mobile",
+                            UOM = "Each"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CostPercent = 65m,
+                            CreatedOn = new DateTime(2024, 9, 27, 4, 57, 13, 752, DateTimeKind.Utc).AddTicks(772),
+                            Description = "Lube chassis, check transmission fluids, battery water level, check/add coolant level; inspect wiper blades, and top off washer fluid.",
+                            Frequency = "5000 miles or 6 months",
+                            GrossProfitPercent = 35m,
+                            IsActive = true,
+                            RetailPrice = 160.00m,
+                            Service = "Oil Changes",
+                            ServiceCode = "M00003",
+                            ServiceMethod = "Mobile",
+                            UOM = "Each"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CostPercent = 65m,
+                            CreatedOn = new DateTime(2024, 9, 27, 4, 57, 13, 752, DateTimeKind.Utc).AddTicks(773),
+                            Description = "Drain fresh water tank and water heater; blow out water lines with compressed air, including toilet, shower and sinks; fill P-Traps with anti-freeze; pump anti-freeze through water lines with water heater bypass; includes up to 2 gallons of anti-freeze.",
+                            Frequency = "Winter",
+                            GrossProfitPercent = 35m,
+                            IsActive = true,
+                            RetailPrice = 105.00m,
+                            Service = "Winterization",
+                            ServiceCode = "M00004",
+                            ServiceMethod = "Mobile",
+                            UOM = "Each"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CostPercent = 65m,
+                            CreatedOn = new DateTime(2024, 9, 27, 4, 57, 13, 752, DateTimeKind.Utc).AddTicks(773),
+                            Description = "Deep cleaning with disinfectant, including cabinets, microwave, refrigerator, toilet & shower, range/oven; clean carpets & upholstery; clean dash & windows; and check for leaks.",
+                            Frequency = "As needed",
+                            GrossProfitPercent = 35m,
+                            IsActive = true,
+                            RetailPrice = 475.00m,
+                            Service = "Detail - Interior",
+                            ServiceCode = "M00005",
+                            ServiceMethod = "Mobile",
+                            UOM = "Each"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CostPercent = 65m,
+                            CreatedOn = new DateTime(2024, 9, 27, 4, 57, 13, 752, DateTimeKind.Utc).AddTicks(776),
+                            Description = "Pressure wash; buff all four sides, using polishing compound; wax all four sides for fiberglass gel coats; clean windows, tires, and chrome.",
+                            Frequency = "As needed",
+                            GrossProfitPercent = 35m,
+                            IsActive = true,
+                            RetailPrice = 675.00m,
+                            Service = "Detail - Exterior",
+                            ServiceCode = "M00006",
+                            ServiceMethod = "Mobile",
+                            UOM = "Each"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CostPercent = 65m,
+                            CreatedOn = new DateTime(2024, 9, 27, 4, 57, 13, 752, DateTimeKind.Utc).AddTicks(776),
+                            Description = "Full exterior and interior detail.",
+                            Frequency = "As needed",
+                            GrossProfitPercent = 35m,
+                            IsActive = true,
+                            RetailPrice = 1099.00m,
+                            Service = "Detail - Full",
+                            ServiceCode = "M00007",
+                            ServiceMethod = "Mobile",
+                            UOM = "Each"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CostPercent = 65m,
+                            CreatedOn = new DateTime(2024, 9, 27, 4, 57, 13, 752, DateTimeKind.Utc).AddTicks(777),
+                            Description = "Clean roof with specially designed cleaning agents and apply UV-Blocking treatment to protect roof, and check for leaks & seal if necessary",
+                            Frequency = "Annual",
+                            GrossProfitPercent = 35m,
+                            IsActive = true,
+                            RetailPrice = 500.00m,
+                            Service = "Roof Maintenance",
+                            ServiceCode = "M00008",
+                            ServiceMethod = "Mobile",
+                            UOM = "Each"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CostPercent = 65m,
+                            CreatedOn = new DateTime(2024, 9, 27, 4, 57, 13, 752, DateTimeKind.Utc).AddTicks(777),
+                            Description = "Perform annually for operating safety and fuel efficiency. Clean main burner orifice; clean blower wheel; clean/Inspect/Adjust electrode assembly; test module board/inspect and clean board contacts; clean and inspect combustion chamber; inspect fan motor; clean and inspect vent tubes and outer casing; reassemble furnace using new gaskets.",
+                            Frequency = "Annual",
+                            GrossProfitPercent = 35m,
+                            IsActive = true,
+                            RetailPrice = 200.00m,
+                            Service = "Furnace ServiceType",
+                            ServiceCode = "B00001",
+                            ServiceMethod = "Both",
+                            UOM = "Each"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CostPercent = 65m,
+                            CreatedOn = new DateTime(2024, 9, 27, 4, 57, 13, 752, DateTimeKind.Utc).AddTicks(778),
+                            Description = "Recommended annually for operating safety and fuel efficiency. Check condition of anode rod; check relief valve; adjust burners and electrodes; check thermocouple; check module",
+                            Frequency = "Annual",
+                            GrossProfitPercent = 35m,
+                            IsActive = true,
+                            RetailPrice = 105.00m,
+                            Service = "Water Heater ServiceType",
+                            ServiceCode = "B00002",
+                            ServiceMethod = "Both",
+                            UOM = "Each"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CostPercent = 65m,
+                            CreatedOn = new DateTime(2024, 9, 27, 4, 57, 13, 752, DateTimeKind.Utc).AddTicks(779),
+                            Description = "Recommended annually to maintain trouble-free operation and long life. Verify unit is air tight in compartment; refrigerator is properly vented (roof and sidewall); clean and adjust burner and orifice; inspect and test all door seals; check LP pressure and proper voltage; clean roof vent and check baffle.",
+                            Frequency = "Annual",
+                            GrossProfitPercent = 35m,
+                            IsActive = true,
+                            RetailPrice = 125.00m,
+                            Service = "Refrigerator ServiceType",
+                            ServiceCode = "B00003",
+                            ServiceMethod = "Both",
+                            UOM = "Each"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CostPercent = 65m,
+                            CreatedOn = new DateTime(2024, 9, 27, 4, 57, 13, 752, DateTimeKind.Utc).AddTicks(779),
+                            Description = "Recommended annually to improve performance and operating efficiency. Examine shroud for cracks and damage; check compressor voltage; check compressor amperage; remove and clean A/C filter; clean and unclog A/C roof drains; check air temperature drop across the evaporator coil.",
+                            Frequency = "Annual",
+                            GrossProfitPercent = 35m,
+                            IsActive = true,
+                            RetailPrice = 125.00m,
+                            Service = "Air Conditioner ServiceType",
+                            ServiceCode = "B00004",
+                            ServiceMethod = "Both",
+                            UOM = "Each"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CostPercent = 65m,
+                            CreatedOn = new DateTime(2024, 9, 27, 4, 57, 13, 752, DateTimeKind.Utc).AddTicks(780),
+                            Description = "Perform annually to help keep appliances and accessories operating efficiently and provide trouble-free travels. Check all of the following for proper operation: antennas, water heater, awnings, furnace, refrigerator, TVs, DVD players, range/oven, washer/dryer, roof A/Cs.",
+                            Frequency = "Annual",
+                            GrossProfitPercent = 35m,
+                            IsActive = true,
+                            RetailPrice = 200.00m,
+                            Service = "Pre-Delivery Inspection",
+                            ServiceCode = "S00001",
+                            ServiceMethod = "Shop",
+                            UOM = "Each"
+                        });
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.ServiceCase", b =>
@@ -1011,16 +1395,19 @@ namespace Helpline.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("AssignedTo")
+                        .HasColumnType("int");
+
                     b.Property<string>("Attachments")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CustomerId")
+                    b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CustomerVehicleId")
+                    b.Property<int?>("CustomerVehicleId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -1040,6 +1427,9 @@ namespace Helpline.DataAccess.Migrations
 
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OpenedBy")
+                        .HasColumnType("int");
 
                     b.Property<int?>("ServiceCaseCallId")
                         .HasColumnType("int");
@@ -1141,23 +1531,6 @@ namespace Helpline.DataAccess.Migrations
                     b.HasIndex("ServiceTypeId");
 
                     b.ToTable("ServiceCaseCallServiceTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            ServiceCaseCallId = -2,
-                            ServiceTypeId = 7
-                        },
-                        new
-                        {
-                            ServiceCaseCallId = -1,
-                            ServiceTypeId = 18
-                        },
-                        new
-                        {
-                            ServiceCaseCallId = -2,
-                            ServiceTypeId = 9
-                        });
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.ServiceCaseTag", b =>
@@ -1173,28 +1546,6 @@ namespace Helpline.DataAccess.Migrations
                     b.HasIndex("TagId");
 
                     b.ToTable("ServiceCaseTags");
-
-                    b.HasData(
-                        new
-                        {
-                            ServiceCaseId = -1,
-                            TagId = -5
-                        },
-                        new
-                        {
-                            ServiceCaseId = -1,
-                            TagId = -2
-                        },
-                        new
-                        {
-                            ServiceCaseId = -2,
-                            TagId = -3
-                        },
-                        new
-                        {
-                            ServiceCaseId = -2,
-                            TagId = -1
-                        });
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.ServiceClass", b =>
@@ -1220,11 +1571,11 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Notes")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<byte>("ServiceType")
                         .HasColumnType("tinyint");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -1308,6 +1659,50 @@ namespace Helpline.DataAccess.Migrations
                         .IsUnique();
 
                     b.ToTable("Tags");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1,
+                            CreatedOn = new DateTime(2024, 9, 27, 4, 57, 13, 751, DateTimeKind.Utc).AddTicks(8466),
+                            IsActive = true,
+                            TagName = "How to"
+                        },
+                        new
+                        {
+                            Id = -2,
+                            CreatedOn = new DateTime(2024, 9, 27, 4, 57, 13, 751, DateTimeKind.Utc).AddTicks(8471),
+                            IsActive = true,
+                            TagName = "Troubleshooting"
+                        },
+                        new
+                        {
+                            Id = -3,
+                            CreatedOn = new DateTime(2024, 9, 27, 4, 57, 13, 751, DateTimeKind.Utc).AddTicks(8472),
+                            IsActive = true,
+                            TagName = "Generator"
+                        },
+                        new
+                        {
+                            Id = -4,
+                            CreatedOn = new DateTime(2024, 9, 27, 4, 57, 13, 751, DateTimeKind.Utc).AddTicks(8473),
+                            IsActive = true,
+                            TagName = "Tires"
+                        },
+                        new
+                        {
+                            Id = -5,
+                            CreatedOn = new DateTime(2024, 9, 27, 4, 57, 13, 751, DateTimeKind.Utc).AddTicks(8473),
+                            IsActive = true,
+                            TagName = "Water Heater"
+                        },
+                        new
+                        {
+                            Id = -6,
+                            CreatedOn = new DateTime(2024, 9, 27, 4, 57, 13, 751, DateTimeKind.Utc).AddTicks(8476),
+                            IsActive = true,
+                            TagName = "Electrical"
+                        });
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.Technician", b =>
@@ -1373,98 +1768,6 @@ namespace Helpline.DataAccess.Migrations
                     b.HasIndex("ServiceId");
 
                     b.ToTable("TechnicianServices");
-
-                    b.HasData(
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 6
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 1
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 2
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 3
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 4
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 5
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 8
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 9
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 10
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 11
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 12
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 13
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 14
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 15
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 17
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 19
-                        },
-                        new
-                        {
-                            TechnicianId = -2,
-                            ServiceId = 18
-                        },
-                        new
-                        {
-                            TechnicianId = -2,
-                            ServiceId = 20
-                        });
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.VehicleRvRenter", b =>
@@ -1480,28 +1783,6 @@ namespace Helpline.DataAccess.Migrations
                     b.HasIndex("VehicleId");
 
                     b.ToTable("VehicleRvRenters");
-
-                    b.HasData(
-                        new
-                        {
-                            RenterId = -1,
-                            VehicleId = -1
-                        },
-                        new
-                        {
-                            RenterId = -2,
-                            VehicleId = -3
-                        },
-                        new
-                        {
-                            RenterId = -2,
-                            VehicleId = -2
-                        },
-                        new
-                        {
-                            RenterId = -3,
-                            VehicleId = -2
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -1513,7 +1794,7 @@ namespace Helpline.DataAccess.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("ServiceType")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -1626,13 +1907,13 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("LoginProvider")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("ServiceType")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserId", "LoginProvider", "Name");
+                    b.HasKey("UserId", "LoginProvider", "ServiceType");
 
                     b.ToTable("UserTokens", (string)null);
                 });
@@ -1653,14 +1934,12 @@ namespace Helpline.DataAccess.Migrations
                     b.HasOne("Helpline.Shared.Models.Subscription", "Subscription")
                         .WithMany("Customers")
                         .HasForeignKey("SubscriptionId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Helpline.Shared.Models.ApplicationUser", "User")
                         .WithOne("Customer")
                         .HasForeignKey("Helpline.Shared.Models.Customer", "UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Subscription");
 
@@ -1725,7 +2004,7 @@ namespace Helpline.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Helpline.Shared.Models.ServiceClass", "Service")
+                    b.HasOne("Helpline.Shared.Models.ServiceClass", "ServiceType")
                         .WithMany("EmployeeServices")
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -1733,7 +2012,7 @@ namespace Helpline.DataAccess.Migrations
 
                     b.Navigation("Employee");
 
-                    b.Navigation("Service");
+                    b.Navigation("ServiceType");
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.KnowledgeBaseTag", b =>
@@ -1802,16 +2081,13 @@ namespace Helpline.DataAccess.Migrations
             modelBuilder.Entity("Helpline.Shared.Models.ServiceCase", b =>
                 {
                     b.HasOne("Helpline.Shared.Models.Customer", "Customer")
-                        .WithMany("ServiceCases")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("CustomerId");
 
                     b.HasOne("Helpline.Shared.Models.CustomerVehicle", "CustomerVehicle")
                         .WithMany("ServiceCases")
                         .HasForeignKey("CustomerVehicleId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Helpline.Shared.Models.Employee", "Employee")
                         .WithMany("ServiceCases")
@@ -1907,7 +2183,7 @@ namespace Helpline.DataAccess.Migrations
 
             modelBuilder.Entity("Helpline.Shared.Models.TechnicianService", b =>
                 {
-                    b.HasOne("Helpline.Shared.Models.ServiceClass", "Service")
+                    b.HasOne("Helpline.Shared.Models.ServiceClass", "ServiceType")
                         .WithMany("TechnicianServices")
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -1919,7 +2195,7 @@ namespace Helpline.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("Service");
+                    b.Navigation("ServiceType");
 
                     b.Navigation("Technician");
                 });
@@ -2015,8 +2291,6 @@ namespace Helpline.DataAccess.Migrations
             modelBuilder.Entity("Helpline.Shared.Models.Customer", b =>
                 {
                     b.Navigation("CustomerVehicles");
-
-                    b.Navigation("ServiceCases");
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.CustomerVehicle", b =>

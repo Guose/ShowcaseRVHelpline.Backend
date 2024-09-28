@@ -5,8 +5,8 @@ namespace Helpline.Shared.Models
 {
     public class RVCheckout : BaseModel
     {
-        [ForeignKey("RentalId")]
         public int RentalId { get; set; }
+        [ForeignKey("RentalId")]
         public RVRental? Rental { get; set; }
 
         public bool IsExteriorCleaned { get; set; }
@@ -22,6 +22,7 @@ namespace Helpline.Shared.Models
         public bool IsACChecked { get; set; }
         public bool IsTiresChecked { get; set; }
         public TankLevelType FuelLevel { get; set; }
+        public TankLevelType FreshWater { get; set; }
         public TankLevelType BlackWater { get; set; }
         public TankLevelType GrayWater { get; set; }
         public TankLevelType Propane { get; set; }

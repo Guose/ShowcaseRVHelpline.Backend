@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helpline.DataAccess", "Help
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helpline.Domain", "Helpline.Domain\Helpline.Domain.csproj", "{C38DEEBC-70F8-4FE6-8F16-9DF79E091A9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{5BC306B3-6EC0-4E9F-8E43-92DFD5AA83E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{5BC306B3-6EC0-4E9F-8E43-92DFD5AA83E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -8,21 +8,17 @@ namespace Helpline.Shared.Models
     {
         [Required]
         public string Title { get; set; } = string.Empty;
-
-        [Required]
-        public int OpenedBy { get; set; }
-        public int AssignedTo { get; set; }
         public DateTime DueDate { get; set; }
         [Required]
         public ServiceCallSevType Sev { get; set; }
 
 
         [ForeignKey("CustomerId")]
-        public int? CustomerId { get; set; }
+        public int CustomerId { get; set; }
         public Customer? Customer { get; set; }
 
         [ForeignKey("CustomerVehicleId")]
-        public int? CustomerVehicleId { get; set; }
+        public int CustomerVehicleId { get; set; }
         public CustomerVehicle? CustomerVehicle { get; set; }
 
         [ForeignKey("EmployeeId")]

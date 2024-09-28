@@ -4,6 +4,7 @@ using Helpline.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Helpline.DataAccess.Migrations
 {
     [DbContext(typeof(HelplineContext))]
-    partial class HelplineContextModelSnapshot : ModelSnapshot
+    [Migration("20240928011211_SeedCustomers")]
+    partial class SeedCustomers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -204,6 +207,32 @@ namespace Helpline.DataAccess.Migrations
                         .IsUnique();
 
                     b.ToTable("Customers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1,
+                            CreatedOn = new DateTime(2024, 9, 27, 18, 12, 11, 163, DateTimeKind.Local).AddTicks(6045),
+                            IsActive = true,
+                            SubscriptionEndDate = new DateTime(2025, 3, 27, 18, 12, 11, 163, DateTimeKind.Local).AddTicks(5973),
+                            SubscriptionId = 1,
+                            SubscriptionStartDate = new DateTime(2024, 3, 27, 18, 12, 11, 163, DateTimeKind.Local).AddTicks(5973),
+                            SubscriptionStatus = true,
+                            SubscriptionType = (byte)1,
+                            UserId = "bc5a677b-c200-408f-9baa-52d7258256ae"
+                        },
+                        new
+                        {
+                            Id = -2,
+                            CreatedOn = new DateTime(2024, 9, 27, 18, 12, 11, 163, DateTimeKind.Local).AddTicks(6058),
+                            IsActive = true,
+                            SubscriptionEndDate = new DateTime(2025, 5, 27, 18, 12, 11, 163, DateTimeKind.Local).AddTicks(6054),
+                            SubscriptionId = 1,
+                            SubscriptionStartDate = new DateTime(2024, 5, 27, 18, 12, 11, 163, DateTimeKind.Local).AddTicks(6054),
+                            SubscriptionStatus = true,
+                            SubscriptionType = (byte)1,
+                            UserId = "45a55c7e-de7a-41ab-aceb-bc3d1701ccf1"
+                        });
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.CustomerVehicle", b =>
@@ -539,18 +568,6 @@ namespace Helpline.DataAccess.Migrations
                     b.HasIndex("ServiceId");
 
                     b.ToTable("EmployeeService");
-
-                    b.HasData(
-                        new
-                        {
-                            EmployeeId = -1,
-                            ServiceId = 2
-                        },
-                        new
-                        {
-                            EmployeeId = -1,
-                            ServiceId = 6
-                        });
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.KnowledgeBaseLibrary", b =>
@@ -609,28 +626,6 @@ namespace Helpline.DataAccess.Migrations
                     b.HasIndex("TagId");
 
                     b.ToTable("KnowledgeBaseTags");
-
-                    b.HasData(
-                        new
-                        {
-                            KnowledgeBaseId = -2,
-                            TagId = -5
-                        },
-                        new
-                        {
-                            KnowledgeBaseId = -2,
-                            TagId = -2
-                        },
-                        new
-                        {
-                            KnowledgeBaseId = -1,
-                            TagId = -3
-                        },
-                        new
-                        {
-                            KnowledgeBaseId = -1,
-                            TagId = -1
-                        });
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.RVCheckout", b =>
@@ -652,9 +647,6 @@ namespace Helpline.DataAccess.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("FreshWater")
-                        .HasColumnType("int");
 
                     b.Property<int>("FuelLevel")
                         .HasColumnType("int");
@@ -982,7 +974,7 @@ namespace Helpline.DataAccess.Migrations
                         .HasPrecision(10, 2)
                         .HasColumnType("decimal(10,2)");
 
-                    b.Property<string>("Service")
+                    b.Property<string>("ServiceType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -1141,23 +1133,6 @@ namespace Helpline.DataAccess.Migrations
                     b.HasIndex("ServiceTypeId");
 
                     b.ToTable("ServiceCaseCallServiceTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            ServiceCaseCallId = -2,
-                            ServiceTypeId = 7
-                        },
-                        new
-                        {
-                            ServiceCaseCallId = -1,
-                            ServiceTypeId = 18
-                        },
-                        new
-                        {
-                            ServiceCaseCallId = -2,
-                            ServiceTypeId = 9
-                        });
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.ServiceCaseTag", b =>
@@ -1173,28 +1148,6 @@ namespace Helpline.DataAccess.Migrations
                     b.HasIndex("TagId");
 
                     b.ToTable("ServiceCaseTags");
-
-                    b.HasData(
-                        new
-                        {
-                            ServiceCaseId = -1,
-                            TagId = -5
-                        },
-                        new
-                        {
-                            ServiceCaseId = -1,
-                            TagId = -2
-                        },
-                        new
-                        {
-                            ServiceCaseId = -2,
-                            TagId = -3
-                        },
-                        new
-                        {
-                            ServiceCaseId = -2,
-                            TagId = -1
-                        });
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.ServiceClass", b =>
@@ -1220,11 +1173,11 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Notes")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<byte>("ServiceType")
                         .HasColumnType("tinyint");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -1373,98 +1326,6 @@ namespace Helpline.DataAccess.Migrations
                     b.HasIndex("ServiceId");
 
                     b.ToTable("TechnicianServices");
-
-                    b.HasData(
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 6
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 1
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 2
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 3
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 4
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 5
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 8
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 9
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 10
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 11
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 12
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 13
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 14
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 15
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 17
-                        },
-                        new
-                        {
-                            TechnicianId = -1,
-                            ServiceId = 19
-                        },
-                        new
-                        {
-                            TechnicianId = -2,
-                            ServiceId = 18
-                        },
-                        new
-                        {
-                            TechnicianId = -2,
-                            ServiceId = 20
-                        });
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.VehicleRvRenter", b =>
@@ -1480,28 +1341,6 @@ namespace Helpline.DataAccess.Migrations
                     b.HasIndex("VehicleId");
 
                     b.ToTable("VehicleRvRenters");
-
-                    b.HasData(
-                        new
-                        {
-                            RenterId = -1,
-                            VehicleId = -1
-                        },
-                        new
-                        {
-                            RenterId = -2,
-                            VehicleId = -3
-                        },
-                        new
-                        {
-                            RenterId = -2,
-                            VehicleId = -2
-                        },
-                        new
-                        {
-                            RenterId = -3,
-                            VehicleId = -2
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -1513,7 +1352,7 @@ namespace Helpline.DataAccess.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("ServiceType")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -1626,13 +1465,13 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("LoginProvider")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("ServiceType")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserId", "LoginProvider", "Name");
+                    b.HasKey("UserId", "LoginProvider", "ServiceType");
 
                     b.ToTable("UserTokens", (string)null);
                 });
@@ -1725,7 +1564,7 @@ namespace Helpline.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Helpline.Shared.Models.ServiceClass", "Service")
+                    b.HasOne("Helpline.Shared.Models.ServiceClass", "ServiceType")
                         .WithMany("EmployeeServices")
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -1733,7 +1572,7 @@ namespace Helpline.DataAccess.Migrations
 
                     b.Navigation("Employee");
 
-                    b.Navigation("Service");
+                    b.Navigation("ServiceType");
                 });
 
             modelBuilder.Entity("Helpline.Shared.Models.KnowledgeBaseTag", b =>
@@ -1907,7 +1746,7 @@ namespace Helpline.DataAccess.Migrations
 
             modelBuilder.Entity("Helpline.Shared.Models.TechnicianService", b =>
                 {
-                    b.HasOne("Helpline.Shared.Models.ServiceClass", "Service")
+                    b.HasOne("Helpline.Shared.Models.ServiceClass", "ServiceType")
                         .WithMany("TechnicianServices")
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -1919,7 +1758,7 @@ namespace Helpline.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("Service");
+                    b.Navigation("ServiceType");
 
                     b.Navigation("Technician");
                 });

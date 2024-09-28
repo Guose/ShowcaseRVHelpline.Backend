@@ -8,12 +8,8 @@ namespace Helpline.Shared.Models
         public DateTime RentalStart { get; set; }
         public DateTime RentalEnd { get; set; }
         public RentalStatusType RentalStatus { get; set; }
-
-        [ForeignKey("CheckoutId")]
         public int? CheckoutId { get; set; }
         public RVCheckout? Checkout { get; set; }
-
-        [ForeignKey("ReturnId")]
         public int? ReturnId { get; set; }
         public RVReturn? Return { get; set; }
 
