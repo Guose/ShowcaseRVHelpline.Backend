@@ -4,6 +4,10 @@ namespace Helpline.Shared.Models
 {
     public class RVRenter : BaseModel
     {
+        public string FullName { get; set; } = string.Empty;
+        public string? MobilePhone { get; set; }
+        public string? Email { get; set; }
+        public string RentalPortal { get; set; } = string.Empty;
         public bool IsRepeatRenter { get; set; } = false;
 
         [ForeignKey("UserId")]

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Helpline.Shared.Models
 {
@@ -9,6 +10,10 @@ namespace Helpline.Shared.Models
         [Required]
         public string PhoneNumber { get; set; } = string.Empty;
         public string? WebPage { get; set; }
+
+        [ForeignKey("AddressId")]
+        public int AddressId { get; set; }
+        public Address? Address { get; set; }
 
         public ICollection<DealershipContact>? DealershipContacts { get; set; }
     }

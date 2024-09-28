@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using Helpline.Shared.Types;
 
 namespace Helpline.Shared.Models
 {
@@ -7,14 +6,14 @@ namespace Helpline.Shared.Models
     {
         public string? Company { get; set; }
         public string? ReferralCode { get; set; }
-        public bool IsW9OnFile { get; set; } = false;
+        public bool IsW9OnFile { get; set; }
         public string? Website { get; set; }
 
         [ForeignKey("UserId")]
         public string? UserId { get; set; }
         public ApplicationUser? User { get; set; }
 
-        public ICollection<ServiceType>? Services { get; set; }
+        public ICollection<TechnicianService>? TechnicianServices { get; set; }
         public ICollection<ServiceCase>? ServiceCases { get; set; }
     }
 }

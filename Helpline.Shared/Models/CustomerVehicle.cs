@@ -14,6 +14,8 @@ namespace Helpline.Shared.Models
         public ICollection<RVRental>? Rentals { get; set; }
         public ICollection<VehicleRvRenter>? VehicleRvRenters { get; set; }
 
+        public ICollection<BedType>? BedTypes { get; set; }
+
         [Required]
         public int Year { get; set; }
         [Required]

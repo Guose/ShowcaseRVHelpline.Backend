@@ -5,8 +5,8 @@ namespace Helpline.Shared.Models
 {
     public class RVReturn : BaseModel
     {
-        [ForeignKey("RentalId")]
         public int RentalId { get; set; }
+        [ForeignKey("RentalId")]
         public RVRental? Rental { get; set; }
 
         public bool IsExteriorCleaned { get; set; }

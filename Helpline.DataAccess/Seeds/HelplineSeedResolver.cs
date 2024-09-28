@@ -1,12 +1,15 @@
 ﻿using Helpline.Shared.Models;
+using Helpline.Shared.Types;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using System.Text.Json;
 
 namespace Helpline.DataAccess.Seeds
 {
-    public class HelplineSeedResolver : IHelplineSeedResolver
+    public class HelplineSeedResolver
     {
-        private readonly IConfiguration configuration;
+        private readonly IConfiguration? configuration;
+        public string? JsonFilePath => configuration!.GetSection("AppSettings:JsonDataFilePath").Value;
 
         public HelplineSeedResolver()
         {
@@ -16,81 +19,113 @@ namespace Helpline.DataAccess.Seeds
                 .Build();
         }
 
-        public List<Address> GetAddressSeeds()
+        public List<T> LoadJsonDataAsync<T>(string fileName)
         {
-            throw new NotImplementedException();
+            string filePath = JsonFilePath + fileName;
+            using var reader = new StreamReader(filePath);
+            var json = reader.ReadToEnd();
+
+            return JsonSerializer.Deserialize<List<T>>(json)!;
         }
 
-        public List<Customer> GetCustomerSeeds()
+        public List<T> UpdateCreatedOnData<T>(List<T> items) where T : IHasCreatedOn
         {
-            throw new NotImplementedException();
+            List<T> updatedItems = [];
+
+            foreach (var item in items)
+            {
+                item.CreatedOn = DateTime.Now;
+                updatedItems.Add(item);
+            }
+
+            return updatedItems;
         }
 
-        public List<CustomerVehicle> GetCustomerVehicleSeeds()
+        public List<RVRental> UpdateStartAndEndDates(List<RVRental> rentals)
         {
-            throw new NotImplementedException();
+            List<RVRental> rentalSeeds = [];
+            DateTime start = new DateTime();
+
+            foreach(var rental in rentals)
+            {
+                switch (rental.RentalStatus)
+                {
+                    case RentalStatusType.Booked:
+                        start = DateTime.Now.AddMonths(3);
+                        break;
+                    case RentalStatusType.OnTrip:
+                        start = DateTime.Now.AddDays(-10);
+                        break;
+                    case RentalStatusType.Completed:
+                        start = DateTime.Now.AddMonths(-10);
+                        break;
+                    default:
+                        break;
+                }
+
+                rental.CreatedOn = DateTime.Now;
+                rental.RentalStart = start;
+                rental.RentalEnd = start.AddDays(30);
+
+                rentalSeeds.Add(rental);
+            }
+
+            return rentalSeeds;
         }
 
-        public List<DealershipContact> GetDealershipContactSeeds()
+        public List<ServiceCase> ServiceUpdateData(List<ServiceCase> customers)
         {
-            throw new NotImplementedException();
+            List<ServiceCase> custsomerSeeds = [];
+
+            foreach (var item in customers)
+            {
+
+                item.DueDate = DateTime.Now.AddMonths(10);
+                item.CreatedOn = DateTime.Now;
+
+                custsomerSeeds.Add(item);
+            }
+
+            return custsomerSeeds;
         }
 
-        public List<Dealership> GetDealershipSeeds()
+        public List<Customer> CustomerUpdateData(List<Customer> customers)
         {
-            throw new NotImplementedException();
+            List<Customer> custsomerSeeds = [];
+            int month = 0;
+            int count = 1;
+
+            foreach (var item in customers)
+            {
+                if (count <= 1)
+                {
+                    month = -6;
+                    count++;
+                }
+                else
+                    month = -4;
+
+                item.SubscriptionStartDate = DateTime.Now.AddMonths(month);
+                item.SubscriptionEndDate = item.SubscriptionStartDate.AddMonths(12);
+                item.CreatedOn = DateTime.Now;
+                
+                custsomerSeeds.Add(item);
+            }
+
+            return custsomerSeeds;
         }
 
-        public List<Employee> GetEmployeeSeeds()
+        public List<ApplicationUser> GetUserSeeds(List<ApplicationUser> users)
         {
-            throw new NotImplementedException();
+            List<ApplicationUser> userSeeds = [];
+            foreach ( var user in users)
+            {
+                user.PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(user, user.Password!);
+                userSeeds.Add(user);
+            }
+
+            return userSeeds;
         }
 
-        public List<KnowledgeBaseLibrary> GetKnowledgeBaseLibrarySeeds()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<RVRental> GetRVRentalsSeeds()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<ServiceDetail> GetRVServicesSeeds()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<ServiceCaseCall> GetServiceCaseCallSeeds()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<ServiceCase> GetServiceCaseSeeds()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Subscription> GetSubscriptionSeeds()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Technician> GetTechnicianSeeds()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<ApplicationUser> GetUserSeeds()
-        {
-            string? jsonFilePath = configuration.GetSection("JsonDataSettings:UserDataFilePath").Value;
-            string jsonData = File.ReadAllText(jsonFilePath!);
-
-            List<ApplicationUser> users = JsonSerializer.Deserialize<List<ApplicationUser>>(jsonData)!;
-
-            ApplicationUserSeeds.CreateUserSeeds(users);
-
-            return users;
-        }
     }
 }

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
 
 namespace Helpline.DataAccess.Factory
 {
@@ -10,8 +10,6 @@ namespace Helpline.DataAccess.Factory
     {
         public HelplineContext CreateDbContext(string[]? args = null)
         {
-            HelplineContext helplineCtx = new(new DbContextOptionsBuilder().Options);
-
             var configuration = new ConfigurationBuilder()
                             .SetBasePath(Directory.GetCurrentDirectory())
                             .AddJsonFile("appsettings.json")
@@ -27,7 +25,8 @@ namespace Helpline.DataAccess.Factory
                 var connectionString = configuration.GetConnectionString("SqlServerConnection");
 
                 optionsBuilder.UseSqlServer(connectionString)
-                              .EnableSensitiveDataLogging();
+                              .EnableSensitiveDataLogging()
+                              .LogTo(Console.WriteLine, LogLevel.Information);
             }
             else
             {
@@ -39,14 +38,16 @@ namespace Helpline.DataAccess.Factory
                         var connectionString = configuration.GetConnectionString("SqlServerConnection");
 
                         optionsBuilder.UseSqlServer(connectionString)
-                                      .EnableSensitiveDataLogging();
+                                      .EnableSensitiveDataLogging()
+                                      .LogTo(Console.WriteLine, LogLevel.Information);
                     }
                     else if (args[i] == "pgAdmin")
                     {
                         var connectionString = configuration.GetConnectionString("PgAdminConnection");
 
                         optionsBuilder.UseNpgsql(connectionString)
-                                      .EnableSensitiveDataLogging();
+                                      .EnableSensitiveDataLogging()
+                                      .LogTo(Console.WriteLine, LogLevel.Information);
                     }
                     // You can add more database providers here if needed
                 }

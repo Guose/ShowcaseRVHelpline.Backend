@@ -6,11 +6,31 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Helpline.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitalDbCreation : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Addresses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Address1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    State = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    County = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DealershipId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Addresses", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Checkouts",
                 columns: table => new
@@ -39,6 +59,7 @@ namespace Helpline.DataAccess.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Attachments = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -47,23 +68,25 @@ namespace Helpline.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Dealerships",
+                name: "KnowledgeBaseLibraries",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DealershipName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    WebPage = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ServiceType = table.Column<byte>(type: "tinyint", nullable: false),
+                    VideoURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VideoDIY = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Attachments = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Dealerships", x => x.Id);
+                    table.PrimaryKey("PK_KnowledgeBaseLibraries", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -98,6 +121,7 @@ namespace Helpline.DataAccess.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Attachments = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -120,7 +144,7 @@ namespace Helpline.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ServiceDetails",
+                name: "RVServices",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -129,19 +153,39 @@ namespace Helpline.DataAccess.Migrations
                     ServiceMethod = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ServiceCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Frequency = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RetailPrice = table.Column<double>(type: "float", nullable: false),
+                    RetailPrice = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     UOM = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CostPercent = table.Column<double>(type: "float", nullable: false),
-                    GrossProfitPercent = table.Column<double>(type: "float", nullable: false),
+                    CostPercent = table.Column<decimal>(type: "decimal(5,1)", precision: 5, scale: 1, nullable: false),
+                    GrossProfitPercent = table.Column<decimal>(type: "decimal(5,1)", precision: 5, scale: 1, nullable: false),
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Attachments = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ServiceDetails", x => x.Id);
+                    table.PrimaryKey("PK_RVServices", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ServiceTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<byte>(type: "tinyint", nullable: false),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    Attachments = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ServiceTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -157,6 +201,7 @@ namespace Helpline.DataAccess.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Attachments = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -170,11 +215,12 @@ namespace Helpline.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TagName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TagName = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Attachments = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -183,16 +229,44 @@ namespace Helpline.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Dealerships",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DealershipName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    WebPage = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AddressId = table.Column<int>(type: "int", nullable: false),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    Attachments = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Dealerships", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Dealerships_Addresses_AddressId",
+                        column: x => x.AddressId,
+                        principalTable: "Addresses",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Firstname = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Lastname = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SecondaryPhone = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Role = table.Column<byte>(type: "tinyint", nullable: false),
                     Permssions = table.Column<byte>(type: "tinyint", nullable: false),
                     IsRemembered = table.Column<bool>(type: "bit", nullable: false),
+                    AddressId = table.Column<int>(type: "int", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -211,6 +285,11 @@ namespace Helpline.DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Users_Addresses_AddressId",
+                        column: x => x.AddressId,
+                        principalTable: "Addresses",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -231,59 +310,31 @@ namespace Helpline.DataAccess.Migrations
                         column: x => x.RoleId,
                         principalTable: "Roles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
-                name: "KnowledgeBaseLibraries",
+                name: "KnowledgeBaseTags",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TagsId = table.Column<int>(type: "int", nullable: true),
-                    VideoURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VideoDIY = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Attachments = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    KnowledgeBaseId = table.Column<int>(type: "int", nullable: false),
+                    TagId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_KnowledgeBaseLibraries", x => x.Id);
+                    table.PrimaryKey("PK_KnowledgeBaseTags", x => new { x.KnowledgeBaseId, x.TagId });
                     table.ForeignKey(
-                        name: "FK_KnowledgeBaseLibraries_Tags_TagsId",
-                        column: x => x.TagsId,
-                        principalTable: "Tags",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Addresses",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Address1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    State = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    County = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Addresses", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Addresses_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
+                        name: "FK_KnowledgeBaseTags_KnowledgeBaseLibraries_KnowledgeBaseId",
+                        column: x => x.KnowledgeBaseId,
+                        principalTable: "KnowledgeBaseLibraries",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_KnowledgeBaseTags_Tags_TagId",
+                        column: x => x.TagId,
+                        principalTable: "Tags",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -302,6 +353,7 @@ namespace Helpline.DataAccess.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Attachments = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -316,8 +368,7 @@ namespace Helpline.DataAccess.Migrations
                         name: "FK_Customers_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -335,6 +386,7 @@ namespace Helpline.DataAccess.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Attachments = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -344,14 +396,12 @@ namespace Helpline.DataAccess.Migrations
                         name: "FK_DealershipContacts_Dealerships_DealershipId",
                         column: x => x.DealershipId,
                         principalTable: "Dealerships",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_DealershipContacts_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -364,11 +414,11 @@ namespace Helpline.DataAccess.Migrations
                     JobTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ReferralCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Services = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Attachments = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -378,36 +428,40 @@ namespace Helpline.DataAccess.Migrations
                         name: "FK_Employees_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "RVRenter",
+                name: "RVRenters",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MobilePhone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RentalPortal = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsRepeatRenter = table.Column<bool>(type: "bit", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Attachments = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RVRenter", x => x.Id);
+                    table.PrimaryKey("PK_RVRenters", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RVRenter_Users_UserId",
+                        name: "FK_RVRenters_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Technician",
+                name: "Technicians",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -417,22 +471,21 @@ namespace Helpline.DataAccess.Migrations
                     IsW9OnFile = table.Column<bool>(type: "bit", nullable: false),
                     Website = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Services = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Attachments = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Technician", x => x.Id);
+                    table.PrimaryKey("PK_Technicians", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Technician_Users_UserId",
+                        name: "FK_Technicians_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -453,7 +506,7 @@ namespace Helpline.DataAccess.Migrations
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -473,7 +526,7 @@ namespace Helpline.DataAccess.Migrations
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -491,13 +544,13 @@ namespace Helpline.DataAccess.Migrations
                         column: x => x.RoleId,
                         principalTable: "Roles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_UserRoles_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -517,32 +570,7 @@ namespace Helpline.DataAccess.Migrations
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "KnowledgeBaseTags",
-                columns: table => new
-                {
-                    KnowledgeBaseId = table.Column<int>(type: "int", nullable: false),
-                    TagId = table.Column<int>(type: "int", nullable: false),
-                    DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_KnowledgeBaseTags", x => new { x.KnowledgeBaseId, x.TagId });
-                    table.ForeignKey(
-                        name: "FK_KnowledgeBaseTags_KnowledgeBaseLibraries_KnowledgeBaseId",
-                        column: x => x.KnowledgeBaseId,
-                        principalTable: "KnowledgeBaseLibraries",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_KnowledgeBaseTags_Tags_TagId",
-                        column: x => x.TagId,
-                        principalTable: "Tags",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -552,6 +580,7 @@ namespace Helpline.DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
+                    BedTypes = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Year = table.Column<int>(type: "int", nullable: false),
                     Class = table.Column<byte>(type: "tinyint", nullable: false),
                     Manufacture = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -600,6 +629,7 @@ namespace Helpline.DataAccess.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Attachments = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -609,8 +639,55 @@ namespace Helpline.DataAccess.Migrations
                         name: "FK_CustomerVehicles_Customers_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "Customers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EmployeeService",
+                columns: table => new
+                {
+                    ServiceId = table.Column<int>(type: "int", nullable: false),
+                    EmployeeId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmployeeService", x => new { x.EmployeeId, x.ServiceId });
+                    table.ForeignKey(
+                        name: "FK_EmployeeService_Employees_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employees",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_EmployeeService_ServiceTypes_ServiceId",
+                        column: x => x.ServiceId,
+                        principalTable: "ServiceTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TechnicianServices",
+                columns: table => new
+                {
+                    ServiceId = table.Column<int>(type: "int", nullable: false),
+                    TechnicianId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TechnicianServices", x => new { x.TechnicianId, x.ServiceId });
+                    table.ForeignKey(
+                        name: "FK_TechnicianServices_ServiceTypes_ServiceId",
+                        column: x => x.ServiceId,
+                        principalTable: "ServiceTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_TechnicianServices_Technicians_TechnicianId",
+                        column: x => x.TechnicianId,
+                        principalTable: "Technicians",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -621,15 +698,17 @@ namespace Helpline.DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RentalStart = table.Column<DateTime>(type: "datetime2", nullable: false),
                     RentalEnd = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CheckoutId = table.Column<int>(type: "int", nullable: false),
-                    ReturnId = table.Column<int>(type: "int", nullable: false),
-                    EmployeeId = table.Column<int>(type: "int", nullable: false),
-                    VehicleId = table.Column<int>(type: "int", nullable: false),
-                    RenterId = table.Column<int>(type: "int", nullable: false),
+                    RentalStatus = table.Column<int>(type: "int", nullable: false),
+                    CheckoutId = table.Column<int>(type: "int", nullable: true),
+                    ReturnId = table.Column<int>(type: "int", nullable: true),
+                    EmployeeId = table.Column<int>(type: "int", nullable: true),
+                    VehicleId = table.Column<int>(type: "int", nullable: true),
+                    RenterId = table.Column<int>(type: "int", nullable: true),
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Attachments = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -639,32 +718,27 @@ namespace Helpline.DataAccess.Migrations
                         name: "FK_RVRentals_Checkouts_CheckoutId",
                         column: x => x.CheckoutId,
                         principalTable: "Checkouts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_RVRentals_CustomerVehicles_VehicleId",
                         column: x => x.VehicleId,
                         principalTable: "CustomerVehicles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_RVRentals_Employees_EmployeeId",
                         column: x => x.EmployeeId,
                         principalTable: "Employees",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_RVRentals_RVRenter_RenterId",
+                        name: "FK_RVRentals_RVRenters_RenterId",
                         column: x => x.RenterId,
-                        principalTable: "RVRenter",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalTable: "RVRenters",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_RVRentals_Returns_ReturnId",
                         column: x => x.ReturnId,
                         principalTable: "Returns",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -672,8 +746,7 @@ namespace Helpline.DataAccess.Migrations
                 columns: table => new
                 {
                     RenterId = table.Column<int>(type: "int", nullable: false),
-                    VehicleId = table.Column<int>(type: "int", nullable: false),
-                    RentalStatus = table.Column<int>(type: "int", nullable: false)
+                    VehicleId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -683,13 +756,13 @@ namespace Helpline.DataAccess.Migrations
                         column: x => x.VehicleId,
                         principalTable: "CustomerVehicles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
-                        name: "FK_VehicleRvRenters_RVRenter_RenterId",
+                        name: "FK_VehicleRvRenters_RVRenters_RenterId",
                         column: x => x.RenterId,
-                        principalTable: "RVRenter",
+                        principalTable: "RVRenters",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -698,15 +771,19 @@ namespace Helpline.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ServiceKType = table.Column<byte>(type: "tinyint", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Caller = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CallType = table.Column<byte>(type: "tinyint", nullable: true),
+                    ServiceCaseId = table.Column<int>(type: "int", nullable: false),
+                    Item = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ServiceType = table.Column<byte>(type: "tinyint", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
                     ResolveDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     KnowledgeBaseLibraryId = table.Column<int>(type: "int", nullable: false),
-                    ServiceCaseId = table.Column<int>(type: "int", nullable: false),
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Attachments = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -716,8 +793,31 @@ namespace Helpline.DataAccess.Migrations
                         name: "FK_ServiceCaseCalls_KnowledgeBaseLibraries_KnowledgeBaseLibraryId",
                         column: x => x.KnowledgeBaseLibraryId,
                         principalTable: "KnowledgeBaseLibraries",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ServiceCaseCallServiceTypes",
+                columns: table => new
+                {
+                    ServiceCaseCallId = table.Column<int>(type: "int", nullable: false),
+                    ServiceTypeId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ServiceCaseCallServiceTypes", x => new { x.ServiceCaseCallId, x.ServiceTypeId });
+                    table.ForeignKey(
+                        name: "FK_ServiceCaseCallServiceTypes_ServiceCaseCalls_ServiceCaseCallId",
+                        column: x => x.ServiceCaseCallId,
+                        principalTable: "ServiceCaseCalls",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_ServiceCaseCallServiceTypes_ServiceTypes_ServiceTypeId",
+                        column: x => x.ServiceTypeId,
+                        principalTable: "ServiceTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -727,13 +827,10 @@ namespace Helpline.DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Caller = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CallType = table.Column<byte>(type: "tinyint", nullable: true),
                     OpenedBy = table.Column<int>(type: "int", nullable: false),
                     AssignedTo = table.Column<int>(type: "int", nullable: false),
                     DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Sev = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CustomerId = table.Column<int>(type: "int", nullable: true),
                     CustomerVehicleId = table.Column<int>(type: "int", nullable: true),
                     EmployeeId = table.Column<int>(type: "int", nullable: false),
@@ -743,6 +840,7 @@ namespace Helpline.DataAccess.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Attachments = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -762,19 +860,17 @@ namespace Helpline.DataAccess.Migrations
                         name: "FK_ServiceCases_Employees_EmployeeId",
                         column: x => x.EmployeeId,
                         principalTable: "Employees",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_ServiceCases_ServiceCaseCalls_ServiceCaseCallId",
                         column: x => x.ServiceCaseCallId,
                         principalTable: "ServiceCaseCalls",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_ServiceCases_Technician_TechnicianId",
+                        name: "FK_ServiceCases_Technicians_TechnicianId",
                         column: x => x.TechnicianId,
-                        principalTable: "Technician",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalTable: "Technicians",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -782,8 +878,7 @@ namespace Helpline.DataAccess.Migrations
                 columns: table => new
                 {
                     ServiceCaseId = table.Column<int>(type: "int", nullable: false),
-                    TagId = table.Column<int>(type: "int", nullable: false),
-                    DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    TagId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -793,19 +888,14 @@ namespace Helpline.DataAccess.Migrations
                         column: x => x.ServiceCaseId,
                         principalTable: "ServiceCases",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_ServiceCaseTags_Tags_TagId",
                         column: x => x.TagId,
                         principalTable: "Tags",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Addresses_UserId",
-                table: "Addresses",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Customers_SubscriptionId",
@@ -837,6 +927,12 @@ namespace Helpline.DataAccess.Migrations
                 filter: "[UserId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Dealerships_AddressId",
+                table: "Dealerships",
+                column: "AddressId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Employees_UserId",
                 table: "Employees",
                 column: "UserId",
@@ -844,9 +940,9 @@ namespace Helpline.DataAccess.Migrations
                 filter: "[UserId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_KnowledgeBaseLibraries_TagsId",
-                table: "KnowledgeBaseLibraries",
-                column: "TagsId");
+                name: "IX_EmployeeService_ServiceId",
+                table: "EmployeeService",
+                column: "ServiceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_KnowledgeBaseTags_TagId",
@@ -869,7 +965,8 @@ namespace Helpline.DataAccess.Migrations
                 name: "IX_RVRentals_CheckoutId",
                 table: "RVRentals",
                 column: "CheckoutId",
-                unique: true);
+                unique: true,
+                filter: "[CheckoutId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RVRentals_EmployeeId",
@@ -885,7 +982,8 @@ namespace Helpline.DataAccess.Migrations
                 name: "IX_RVRentals_ReturnId",
                 table: "RVRentals",
                 column: "ReturnId",
-                unique: true);
+                unique: true,
+                filter: "[ReturnId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RVRentals_VehicleId",
@@ -893,8 +991,8 @@ namespace Helpline.DataAccess.Migrations
                 column: "VehicleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RVRenter_UserId",
-                table: "RVRenter",
+                name: "IX_RVRenters_UserId",
+                table: "RVRenters",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -906,6 +1004,11 @@ namespace Helpline.DataAccess.Migrations
                 name: "IX_ServiceCaseCalls_ServiceCaseId",
                 table: "ServiceCaseCalls",
                 column: "ServiceCaseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ServiceCaseCallServiceTypes_ServiceTypeId",
+                table: "ServiceCaseCallServiceTypes",
+                column: "ServiceTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ServiceCases_CustomerId",
@@ -938,11 +1041,22 @@ namespace Helpline.DataAccess.Migrations
                 column: "TagId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Technician_UserId",
-                table: "Technician",
+                name: "IX_Tags_TagName",
+                table: "Tags",
+                column: "TagName",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Technicians_UserId",
+                table: "Technicians",
                 column: "UserId",
                 unique: true,
                 filter: "[UserId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TechnicianServices_ServiceId",
+                table: "TechnicianServices",
+                column: "ServiceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserClaims_UserId",
@@ -965,6 +1079,11 @@ namespace Helpline.DataAccess.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Users_AddressId",
+                table: "Users",
+                column: "AddressId");
+
+            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "Users",
                 column: "NormalizedUserName",
@@ -981,13 +1100,16 @@ namespace Helpline.DataAccess.Migrations
                 table: "ServiceCaseCalls",
                 column: "ServiceCaseId",
                 principalTable: "ServiceCases",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                principalColumn: "Id");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Customers_Subscriptions_SubscriptionId",
+                table: "Customers");
+
             migrationBuilder.DropForeignKey(
                 name: "FK_Customers_Users_UserId",
                 table: "Customers");
@@ -997,12 +1119,8 @@ namespace Helpline.DataAccess.Migrations
                 table: "Employees");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_Technician_Users_UserId",
-                table: "Technician");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Customers_Subscriptions_SubscriptionId",
-                table: "Customers");
+                name: "FK_Technicians_Users_UserId",
+                table: "Technicians");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_CustomerVehicles_Customers_CustomerId",
@@ -1013,8 +1131,8 @@ namespace Helpline.DataAccess.Migrations
                 table: "ServiceCases");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_KnowledgeBaseLibraries_Tags_TagsId",
-                table: "KnowledgeBaseLibraries");
+                name: "FK_ServiceCases_Employees_EmployeeId",
+                table: "ServiceCases");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_ServiceCaseCalls_KnowledgeBaseLibraries_KnowledgeBaseLibraryId",
@@ -1025,18 +1143,14 @@ namespace Helpline.DataAccess.Migrations
                 table: "ServiceCases");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_ServiceCases_Employees_EmployeeId",
-                table: "ServiceCases");
-
-            migrationBuilder.DropForeignKey(
                 name: "FK_ServiceCaseCalls_ServiceCases_ServiceCaseId",
                 table: "ServiceCaseCalls");
 
             migrationBuilder.DropTable(
-                name: "Addresses");
+                name: "DealershipContacts");
 
             migrationBuilder.DropTable(
-                name: "DealershipContacts");
+                name: "EmployeeService");
 
             migrationBuilder.DropTable(
                 name: "KnowledgeBaseTags");
@@ -1048,10 +1162,16 @@ namespace Helpline.DataAccess.Migrations
                 name: "RVRentals");
 
             migrationBuilder.DropTable(
+                name: "RVServices");
+
+            migrationBuilder.DropTable(
+                name: "ServiceCaseCallServiceTypes");
+
+            migrationBuilder.DropTable(
                 name: "ServiceCaseTags");
 
             migrationBuilder.DropTable(
-                name: "ServiceDetails");
+                name: "TechnicianServices");
 
             migrationBuilder.DropTable(
                 name: "UserClaims");
@@ -1078,22 +1198,31 @@ namespace Helpline.DataAccess.Migrations
                 name: "Returns");
 
             migrationBuilder.DropTable(
+                name: "Tags");
+
+            migrationBuilder.DropTable(
+                name: "ServiceTypes");
+
+            migrationBuilder.DropTable(
                 name: "Roles");
 
             migrationBuilder.DropTable(
-                name: "RVRenter");
-
-            migrationBuilder.DropTable(
-                name: "Users");
+                name: "RVRenters");
 
             migrationBuilder.DropTable(
                 name: "Subscriptions");
 
             migrationBuilder.DropTable(
+                name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Addresses");
+
+            migrationBuilder.DropTable(
                 name: "Customers");
 
             migrationBuilder.DropTable(
-                name: "Tags");
+                name: "Employees");
 
             migrationBuilder.DropTable(
                 name: "KnowledgeBaseLibraries");
@@ -1102,16 +1231,13 @@ namespace Helpline.DataAccess.Migrations
                 name: "CustomerVehicles");
 
             migrationBuilder.DropTable(
-                name: "Employees");
-
-            migrationBuilder.DropTable(
                 name: "ServiceCases");
 
             migrationBuilder.DropTable(
                 name: "ServiceCaseCalls");
 
             migrationBuilder.DropTable(
-                name: "Technician");
+                name: "Technicians");
         }
     }
 }

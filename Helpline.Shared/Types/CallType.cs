@@ -5,5 +5,7 @@
         None = 0,
         Unknown = 1,
         ServiceIssue = 2,
+        Support = 3,
+        Maintenance = 4,
     }
 }

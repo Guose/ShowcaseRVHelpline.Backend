@@ -5,7 +5,7 @@ using Microsoft.ServiceFabric.Services.Runtime;
 namespace Helpline.DataAccess
 {
     /// <summary>
-    /// An instance of this class is created for each service instance by the Service Fabric runtime.
+    /// An instance of this class is created for each service instance by the ServiceType Fabric runtime.
     /// </summary>
     internal sealed class DataAccess : StatelessService
     {
@@ -25,7 +25,7 @@ namespace Helpline.DataAccess
         /// <summary>
         /// This is the main entry point for your service instance.
         /// </summary>
-        /// <param name="cancellationToken">Canceled when Service Fabric needs to shut down this service instance.</param>
+        /// <param name="cancellationToken">Canceled when ServiceType Fabric needs to shut down this service instance.</param>
         protected override async Task RunAsync(CancellationToken cancellationToken)
         {
             // TODO: Replace the following sample code with your own logic 
