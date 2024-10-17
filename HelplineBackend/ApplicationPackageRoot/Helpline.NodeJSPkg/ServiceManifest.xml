@@ -33,7 +33,7 @@
   <Resources>
     <Endpoints>
       <!-- This endpoint is used by the communication listener to obtain the port on which to 
-           listen. Please note that if your service is partitioned, this port is shared with 
+           listen. Please note that if your service is partitioned, this port is Common with 
            replicas of different partitions that are placed in your code. -->
       <Endpoint Name="Helpline.NodeJSTypeEndpoint" Port="3001" />
     </Endpoints>
