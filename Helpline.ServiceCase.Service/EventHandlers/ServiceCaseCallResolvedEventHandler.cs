@@ -5,7 +5,7 @@ namespace Helpline.ServiceCaseService.EventHandlers
 {
     public class ServiceCaseCallResolvedEventHandler : IEventHandler<ServiceCaseCallResolvedEvent>
     {
-        public Task HandleAsync(ServiceCaseCallResolvedEvent @event)
+        public Task HandleAsync(ServiceCaseCallResolvedEvent @event, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

@@ -15,12 +15,12 @@ namespace Helpline.ServiceCaseService.Commands
             Tags = tags ?? new List<string>();
         }
 
-        public override Task<bool> CanExecuteAsync(object parameter)
+        public override Task<bool> CanExecuteAsync(object parameter, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
 
-        public override Task ExecuteAsync(object parameter)
+        public override Task ExecuteAsync(object parameter, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

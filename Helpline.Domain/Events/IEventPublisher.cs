@@ -2,6 +2,6 @@
 {
     public interface IEventPublisher
     {
-        Task PublishAsync<T>(T @event) where T : class;
+        Task PublishAsync<T>(T @event, CancellationToken cancellationToken) where T : class;
     }
 }

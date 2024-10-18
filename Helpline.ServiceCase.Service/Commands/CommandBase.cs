@@ -4,9 +4,9 @@ namespace Helpline.ServiceCaseService.Commands
 {
     public abstract class CommandBase : ICommand
     {
-        public abstract Task<bool> CanExecuteAsync(object parameter);
+        public abstract Task<bool> CanExecuteAsync(object parameter, CancellationToken cancellationToken);
 
-        public abstract Task ExecuteAsync(object parameter);
+        public abstract Task ExecuteAsync(object parameter, CancellationToken cancellationToken);
 
         protected void LogCommandExecution(string commandName)
         {

@@ -2,7 +2,7 @@
 {
     public interface ICommand
     {
-        Task<bool> CanExecuteAsync(object parameter);
-        Task ExecuteAsync(object parameter);
+        Task<bool> CanExecuteAsync(object parameter, CancellationToken cancellationToken);
+        Task ExecuteAsync(object parameter, CancellationToken cancellationToken);
     }
 }

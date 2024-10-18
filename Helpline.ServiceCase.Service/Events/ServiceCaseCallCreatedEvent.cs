@@ -10,6 +10,12 @@ namespace Helpline.ServiceCaseService.Events
         public List<string>? TagNames { get; set; }
         public string IssueDescription { get; private set; }
 
+        public Guid EventId => throw new NotImplementedException();
+
+        public string EventName => throw new NotImplementedException();
+
+        public DateTime CreatedOn => throw new NotImplementedException();
+
         public ServiceCaseCallCreatedEvent(int customerId, string issueDescription, DateTime callStartTime, List<string> tagNames)
         {
             CustomerId = customerId;
