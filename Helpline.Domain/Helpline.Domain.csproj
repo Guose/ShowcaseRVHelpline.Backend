@@ -12,7 +12,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.ServiceFabric.Services" Version="7.1.2338" />
+    <PackageReference Include="Microsoft.ServiceFabric.Services" Version="7.1.2448" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Helpline.Common\Helpline.Common.csproj" />
+    <ProjectReference Include="..\Helpline.DataAccess\Helpline.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

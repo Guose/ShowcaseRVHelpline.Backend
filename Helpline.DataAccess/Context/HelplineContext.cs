@@ -1,5 +1,5 @@
 ﻿using Helpline.DataAccess.Helpers;
-using Helpline.Shared.Models;
+using Helpline.Common.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +12,7 @@ namespace Helpline.DataAccess.Context
 
         public DbSet<Address> Addresses => Set<Address>();
         public DbSet<ApplicationUser> ApplicationUsers => Set<ApplicationUser>();
+        public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
         public DbSet<Customer> Customers => Set<Customer>();
         public DbSet<CustomerVehicle> CustomerVehicles => Set<CustomerVehicle>();
         public DbSet<Dealership> Dealerships => Set<Dealership>();

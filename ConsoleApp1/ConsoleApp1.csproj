@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Helpline.Shared\Helpline.Shared.csproj" />
+    <ProjectReference Include="..\Helpline.Common\Helpline.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>

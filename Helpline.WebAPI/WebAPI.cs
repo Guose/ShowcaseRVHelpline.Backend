@@ -1,6 +1,9 @@
 using System.Fabric;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
+using Helpline.DataAccess.Context;
+using Helpline.WebAPI.AuditLogger;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.ServiceFabric.Services.Communication.AspNetCore;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
@@ -31,6 +34,9 @@ namespace Helpline.WebAPI
 
                         var builder = WebApplication.CreateBuilder();
 
+                        builder.Services.AddDbContext<HelplineContext>(options => 
+                            options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServerConnection")));
+
                         builder.Services.AddSingleton<StatelessServiceContext>(serviceContext);
                         builder.WebHost
                                     .UseKestrel(opt =>
@@ -55,6 +61,9 @@ namespace Helpline.WebAPI
                         }
                         app.UseHttpsRedirection();
                         app.UseAuthorization();
+
+                        app.UseMiddleware<AuditMiddleware>();
+
                         app.MapControllers();
                         
                         return app;

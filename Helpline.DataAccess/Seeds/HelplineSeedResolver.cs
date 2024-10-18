@@ -1,5 +1,5 @@
-﻿using Helpline.Shared.Models;
-using Helpline.Shared.Types;
+﻿using Helpline.Common.Models;
+using Helpline.Common.Types;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using System.Text.Json;
