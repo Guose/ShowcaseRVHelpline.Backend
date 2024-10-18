@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Helpline.Common\Helpline.Common.csproj" />
+    <ProjectReference Include="..\Helpline.DataAccess\Helpline.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>
