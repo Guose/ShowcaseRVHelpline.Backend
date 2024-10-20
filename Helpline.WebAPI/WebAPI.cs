@@ -1,5 +1,7 @@
 using System.Fabric;
 using System.Net;
+using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 using System.Security.Cryptography.X509Certificates;
 using Helpline.DataAccess.Context;
 using Helpline.WebAPI.AuditLogger;
@@ -7,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.ServiceFabric.Services.Communication.AspNetCore;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
+using Newtonsoft.Json.Serialization;
 
 namespace Helpline.WebAPI
 {
@@ -35,7 +38,8 @@ namespace Helpline.WebAPI
                         var builder = WebApplication.CreateBuilder();
 
                         builder.Services.AddDbContext<HelplineContext>(options => 
-                            options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServerConnection")));
+                            options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServerConnection"))
+                            .EnableSensitiveDataLogging());
 
                         builder.Services.AddSingleton<StatelessServiceContext>(serviceContext);
                         builder.WebHost
@@ -50,7 +54,20 @@ namespace Helpline.WebAPI
                                     .UseContentRoot(Directory.GetCurrentDirectory())
                                     .UseServiceFabricIntegration(listener, ServiceFabricIntegrationOptions.None)
                                     .UseUrls(url);
-                        builder.Services.AddControllers();
+                        builder.Services.AddControllers()
+                        .AddNewtonsoftJson(settings =>
+                        {
+                            settings.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                            settings.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                        })
+                        .AddJsonOptions(options =>
+                        {
+                            options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+                            options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                        });
+
+
+
                         builder.Services.AddEndpointsApiExplorer();
                         builder.Services.AddSwaggerGen();
                         var app = builder.Build();

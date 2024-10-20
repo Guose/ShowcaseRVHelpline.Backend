@@ -7,21 +7,6 @@
        should match the Name and Version attributes of the ServiceManifest element defined in the 
        ServiceManifest.xml file. -->
   <ServiceManifestImport>
-    <ServiceManifestRef ServiceManifestName="Helpline.NodeJSPkg" ServiceManifestVersion="1.0.0" />
-    <ConfigOverrides />
-    <Policies>
-      <ContainerHostPolicies CodePackageRef="Code">
-        <!-- See https://aka.ms/I7z0p9 for how to encrypt your repository password -->
-        <RepositoryCredentials AccountName="guose79" Password="" PasswordEncrypted="true" />
-        <PortBinding ContainerPort="3001" EndpointRef="Helpline.NodeJSTypeEndpoint" />
-      </ContainerHostPolicies>
-    </Policies>
-  </ServiceManifestImport>
-  <ServiceManifestImport>
-    <ServiceManifestRef ServiceManifestName="Helpline.ExpressPkg" ServiceManifestVersion="1.0.0" />
-    <ConfigOverrides />
-  </ServiceManifestImport>
-  <ServiceManifestImport>
     <ServiceManifestRef ServiceManifestName="Helpline.DomainPkg" ServiceManifestVersion="1.0.0" />
     <ConfigOverrides />
   </ServiceManifestImport>

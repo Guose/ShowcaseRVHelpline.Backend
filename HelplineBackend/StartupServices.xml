@@ -1,8 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <StartupServicesManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/2011/01/fabric">
   <Parameters>
-    <Parameter Name="Helpline.NodeJS_InstanceCount" DefaultValue="-1" />
-    <Parameter Name="Helpline.Express_InstanceCount" DefaultValue="-1" />
     <Parameter Name="Helpline.Domain_InstanceCount" DefaultValue="-1" />
     <Parameter Name="Helpline.DataAccess_InstanceCount" DefaultValue="-1" />
     <Parameter Name="Helpline.WebAPI_InstanceCount" DefaultValue="-1" />
@@ -13,16 +11,6 @@
          ServiceFabric PowerShell module.
 
          The attribute ServiceTypeName below must match the name defined in the imported ServiceManifest.xml file. -->
-    <Service Name="Helpline.NodeJS" ServicePackageActivationMode="ExclusiveProcess">
-      <StatelessService ServiceTypeName="Helpline.NodeJSType" InstanceCount="[Helpline.NodeJS_InstanceCount]">
-        <SingletonPartition />
-      </StatelessService>
-    </Service>
-    <Service Name="Helpline.Express" ServicePackageActivationMode="ExclusiveProcess">
-      <StatelessService ServiceTypeName="Helpline.ExpressType" InstanceCount="[Helpline.Express_InstanceCount]">
-        <SingletonPartition />
-      </StatelessService>
-    </Service>
     <Service Name="Helpline.Domain" ServicePackageActivationMode="ExclusiveProcess">
       <StatelessService ServiceTypeName="Helpline.DomainType" InstanceCount="[Helpline.Domain_InstanceCount]">
         <SingletonPartition />
