@@ -3,7 +3,6 @@ using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 using System.Security.Cryptography.X509Certificates;
 using Helpline.DataAccess.Context;
-using Helpline.WebAPI.AuditLogger;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.ServiceFabric.Services.Communication.AspNetCore;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
@@ -13,13 +12,18 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Helpline.Domain.Configuration.Auth;
 using System.Net.WebSockets;
 using Helpline.Domain.Data.Interfaces;
 using Helpline.Domain.Data.Repositories;
-using Helpline.WebAPI.Controllers;
 using Helpline.Common.Interfaces;
 using Helpline.Common.Logging;
+using Helpline.WebAPI.Controller.Configuration.Authenticate;
+using Microsoft.AspNetCore.Mvc.ApplicationParts;
+using Helpline.WebAPI.Controller.Authentication;
+using Helpline.WebAPI.Middleware.AuditLogger;
+using System.Xml.XPath;
+using Microsoft.Extensions.FileProviders;
+using System.Xml;
 
 namespace Helpline.WebAPI
 {
@@ -28,9 +32,14 @@ namespace Helpline.WebAPI
     /// </summary>
     internal sealed class WebAPI : StatelessService
     {
+        private readonly string swaggerXMLFileName = "SomeFile.XML";
         public WebAPI(StatelessServiceContext context)
             : base(context)
-        { }
+        {
+            ManifestEmbeddedFileProvider = new ManifestEmbeddedFileProvider(typeof(WebAPI).Assembly);
+        }
+
+        private static ManifestEmbeddedFileProvider? ManifestEmbeddedFileProvider { get; set; }
 
         /// <summary>
         /// Optional override to create listeners (like tcp, http) for this service instance.
@@ -54,14 +63,12 @@ namespace Helpline.WebAPI
                             .Build();
 
                         builder.Services.AddSingleton(serviceContext);
+                        builder.Services.AddHttpContextAccessor();
 
                         // Add services to the container.
-                        builder.Services.AddSingleton<ILogging, Logging>();
+                        builder.Services.AddScoped<ILogging, Logging>();
                         builder.Services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
                         builder.Services.AddScoped<ITokenConfiguration, TokenConfiguration>();
-
-                        // Add controllers to the container.
-                        builder.Services.AddScoped<AuthController>();
 
                         int port = serviceContext.CodePackageActivationContext.GetEndpoint("ServiceEndpoint").Port;
 
@@ -100,7 +107,7 @@ namespace Helpline.WebAPI
                         {
                             options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
                             options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-                        });
+                        }).PartManager.ApplicationParts.Add(new AssemblyPart(typeof(AuthenticationController).Assembly));
 
                         builder.Services.AddCors(options =>
                         {
@@ -142,6 +149,7 @@ namespace Helpline.WebAPI
                         builder.Services.AddSwaggerGen(c =>
                         {
                             c.SwaggerDoc("v1", new OpenApiInfo { Title = "JWT Auth API", Version = "v1" });
+                            c.IncludeXmlComments(SwaggerXMLCommentFileFactory);
 
                             var securitySchema = new OpenApiSecurityScheme
                             {
@@ -194,6 +202,8 @@ namespace Helpline.WebAPI
                             }
                         });
 
+                        app.UseMiddleware<AuditLoggerMiddleware>();
+
                         app.UseHttpsRedirection();
 
                         app.UseAuthentication();
@@ -206,6 +216,12 @@ namespace Helpline.WebAPI
 
                     }))
             };
+        }
+
+        private XPathDocument SwaggerXMLCommentFileFactory()
+        {
+            using Stream s = ManifestEmbeddedFileProvider!.GetFileInfo(swaggerXMLFileName).CreateReadStream();
+            return new XPathDocument(XmlReader.Create(s));
         }
 
         /// <summary>

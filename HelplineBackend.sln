@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp1", "ConsoleApp1\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helpline.Common", "Helpline.Common\Helpline.Common.csproj", "{01F35E8A-8C16-412F-AFAE-0189C91CC83B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helpline.ServiceCaseService", "Helpline.ServiceCase.Service\Helpline.ServiceCaseService.csproj", "{1B0DD7FA-E968-4EE2-80F0-F36A64B1156F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helpline.ServiceCallHub", "Helpline.ServiceCallHub\Helpline.ServiceCallHub.csproj", "{1B0DD7FA-E968-4EE2-80F0-F36A64B1156F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helpline.WebAPI.Controller", "Helpline.WebAPI.Controller\Helpline.WebAPI.Controller.csproj", "{40563AA4-342B-4E64-9496-C0B292565144}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -85,6 +87,14 @@ Global
 		{1B0DD7FA-E968-4EE2-80F0-F36A64B1156F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1B0DD7FA-E968-4EE2-80F0-F36A64B1156F}.Release|x64.ActiveCfg = Release|Any CPU
 		{1B0DD7FA-E968-4EE2-80F0-F36A64B1156F}.Release|x64.Build.0 = Release|Any CPU
+		{40563AA4-342B-4E64-9496-C0B292565144}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40563AA4-342B-4E64-9496-C0B292565144}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40563AA4-342B-4E64-9496-C0B292565144}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{40563AA4-342B-4E64-9496-C0B292565144}.Debug|x64.Build.0 = Debug|Any CPU
+		{40563AA4-342B-4E64-9496-C0B292565144}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40563AA4-342B-4E64-9496-C0B292565144}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40563AA4-342B-4E64-9496-C0B292565144}.Release|x64.ActiveCfg = Release|Any CPU
+		{40563AA4-342B-4E64-9496-C0B292565144}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
