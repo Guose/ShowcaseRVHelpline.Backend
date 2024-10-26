@@ -1,0 +1,15 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "JwtSettings": {
+    "SecurityKey": "YGNphCAjvAwGNFD2g6ISunYnlAnkIlryhglDAC6f8k0=",
+    "Issuer": "/rv-helpline-issuer",
+    "Audience": "/rvHelpline-aud",
+    "ExpiryMinutes": 60
+  }
+}

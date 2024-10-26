@@ -32,7 +32,7 @@
       <!-- This endpoint is used by the communication listener to obtain the port on which to 
            listen. Please note that if your service is partitioned, this port is Common with 
            replicas of different partitions that are placed in your code. -->
-      <Endpoint Protocol="https" Name="ServiceEndpoint" Type="Input" Port="8630" />
+      <Endpoint Protocol="https" Name="ServiceEndpoint" Port="5001" Type="Input" CertificateRef="c29d4d43e1ad248e183b794c0709fb9ff70215ed" />
     </Endpoints>
   </Resources>
 </ServiceManifest>
