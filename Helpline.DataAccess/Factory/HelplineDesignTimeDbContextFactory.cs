@@ -12,7 +12,7 @@ namespace Helpline.DataAccess.Factory
         {
             var configuration = new ConfigurationBuilder()
                             .SetBasePath(Directory.GetCurrentDirectory())
-                            .AddJsonFile("appsettings.json")
+                            .AddJsonFile("appsettingsDataAccess.json")
                             .Build();
 
             // Create a DbContextOptionsBuilder
@@ -25,7 +25,7 @@ namespace Helpline.DataAccess.Factory
                 var connectionString = configuration.GetConnectionString("SqlServerConnection");
 
                 optionsBuilder.UseSqlServer(connectionString)
-                              .EnableSensitiveDataLogging()
+                              .EnableSensitiveDataLogging(false)
                               .LogTo(Console.WriteLine, LogLevel.Information);
             }
             else

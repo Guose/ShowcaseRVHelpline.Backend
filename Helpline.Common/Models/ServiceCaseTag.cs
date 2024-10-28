@@ -4,7 +4,7 @@ namespace Helpline.Common.Models
 {
     public class ServiceCaseTag
     {
-        public int? ServiceCaseId { get; set; }
+        public Guid? ServiceCaseId { get; set; }
         public int? TagId { get; set; }
 
         [InverseProperty("ServiceCaseTags")]

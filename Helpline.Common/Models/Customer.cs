@@ -16,7 +16,7 @@ namespace Helpline.Common.Models
         public ApplicationUser? User { get; set; }
 
         [ForeignKey("SubscriptionId")]
-        public int SubscriptionId { get; set; }
+        public Guid SubscriptionId { get; set; }
         public Subscription? Subscription { get; set; }
 
         public ICollection<CustomerVehicle>? CustomerVehicles { get; set; }

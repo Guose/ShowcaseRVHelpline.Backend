@@ -36,7 +36,7 @@ namespace Helpline.WebAPI
         public WebAPI(StatelessServiceContext context)
             : base(context)
         {
-            ManifestEmbeddedFileProvider = new ManifestEmbeddedFileProvider(typeof(WebAPI).Assembly);
+            // ManifestEmbeddedFileProvider = new ManifestEmbeddedFileProvider(typeof(WebAPI).Assembly);
         }
 
         private static ManifestEmbeddedFileProvider? ManifestEmbeddedFileProvider { get; set; }
@@ -94,8 +94,7 @@ namespace Helpline.WebAPI
                             .UseUrls(url);
 
                         builder.Services.AddDbContext<HelplineContext>(options =>
-                            options.UseSqlServer(configuration.GetConnectionString("SqlServerConnection"))
-                            .EnableSensitiveDataLogging());
+                            options.UseSqlServer(configuration.GetConnectionString("SqlServerConnection")));
 
                         builder.Services.AddControllers()
                         .AddNewtonsoftJson(settings =>
@@ -149,7 +148,7 @@ namespace Helpline.WebAPI
                         builder.Services.AddSwaggerGen(c =>
                         {
                             c.SwaggerDoc("v1", new OpenApiInfo { Title = "JWT Auth API", Version = "v1" });
-                            c.IncludeXmlComments(SwaggerXMLCommentFileFactory);
+                            // c.IncludeXmlComments(SwaggerXMLCommentFileFactory);
 
                             var securitySchema = new OpenApiSecurityScheme
                             {

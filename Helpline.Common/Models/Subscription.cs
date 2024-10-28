@@ -6,6 +6,10 @@ namespace Helpline.Common.Models
 {
     public class Subscription : BaseModel
     {
+        [Key]
+        [Required]
+        public new Guid Id { get; set; }
+
         [Required]
         public SubscriptionType SubscriptionType { get; set; }
         public string? Term { get; set; }
