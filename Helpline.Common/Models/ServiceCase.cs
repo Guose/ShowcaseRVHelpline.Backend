@@ -6,6 +6,10 @@ namespace Helpline.Common.Models
 {
     public class ServiceCase : BaseModel
     {
+        [Key]
+        [Required]
+        public new Guid Id { get; set; }
+
         [Required]
         public string Title { get; set; } = string.Empty;
         public DateTime DueDate { get; set; }
@@ -18,7 +22,7 @@ namespace Helpline.Common.Models
         public Customer? Customer { get; set; }
 
         [ForeignKey("CustomerVehicleId")]
-        public int CustomerVehicleId { get; set; }
+        public Guid CustomerVehicleId { get; set; }
         public CustomerVehicle? CustomerVehicle { get; set; }
 
         [ForeignKey("EmployeeId")]

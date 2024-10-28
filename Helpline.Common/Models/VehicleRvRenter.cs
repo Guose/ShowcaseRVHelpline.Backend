@@ -4,8 +4,8 @@ namespace Helpline.Common.Models
 {
     public class VehicleRvRenter
     {
-        public int? RenterId { get; set; }
-        public int? VehicleId { get; set; }
+        public int RenterId { get; set; }
+        public Guid VehicleId { get; set; }
 
         [InverseProperty("VehicleRvRenters")]
         public RVRenter? Renter { get; set; }
