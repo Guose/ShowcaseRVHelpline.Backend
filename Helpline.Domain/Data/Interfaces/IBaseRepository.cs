@@ -1,6 +1,6 @@
 ﻿namespace Helpline.Domain.Data.Interfaces
 {
-    public interface IGenericRepository<T>
+    public interface IBaseRepository<T>
     {
         Task<IEnumerable<T>> GetAllEntitiesAsync();
         Task<bool> CreateEntityAsync(T model);

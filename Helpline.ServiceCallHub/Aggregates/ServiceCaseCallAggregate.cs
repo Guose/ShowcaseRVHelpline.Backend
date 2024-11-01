@@ -1,4 +1,5 @@
-﻿using Helpline.Domain.Events;
+﻿using Helpline.Common.Models;
+using Helpline.Domain.Events;
 using Helpline.ServiceCallHub.Events;
 
 namespace Helpline.ServiceCallHub.Aggregates
@@ -15,9 +16,13 @@ namespace Helpline.ServiceCallHub.Aggregates
         public int? KnowledgeBaseArticleId { get; private set; }
         public List<string> Tags { get; private set; }
 
+        public ServiceCaseCall ServiceCall { get; private set; }
 
-        public ServiceCaseCallAggregate(int customerId, string issueDescription, List<string> tags)
+
+        public ServiceCaseCallAggregate(ServiceCaseCall serviceCall, int customerId, string issueDescription, List<string> tags)
         {
+            ServiceCall = serviceCall;
+
             CustomerId = customerId;
             IssueDescription = issueDescription;
             CallStartTime = DateTime.UtcNow;
@@ -27,6 +32,11 @@ namespace Helpline.ServiceCallHub.Aggregates
             // Raise an event
             var createdEvent = new ServiceCaseCallCreatedEvent(CustomerId, IssueDescription, CallStartTime, Tags);
             _events.Add(createdEvent);
+        }
+
+        public void ChangeStatus(ServiceCaseCallServiceType serviceCaseCallServiceType)
+        {
+            ServiceCall.Status = serviceCaseCallServiceType.ServiceCaseCall!.Status;
         }
 
         public void ResolveCall(int knowledgeBaseArticleId)

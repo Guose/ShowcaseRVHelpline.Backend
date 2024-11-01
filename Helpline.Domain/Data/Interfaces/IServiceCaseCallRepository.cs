@@ -2,7 +2,7 @@
 
 namespace Helpline.Domain.Data.Interfaces
 {
-    public interface IServiceCaseCallRepository : IGenericRepository<ServiceCaseCall>
+    public interface IServiceCaseCallRepository : IBaseRepository<ServiceCaseCall>
     {
     }
 }

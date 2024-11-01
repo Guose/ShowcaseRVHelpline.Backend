@@ -6,7 +6,7 @@ using Helpline.Domain.Data.Interfaces;
 namespace Helpline.Domain.Data.Repositories
 {
     public class RVRenterRepository(HelplineContext context, ILogging logging) :
-        GenericRepository<RVRenter, HelplineContext>(context, logging), IRVRenterRepository
+        BaseRepository<RVRenter, HelplineContext>(context, logging), IRVRenterRepository
     {
     }
 }

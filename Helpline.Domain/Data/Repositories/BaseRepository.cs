@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Helpline.Domain.Data.Repositories
 {
-    public class GenericRepository<TEnity, TContext>(TContext context, ILogging logging) : IGenericRepository<TEnity>
+    public class BaseRepository<TEnity, TContext>(TContext context, ILogging logging) : IBaseRepository<TEnity>
         where TEnity : class
         where TContext : DbContext
     {

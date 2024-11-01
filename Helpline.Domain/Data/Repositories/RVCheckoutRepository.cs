@@ -6,7 +6,7 @@ using Helpline.Domain.Data.Interfaces;
 namespace Helpline.Domain.Data.Repositories
 {
     public class RVCheckoutRepository(HelplineContext context, ILogging logging) :
-        GenericRepository<RVCheckout, HelplineContext>(context, logging), IRVCheckoutRepository
+        BaseRepository<RVCheckout, HelplineContext>(context, logging), IRVCheckoutRepository
     {
     }
 }

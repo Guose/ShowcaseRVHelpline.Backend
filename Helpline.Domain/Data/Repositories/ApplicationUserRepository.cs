@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Helpline.Domain.Data.Repositories
 {
     public class ApplicationUserRepository(HelplineContext context, ILogging logging) :
-        GenericRepository<ApplicationUser, HelplineContext>(context, logging), IApplicationUserRepository
+        BaseRepository<ApplicationUser, HelplineContext>(context, logging), IApplicationUserRepository
     {
         public Task<bool> ExecuteUpdateAsync(ApplicationUser applicationUser)
         {

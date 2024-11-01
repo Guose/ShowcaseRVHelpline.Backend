@@ -4,7 +4,7 @@ using Helpline.Domain.Events;
 using Helpline.ServiceCallHub.Aggregates;
 using Helpline.ServiceCallHub.Commands;
 
-namespace Helpline.ServiceCallHub.CommandHandlers
+namespace Helpline.ServiceCallHub.Commands.CommandHandlers
 {
     public class CreateServiceCaseCommandHandler : ICommandHandler<CreateServiceCaseCallCommand>
     {

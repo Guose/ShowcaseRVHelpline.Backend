@@ -2,7 +2,7 @@
 
 namespace Helpline.Domain.Data.Interfaces
 {
-    public interface ICustomerRepository : IGenericRepository<Customer>
+    public interface ICustomerRepository : IBaseRepository<Customer>
     {
     }
 }

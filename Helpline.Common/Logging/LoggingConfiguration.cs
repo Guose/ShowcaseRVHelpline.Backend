@@ -7,12 +7,13 @@ namespace Helpline.Common.Logging
     {
         internal static void ConfigureLogger()
         {
+            // Logging configuration. Once application is further along, switch internal to weekly
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
-                .WriteTo.File("Logs/autitlog.txt", rollingInterval: RollingInterval.Month)
+                .WriteTo.File("Logs/helplinelogs.txt", rollingInterval: RollingInterval.Month)
                 .CreateLogger();
         }
     }

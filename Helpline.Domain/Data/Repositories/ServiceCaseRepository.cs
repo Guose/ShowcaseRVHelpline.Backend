@@ -6,7 +6,7 @@ using Helpline.Domain.Data.Interfaces;
 namespace Helpline.Domain.Data.Repositories
 {
     public class ServiceCaseRepository(HelplineContext context, ILogging logging) :
-        GenericRepository<ServiceCase, HelplineContext>(context, logging), IServiceCaseRepository
+        BaseRepository<ServiceCase, HelplineContext>(context, logging), IServiceCaseRepository
     {
         public Task<ServiceCase?> GetServiceCaseByIdAsync(int id)
         {

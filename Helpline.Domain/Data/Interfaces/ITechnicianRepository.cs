@@ -2,7 +2,7 @@
 
 namespace Helpline.Domain.Data.Interfaces
 {
-    public interface ITechnicianRepository : IGenericRepository<Technician>
+    public interface ITechnicianRepository : IBaseRepository<Technician>
     {
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Helpline.ServiceCallHub.Commands
+﻿using Helpline.Domain.Commands;
+
+namespace Helpline.ServiceCallHub.Commands
 {
     public class CreateServiceCaseCallCommand : CommandBase
     {
