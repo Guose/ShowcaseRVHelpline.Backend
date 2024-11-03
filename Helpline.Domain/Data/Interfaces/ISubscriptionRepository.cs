@@ -2,7 +2,7 @@
 
 namespace Helpline.Domain.Data.Interfaces
 {
-    public interface ISubscriptionRepository : IBaseRepository<Subscription>
+    public interface ISubscriptionRepository : IBaseRepository<Subscription, Guid>
     {
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Helpline.Domain.Data.Interfaces
 {
-    public interface ITagRepository : IBaseRepository<Tag>
+    public interface ITagRepository : IBaseRepository<Tag, int>
     {
     }
 }

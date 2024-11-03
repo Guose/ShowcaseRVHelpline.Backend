@@ -6,7 +6,7 @@ using Helpline.Domain.Data.Interfaces;
 namespace Helpline.Domain.Data.Repositories
 {
     public class CustomerRepository(HelplineContext context, ILogging logging) :
-        BaseRepository<Customer, HelplineContext>(context, logging), ICustomerRepository
+        BaseRepository<Customer, HelplineContext, int>(context, logging), ICustomerRepository
     {
     }
 }

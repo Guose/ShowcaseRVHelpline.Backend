@@ -2,7 +2,7 @@
 
 namespace Helpline.Domain.Data.Interfaces
 {
-    public interface IServiceCaseTagRepository : IBaseRepository<ServiceCaseTag>
+    public interface IServiceCaseTagRepository : IBaseRepository<ServiceCaseTag, int>
     {
     }
 }

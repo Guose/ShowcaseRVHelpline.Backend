@@ -2,9 +2,8 @@
 
 namespace Helpline.Domain.Data.Interfaces
 {
-    public interface IServiceCaseRepository : IBaseRepository<ServiceCase>
+    public interface IServiceCaseRepository : IBaseRepository<ServiceCase, Guid>
     {
         Task<bool> UpdateEntityAsync(ServiceCase serviceCase);
-        Task<ServiceCase?> GetServiceCaseByIdAsync(int id);
     }
 }

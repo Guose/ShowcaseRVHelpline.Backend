@@ -2,7 +2,7 @@
 
 namespace Helpline.Domain.Data.Interfaces
 {
-    public interface IKnowledgeBaseLibraryRepository : IBaseRepository<KnowledgeBaseLibrary>
+    public interface IKnowledgeBaseLibraryRepository : IBaseRepository<KnowledgeBaseLibrary, int>
     {
     }
 }

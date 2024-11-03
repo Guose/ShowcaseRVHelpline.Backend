@@ -1,8 +1,6 @@
 ﻿using Helpline.Domain.Commands;
 using Helpline.Domain.Data.Interfaces;
 using Helpline.Domain.Events;
-using Helpline.ServiceCallHub.Aggregates;
-using Helpline.ServiceCallHub.Commands;
 
 namespace Helpline.ServiceCallHub.Commands.CommandHandlers
 {
@@ -19,9 +17,6 @@ namespace Helpline.ServiceCallHub.Commands.CommandHandlers
 
         public async Task HandleAsync(CreateServiceCaseCallCommand command)
         {
-            // Create the aggregate
-            var aggregate = new ServiceCaseCallAggregate(command.CustomerId, command.IssueDescription, command.Tags);
-
             // Save to the repository
             await serviceCaseCallRepository.SaveAsync();
 

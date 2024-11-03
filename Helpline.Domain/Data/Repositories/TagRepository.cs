@@ -6,7 +6,7 @@ using Helpline.Domain.Data.Interfaces;
 namespace Helpline.Domain.Data.Repositories
 {
     public class TagRepository(HelplineContext context, ILogging logging) :
-        BaseRepository<Tag, HelplineContext>(context, logging), ITagRepository
+        BaseRepository<Tag, HelplineContext, int>(context, logging), ITagRepository
     {
     }
 }

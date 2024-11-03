@@ -5,7 +5,7 @@ namespace Helpline.Common.Logging
 {
     public class LoggingConfiguration
     {
-        internal static void ConfigureLogger()
+        public static void ConfigureLogger()
         {
             // Logging configuration. Once application is further along, switch internal to weekly
             Log.Logger = new LoggerConfiguration()

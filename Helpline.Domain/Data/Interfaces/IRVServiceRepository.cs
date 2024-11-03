@@ -2,7 +2,7 @@
 
 namespace Helpline.Domain.Data.Interfaces
 {
-    public interface IRVServiceRepository : IBaseRepository<RVService>
+    public interface IRVServiceRepository : IBaseRepository<RVService, int>
     {
     }
 }

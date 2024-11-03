@@ -36,6 +36,7 @@ using Microsoft.AspNetCore.OData.Formatter;
 using FluentValidation;
 using Helpline.Common.Models;
 using Microsoft.AspNetCore.Identity;
+using Helpline.Domain.Data;
 
 namespace Helpline.WebAPI
 {
@@ -79,8 +80,9 @@ namespace Helpline.WebAPI
 
                         // Add services to the container.
                         builder.Services.AddScoped<ILogging, Logging>();
-                        builder.Services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
                         builder.Services.AddScoped<ITokenConfiguration, TokenConfiguration>();
+                        builder.Services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
+                        builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
                         int port = serviceContext.CodePackageActivationContext.GetEndpoint("ServiceEndpoint").Port;
 

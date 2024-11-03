@@ -9,10 +9,10 @@
   <ItemGroup>
     <Folder Include="DTOs\" />
     <Folder Include="Commands\" />
-    <Folder Include="CommandHandlers\" />
+    <Folder Include="Commands\CommandHandlers\" />
     <Folder Include="Events\" />
-    <Folder Include="EventHandlers\" />
-    <Folder Include="QueryHandlers\" />
+    <Folder Include="Events\EventHandlers\" />
+    <Folder Include="Queries\QueryHandlers\" />
     <Folder Include="Queries\" />
   </ItemGroup>
 

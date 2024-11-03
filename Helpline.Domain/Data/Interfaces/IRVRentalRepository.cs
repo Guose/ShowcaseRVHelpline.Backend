@@ -2,7 +2,7 @@
 
 namespace Helpline.Domain.Data.Interfaces
 {
-    public interface IRVRentalRepository : IBaseRepository<RVRental>
+    public interface IRVRentalRepository : IBaseRepository<RVRental, Guid>
     {
     }
 }
