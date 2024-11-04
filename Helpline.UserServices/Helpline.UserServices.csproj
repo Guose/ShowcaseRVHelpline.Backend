@@ -4,16 +4,21 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\" />
     <Folder Include="Commands\" />
     <Folder Include="Commands\CommandHandlers\" />
     <Folder Include="Events\" />
     <Folder Include="Events\EventHandlers\" />
+    <Folder Include="Helpers\" />
     <Folder Include="Queries\QueryHandlers\" />
     <Folder Include="Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Helpline.Common\Helpline.Common.csproj" />
   </ItemGroup>
 
 </Project>

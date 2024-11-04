@@ -23,12 +23,14 @@
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.10" />
     <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="8.0.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.1" />
     <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="8.0.10" />
     <PackageReference Include="Microsoft.Identity.Web.MicrosoftGraph" Version="3.2.2" />
     <PackageReference Include="Microsoft.Identity.Web.UI" Version="3.2.2" />
     <PackageReference Include="Microsoft.ServiceFabric.AspNetCore.Kestrel" Version="7.1.2448" />
+    <PackageReference Include="StackExchange.Redis" Version="2.8.16" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.8.1" />
   </ItemGroup>
 
@@ -36,6 +38,7 @@
     <ProjectReference Include="..\Helpline.Common\Helpline.Common.csproj" />
     <ProjectReference Include="..\Helpline.DataAccess\Helpline.DataAccess.csproj" />
     <ProjectReference Include="..\Helpline.Domain\Helpline.Domain.csproj" />
+    <ProjectReference Include="..\Helpline.UserServices\Helpline.UserServices.csproj" />
     <ProjectReference Include="..\Helpline.WebAPI.Controller\Helpline.WebAPI.Controller.csproj" />
   </ItemGroup>
 

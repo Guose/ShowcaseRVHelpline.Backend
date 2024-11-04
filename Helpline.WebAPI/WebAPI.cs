@@ -37,6 +37,7 @@ using FluentValidation;
 using Helpline.Common.Models;
 using Microsoft.AspNetCore.Identity;
 using Helpline.Domain.Data;
+using Helpline.WebAPI.Services.Caching;
 
 namespace Helpline.WebAPI
 {
@@ -79,10 +80,14 @@ namespace Helpline.WebAPI
                         builder.Services.AddHttpContextAccessor();
 
                         // Add services to the container.
+                        builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
                         builder.Services.AddScoped<ILogging, Logging>();
                         builder.Services.AddScoped<ITokenConfiguration, TokenConfiguration>();
                         builder.Services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
+                        builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
                         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+                        builder.Services.AddScoped<IRedisCacheService, RedisCacheService>();
 
                         int port = serviceContext.CodePackageActivationContext.GetEndpoint("ServiceEndpoint").Port;
 
@@ -109,6 +114,12 @@ namespace Helpline.WebAPI
 
                         builder.Services.AddDbContext<HelplineContext>(options =>
                             options.UseSqlServer(configuration.GetConnectionString("SqlServerConnection")));
+
+                        builder.Services.AddStackExchangeRedisCache(options =>
+                        {
+                            options.Configuration = builder.Configuration.GetConnectionString("Redis");
+                            options.InstanceName = "RVHelplineAPI_";
+                        });
 
                         builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                             .AddEntityFrameworkStores<HelplineContext>()
@@ -293,7 +304,7 @@ namespace Helpline.WebAPI
                             }
                         });
 
-                        app.UseMiddleware<AuditLoggerMiddleware>();
+                        //app.UseMiddleware<IAuditLoggerMiddleware>();
 
                         app.UseHttpsRedirection();
 

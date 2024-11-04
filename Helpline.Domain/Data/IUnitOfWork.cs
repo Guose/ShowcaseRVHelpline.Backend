@@ -6,6 +6,9 @@ namespace Helpline.Domain.Data
     {
         IAddressRepository AddressRepo { get; }
         IApplicationUserRepository UserRepo { get; }
+        ICustomerRepository CustomerRepo { get; }
+        IEmployeeRepository EmployeeRepo { get; }
+        ITechnicianRepository TechnicianRepo { get; }
         Task<bool> CompleteAsync();
     }
 }

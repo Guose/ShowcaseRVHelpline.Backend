@@ -11,6 +11,9 @@ namespace Helpline.Domain.Data
         private readonly HelplineContext context;
         public IAddressRepository AddressRepo { get; }
         public IApplicationUserRepository UserRepo { get; }
+        public ICustomerRepository CustomerRepo { get; }
+        public IEmployeeRepository EmployeeRepo { get; }
+        public ITechnicianRepository TechnicianRepo { get; }
 
         public UnitOfWork(HelplineContext context, ILogging logger)
         {
@@ -19,6 +22,9 @@ namespace Helpline.Domain.Data
 
             AddressRepo = new AddressRepository(context, logger);
             UserRepo = new ApplicationUserRepository(context, logger);
+            CustomerRepo = new CustomerRepository(context, logger);
+            EmployeeRepo = new EmployeeRepository(context, logger);
+            TechnicianRepo = new TechnicianRepository(context,logger);
         }
 
         public async Task<bool> CompleteAsync()
@@ -29,7 +35,7 @@ namespace Helpline.Domain.Data
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

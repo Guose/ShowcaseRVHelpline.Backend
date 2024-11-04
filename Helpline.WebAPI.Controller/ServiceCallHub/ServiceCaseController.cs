@@ -1,11 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Helpline.Domain.Data;
+using Helpline.WebAPI.Controller.Configuration;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Helpline.WebAPI.Controller.ServiceCallHub
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ServiceCaseController : ControllerBase
+    public class ServiceCaseController : BaseController
     {
-
+        public ServiceCaseController(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
+        {
+        }
     }
 }
