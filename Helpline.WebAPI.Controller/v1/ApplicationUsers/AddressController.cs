@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
-using Helpline.Common.Models;
 using Helpline.Domain.Data;
-using Helpline.UserServices.DTOs.Requests;
 using Helpline.UserServices.DTOs.Responses;
 using Helpline.WebAPI.Controller.Configuration;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Helpline.WebAPI.Controller.UserServices
+namespace Helpline.WebAPI.Controller.v1.ApplicationUsers
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -26,7 +24,7 @@ namespace Helpline.WebAPI.Controller.UserServices
 
             var address = await unitOfWork.AddressRepo.GetEntityByIdAsync(user.AddressId);
 
-            if (address == null) 
+            if (address == null)
                 return NotFound("Address for user not found");
 
             var result = mapper.Map<AddressResponse>(address);

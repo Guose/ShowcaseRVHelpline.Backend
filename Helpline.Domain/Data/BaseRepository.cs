@@ -35,8 +35,7 @@ namespace Helpline.Domain.Data
                 if (model == null)
                     return false;
 
-                Context.Set<TEnity>().Update(model);
-                await SaveAsync();
+                await Task.Run(() => Context.Set<TEnity>().Update(model));
 
                 return true;
             }
@@ -54,8 +53,7 @@ namespace Helpline.Domain.Data
                 if (model == null)
                     return false;
 
-                Context.Set<TEnity>().Remove(model);
-                await SaveAsync();
+                await Task.Run(() => Context.Set<TEnity>().Remove(model));
 
                 return true;
             }
@@ -98,9 +96,17 @@ namespace Helpline.Domain.Data
             return Context.ChangeTracker.HasChanges();
         }
 
-        public async Task SaveAsync()
-        {
-            await Context.SaveChangesAsync();
+        public async Task<int> SaveAsync()
+        {            
+            try
+            {
+                return await Context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                Logging.LogError(ex, $"{nameof(SaveAsync)}: Message: {ex.Message} InnerException: {ex.InnerException}");
+                throw new ArgumentException(ex.Message);
+            }
         }
 
     }

@@ -1,13 +1,12 @@
 ﻿using AutoMapper;
 using Helpline.Common.Models;
 using Helpline.Domain.Data;
-using Helpline.Domain.Data.Interfaces;
 using Helpline.UserServices.DTOs.Responses;
 using Helpline.WebAPI.Controller.Configuration;
 using Helpline.WebAPI.Controller.Configuration.Authenticate;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Helpline.WebAPI.Controller.Authentication
+namespace Helpline.WebAPI.Controller.v1.Authentication
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -22,7 +21,7 @@ namespace Helpline.WebAPI.Controller.Authentication
         [HttpPost("AuthenticateUser")]
         public async Task<IActionResult> Login([FromBody] LoginUserDto login)
         {
-            ApplicationUser? user = await unitOfWork.UserRepo.ValidateUsernameAsync(login.UserName);
+            ApplicationUser? user = await unitOfWork.UserRepo.GetUserByUsernameAsync(login.UserName);
 
             if (user == null)
             {
@@ -30,7 +29,7 @@ namespace Helpline.WebAPI.Controller.Authentication
             }
 
             if (login.UserName != user.UserName && !BCrypt.Net.BCrypt.Verify(login.Password, user.PasswordHash))
-            {                
+            {
                 return Unauthorized();
             }
             var token = tokenConfiguration.GenerateToken(user.UserName!, user.Id, login.AuthInterval, out string authToken);

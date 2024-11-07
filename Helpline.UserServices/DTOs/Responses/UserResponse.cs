@@ -1,10 +1,10 @@
-﻿using System.Text.Json.Serialization;
-using Helpline.Common.Types;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Newtonsoft.Json.Converters;
+﻿using Helpline.Common.Types;
 
 namespace Helpline.UserServices.DTOs.Responses
 {
+    /// <summary>
+    /// User that is returned from data access layer (DB)
+    /// </summary>
     public class UserResponse
     {
         public string Id { get; set; } = string.Empty;

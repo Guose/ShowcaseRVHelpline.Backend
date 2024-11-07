@@ -9,6 +9,8 @@ namespace Helpline.Domain.Data
         ICustomerRepository CustomerRepo { get; }
         IEmployeeRepository EmployeeRepo { get; }
         ITechnicianRepository TechnicianRepo { get; }
+        IDealershipContactRepository DealershipContactRepo { get; }
+        IRVRenterRepository RVRenterRepo { get; }
         Task<bool> CompleteAsync();
     }
 }

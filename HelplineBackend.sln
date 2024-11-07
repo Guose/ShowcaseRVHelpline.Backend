@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helpline.ServiceCallHub", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helpline.WebAPI.Controller", "Helpline.WebAPI.Controller\Helpline.WebAPI.Controller.csproj", "{40563AA4-342B-4E64-9496-C0B292565144}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helpline.UserServices", "Helpline.UserServices\Helpline.UserServices.csproj", "{3F1CF99F-8D29-4963-A3F4-266A5A95A52F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helpline.UserServices", "Helpline.UserServices\Helpline.UserServices.csproj", "{3F1CF99F-8D29-4963-A3F4-266A5A95A52F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

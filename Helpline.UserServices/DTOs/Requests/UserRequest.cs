@@ -4,6 +4,9 @@ using Newtonsoft.Json.Converters;
 
 namespace Helpline.UserServices.DTOs.Requests
 {
+    /// <summary>
+    /// User that sends to the data access layer (DB)
+    /// </summary>
     public class UserRequest
     {
         public string FirstName { get; set; } = string.Empty;

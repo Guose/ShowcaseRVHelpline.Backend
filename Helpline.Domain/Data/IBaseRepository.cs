@@ -7,7 +7,6 @@
         Task<bool> CreateEntityAsync(T model);
         Task<bool> DeleteEntityAsync(T model);
         Task<bool> UpdateEntityAsync(T model);
-        Task SaveAsync();
         bool HasChanges();
     }
 }

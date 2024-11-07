@@ -3,7 +3,7 @@ using Helpline.Domain.Data;
 using Helpline.WebAPI.Controller.Configuration;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Helpline.WebAPI.Controller.ServiceCallHub
+namespace Helpline.WebAPI.Controller.v1.ServiceCallHub
 {
     [ApiController]
     [Route("api/[controller]")]

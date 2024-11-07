@@ -28,7 +28,6 @@ namespace Helpline.Domain.Data.Repositories
                 results.County = address.County;
 
                 Context.Addresses.Update(results);
-                await SaveAsync();
 
                 return true;
             }

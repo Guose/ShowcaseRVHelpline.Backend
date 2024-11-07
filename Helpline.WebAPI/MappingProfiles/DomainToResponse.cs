@@ -10,10 +10,12 @@ namespace Helpline.WebAPI.MappingProfiles
         {
             // Base User to User Response mapping
             CreateMap<ApplicationUser, UserResponse>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address));
 
             // Customer-specific mapping
-            CreateMap<Customer, CustomerResponse>();
+            CreateMap<Customer, CustomerResponse>()
+                .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.User));
 
             // Employee-specific mapping
             CreateMap<Employee, EmployeeResponse>();

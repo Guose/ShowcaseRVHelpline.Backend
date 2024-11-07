@@ -1,4 +1,4 @@
-﻿namespace Helpline.Common.Exceptions
+﻿namespace Helpline.Common.Shared
 {
     public class OperationResult
     {

@@ -19,7 +19,6 @@ using Helpline.Common.Interfaces;
 using Helpline.Common.Logging;
 using Helpline.WebAPI.Controller.Configuration.Authenticate;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
-using Helpline.WebAPI.Controller.Authentication;
 using Helpline.WebAPI.Middleware.AuditLogger;
 using System.Xml.XPath;
 using Microsoft.Extensions.FileProviders;
@@ -38,6 +37,7 @@ using Helpline.Common.Models;
 using Microsoft.AspNetCore.Identity;
 using Helpline.Domain.Data;
 using Helpline.WebAPI.Services.Caching;
+using Helpline.WebAPI.Controller.v1.Authentication;
 
 namespace Helpline.WebAPI
 {
@@ -88,6 +88,12 @@ namespace Helpline.WebAPI
                         builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
                         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
                         builder.Services.AddScoped<IRedisCacheService, RedisCacheService>();
+
+                        // Injecting the MediatR into DI
+                        builder.Services.AddMediatR(config =>
+                        {
+                            config.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
+                        });
 
                         int port = serviceContext.CodePackageActivationContext.GetEndpoint("ServiceEndpoint").Port;
 

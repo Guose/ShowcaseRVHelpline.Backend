@@ -13,6 +13,8 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="MediatR" Version="12.4.1" />
+    <PackageReference Include="MediatR.Extensions.Autofac.DependencyInjection" Version="12.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.10" />
     <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="8.0.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.1" />
@@ -24,7 +26,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Helpline.Common\Helpline.Common.csproj" />
     <ProjectReference Include="..\Helpline.DataAccess\Helpline.DataAccess.csproj" />
-    <ProjectReference Include="..\Helpline.UserServices\Helpline.UserServices.csproj" />
   </ItemGroup>
 
 </Project>

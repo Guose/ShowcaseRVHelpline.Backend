@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Helpline.WebAPI.Controller.Authentication
+namespace Helpline.WebAPI.Controller.v1.Authentication
 {
     [Route("api/authpolicies")]
     [ApiExplorerSettings(IgnoreApi = true)]
@@ -51,7 +51,7 @@ namespace Helpline.WebAPI.Controller.Authentication
             var policies = new Dictionary<string, bool>();
             foreach (var policyName in policiesToEvaluate)
             {
-                var policyResult = await this.authorizationService.AuthorizeAsync(this.User, policyName).ConfigureAwait(false);
+                var policyResult = await authorizationService.AuthorizeAsync(User, policyName).ConfigureAwait(false);
                 policies.Add(policyName, policyResult.Succeeded);
             }
 
