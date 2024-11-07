@@ -131,6 +131,8 @@ namespace Helpline.WebAPI
                             .AddEntityFrameworkStores<HelplineContext>()
                             .AddDefaultTokenProviders();
 
+                        var webApiControllerAssembly = typeof(Controller.AssemblyReference).Assembly;
+
                         builder.Services.AddControllers(options =>
                         {
                             options.Filters.Add(typeof(ValidationActionFilter));
@@ -142,14 +144,13 @@ namespace Helpline.WebAPI
                             settings.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                             settings.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                         })
-                        .AddOData(opt =>
-                            opt.Select().Filter().OrderBy().Expand())
                         .AddJsonOptions(options =>
                         {
                             options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
                             options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-                        }).PartManager.ApplicationParts.Add(new AssemblyPart(typeof(AuthenticationController).Assembly));
-
+                        })
+                        .AddOData(opt => opt.Select().Filter().OrderBy().Expand())
+                        .AddApplicationPart(Controller.AssemblyReference.Assembly);
                         
                         builder.Services.AddValidatorsFromAssemblyContaining<ValidationActionFilter>();
 
