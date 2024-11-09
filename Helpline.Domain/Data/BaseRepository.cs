@@ -45,7 +45,7 @@ namespace Helpline.Domain.Data
                 throw new ArgumentException(ex.Message);
             }
         }
-        
+
         public virtual async Task<bool> DeleteEntityAsync(TEnity model)
         {
             try
