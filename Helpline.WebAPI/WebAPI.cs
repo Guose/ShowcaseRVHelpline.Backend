@@ -155,12 +155,6 @@ namespace Helpline.WebAPI
                         
                         builder.Services.AddValidatorsFromAssemblyContaining<ValidationActionFilter>();
 
-                        
-                        builder.Services.AddValidatorsFromAssemblyContaining<ValidationActionFilter>();
-
-                        
-                        builder.Services.AddValidatorsFromAssemblyContaining<ValidationActionFilter>();
-
                         builder.Services.AddCors(options =>
                         {
                             options.AddPolicy("CorsPolicy", corsBuilder =>
