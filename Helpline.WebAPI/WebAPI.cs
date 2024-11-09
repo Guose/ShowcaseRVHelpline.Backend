@@ -19,7 +19,6 @@ using Helpline.Common.Interfaces;
 using Helpline.Common.Logging;
 using Helpline.WebAPI.Controller.Configuration.Authenticate;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
-using Helpline.WebAPI.Controller.Authentication;
 using Helpline.WebAPI.Middleware.AuditLogger;
 using System.Xml.XPath;
 using Microsoft.Extensions.FileProviders;
@@ -37,6 +36,9 @@ using FluentValidation;
 using Helpline.Common.Models;
 using Microsoft.AspNetCore.Identity;
 using Helpline.Domain.Data;
+using Helpline.WebAPI.Services.Caching;
+using Helpline.WebAPI.Controller.v1.Authentication;
+
 
 namespace Helpline.WebAPI
 {
@@ -79,10 +81,21 @@ namespace Helpline.WebAPI
                         builder.Services.AddHttpContextAccessor();
 
                         // Add services to the container.
+                        builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
                         builder.Services.AddScoped<ILogging, Logging>();
                         builder.Services.AddScoped<ITokenConfiguration, TokenConfiguration>();
                         builder.Services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
+                        builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
                         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+                        builder.Services.AddScoped<IRedisCacheService, RedisCacheService>();
+
+                        // Injecting the MediatR into DI
+                        builder.Services.AddMediatR(config =>
+                        {
+                            config.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
+                        });
+
 
                         int port = serviceContext.CodePackageActivationContext.GetEndpoint("ServiceEndpoint").Port;
 
@@ -109,9 +122,17 @@ namespace Helpline.WebAPI
                         builder.Services.AddDbContext<HelplineContext>(options =>
                             options.UseSqlServer(configuration.GetConnectionString("SqlServerConnection")));
 
+                        builder.Services.AddStackExchangeRedisCache(options =>
+                        {
+                            options.Configuration = builder.Configuration.GetConnectionString("Redis");
+                            options.InstanceName = "RVHelplineAPI_";
+                        });
+
                         builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                             .AddEntityFrameworkStores<HelplineContext>()
                             .AddDefaultTokenProviders();
+
+                        var webApiControllerAssembly = typeof(Controller.AssemblyReference).Assembly;
 
                         builder.Services.AddControllers(options =>
                         {
@@ -130,7 +151,11 @@ namespace Helpline.WebAPI
                         {
                             options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
                             options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-                        }).PartManager.ApplicationParts.Add(new AssemblyPart(typeof(AuthenticationController).Assembly));
+                        })
+                        .AddOData(opt => opt.Select().Filter().OrderBy().Expand())
+                        .AddApplicationPart(Controller.AssemblyReference.Assembly);
+                        
+                        builder.Services.AddValidatorsFromAssemblyContaining<ValidationActionFilter>();
 
                         
                         builder.Services.AddValidatorsFromAssemblyContaining<ValidationActionFilter>();
@@ -292,7 +317,7 @@ namespace Helpline.WebAPI
                             }
                         });
 
-                        app.UseMiddleware<AuditLoggerMiddleware>();
+                        //app.UseMiddleware<IAuditLoggerMiddleware>();
 
                         app.UseHttpsRedirection();
 

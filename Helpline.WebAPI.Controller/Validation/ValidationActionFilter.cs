@@ -15,7 +15,7 @@ namespace Helpline.WebAPI.Controller.Validation
 
         public void OnActionExecuting(ActionExecutingContext context)
         {
-            throw new NotImplementedException();
+            // throw new NotImplementedException();
         }
     }
 }
