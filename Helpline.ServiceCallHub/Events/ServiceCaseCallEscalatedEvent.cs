@@ -1,8 +1,6 @@
-﻿using Helpline.Domain.Events;
-
-namespace Helpline.ServiceCallHub.Events
+﻿namespace Helpline.ServiceCallHub.Events
 {
-    public class ServiceCaseCallEscalatedEvent : IEvent
+    public class ServiceCaseCallEscalatedEvent
     {
         public string IssueDescription { get; set; }
         public int CustomerId { get; set; }

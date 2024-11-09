@@ -2,7 +2,7 @@
 
 namespace Helpline.Domain.Data.Interfaces
 {
-    public interface IDealershipRepository : IGenericRepository<Dealership>
+    public interface IDealershipRepository : IBaseRepository<Dealership, int>
     {
     }
 }

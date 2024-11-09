@@ -1,6 +1,8 @@
-﻿namespace Helpline.ServiceCallHub.Commands
+﻿using Helpline.Domain.Commands;
+
+namespace Helpline.ServiceCallHub.Commands
 {
-    public class CreateServiceCaseCallCommand : CommandBase
+    public class CreateServiceCaseCallCommand
     {
         public int CustomerId { get; }
         public string IssueDescription { get; }
@@ -11,16 +13,6 @@
             CustomerId = customerId;
             IssueDescription = issueDescription;
             Tags = tags ?? new List<string>();
-        }
-
-        public override Task<bool> CanExecuteAsync(object parameter, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override Task ExecuteAsync(object parameter, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -6,7 +6,11 @@ using Helpline.Domain.Data.Interfaces;
 namespace Helpline.Domain.Data.Repositories
 {
     public class RVRenterRepository(HelplineContext context, ILogging logging) :
-        GenericRepository<RVRenter, HelplineContext>(context, logging), IRVRenterRepository
+        BaseRepository<RVRenter, HelplineContext, int>(context, logging), IRVRenterRepository
     {
+        public Task<RVRenter> GetRenterByUserIdAsync(string userId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
