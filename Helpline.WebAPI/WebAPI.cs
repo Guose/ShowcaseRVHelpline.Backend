@@ -193,6 +193,8 @@ namespace Helpline.WebAPI
                                 ValidAudience = builder.Configuration["JwtSettings:Audience"]!
                             };
                         });
+                        
+                        builder.Services.AddAuthorization();
 
                         builder.Services.AddSingleton<IAuthorizationHandler, AllowHelplineAccessHandler>();
 
