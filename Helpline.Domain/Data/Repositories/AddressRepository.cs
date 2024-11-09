@@ -13,21 +13,20 @@ namespace Helpline.Domain.Data.Repositories
         {
             try
             {
-                var results = await Context.Addresses.FirstOrDefaultAsync(a => a.Id == address.Id);
+                Address? results = await Context.Addresses.FirstOrDefaultAsync(a => a.Id == address.Id);
                 var user = await Context.Users.FirstOrDefaultAsync(u => u.Id == userId);
 
-                if (results == null && user == null)
+                if (results == null || user == null)
                     return false;
 
-                results!.Address1 = address.Address1;
-                results.Address2 = address.Address2;
-                results.City = address.City;
-                results.State = address.State;
-                results.PostalCode = address.PostalCode;
-                results.Country = address.Country;
-                results.County = address.County;
-
-                Context.Addresses.Update(results);
+                //Context.Addresses.Update(Address.Create(
+                //    results.Address1,
+                //    results.Address2!,
+                //    results.City!,
+                //    results.State!,
+                //    results.PostalCode,
+                //    results.Country!,
+                //    results.County!));
 
                 return true;
             }

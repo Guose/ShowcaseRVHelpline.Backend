@@ -11,6 +11,6 @@ namespace Helpline.Domain.Data
         ITechnicianRepository TechnicianRepo { get; }
         IDealershipContactRepository DealershipContactRepo { get; }
         IRVRenterRepository RVRenterRepo { get; }
-        Task<bool> CompleteAsync();
+        Task<bool> CompleteAsync(CancellationToken cancellationToken);
     }
 }

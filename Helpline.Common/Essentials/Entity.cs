@@ -5,12 +5,21 @@
         public Entity()
         {            
         }
-        protected Entity(Guid id)
+        protected Entity(Guid guidId)
         {
-            Id = id;
+            GuidId = guidId;
+            IdType = IdType.Guid;
+        }
+        protected Entity(int intId)
+        {
+            IntId = intId;
+            IdType = IdType.Int;
         }
 
-        public Guid Id { get; private set; }
+        public Guid GuidId { get; private set; }
+        public int IntId { get; private set; }
+
+        public IdType IdType { get; set; }
 
         public static bool operator ==(Entity? first, Entity? second) =>
             first is not null && second is not null && first.Equals(second);
@@ -20,35 +29,37 @@
 
         public bool Equals(Entity? other)
         {
-            if (other is null)
+            if (other is null || other.GetType() != GetType())
                 return false;
 
-            if (other.GetType() != GetType())
-                return false;
-
-            return other.Id == Id;
+            return IdType == other.IdType &&
+                (IdType == IdType.Guid ?
+                GuidId == other.GuidId :
+                IntId == other.IntId);
         }
 
         public override bool Equals(object? obj)
         {
-            if (obj is null)
-            {
+            if (obj is not Entity entity || entity.GetType() != GetType())
                 return false;
+
+            return Equals(entity);
             }
 
-            if (obj.GetType() != GetType())
+        public override int GetHashCode()
             {
-                return false;
-            }
-
-            if (obj is not Entity entity)
+            return IdType switch
             {
-                return false;
+                IdType.Guid => GuidId.GetHashCode() * 41,
+                IdType.Int => IntId.GetHashCode() * 41,
+                _ => base.GetHashCode()
+            };
             }
-
-            return entity.Id == Id;
         }
 
-        public override int GetHashCode() => Id.GetHashCode() * 41;
+    public enum IdType
+    {
+        Guid,
+        Int,
     }
 }

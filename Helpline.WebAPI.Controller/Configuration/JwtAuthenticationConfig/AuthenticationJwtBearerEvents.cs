@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Logging;
 
-namespace Helpline.WebAPI.Controller.Configuration.Authenticate
+namespace Helpline.WebAPI.Controller.Configuration.JwtAuthenticationConfig
 {
     public class AuthenticationJwtBearerEvents : JwtBearerEvents
     {
@@ -15,7 +15,7 @@ namespace Helpline.WebAPI.Controller.Configuration.Authenticate
 
         public override Task AuthenticationFailed(AuthenticationFailedContext context)
         {
-            this.logger.LogError("Authentication Error", context.Exception);
+            logger.LogError("Authentication Error", context.Exception);
             return base.AuthenticationFailed(context);
         }
     }

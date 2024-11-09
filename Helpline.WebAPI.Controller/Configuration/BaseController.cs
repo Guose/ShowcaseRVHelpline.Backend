@@ -1,20 +1,48 @@
-﻿using AutoMapper;
-using Helpline.Domain.Data;
+﻿using Helpline.Common.Shared;
+using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Helpline.WebAPI.Controller.Configuration
 {
     [ApiController]
-    [Route("api/[controller]")]
-    public class BaseController : ControllerBase
+    public abstract class BaseController : ControllerBase
     {
-        protected readonly IUnitOfWork unitOfWork;
-        protected readonly IMapper mapper;
+        protected readonly ISender Sender;
 
-        public BaseController(IUnitOfWork unitOfWork, IMapper mapper)
+        public BaseController(ISender sender) => Sender = sender;
+
+        protected IActionResult HandleFailure(Result result) =>
+        result switch
         {
-            this.unitOfWork = unitOfWork;
-            this.mapper = mapper;
-        }
+            { IsSuccess: true } => throw new InvalidOperationException(),
+            IValidationResult validationResult =>
+                BadRequest(
+                    CreateProblemDetails(
+                        "Validation Error",
+                        StatusCodes.Status400BadRequest,
+                        result.Error,
+                        validationResult.Errors)),
+            _ =>
+                BadRequest(
+                    CreateProblemDetails(
+                        "Bad Request",
+                        StatusCodes.Status400BadRequest,
+                        result.Error))
+        };
+
+        private static ProblemDetails CreateProblemDetails(
+        string title,
+        int status,
+        Error error,
+        Error[]? errors = null) =>
+        new()
+        {
+            Title = title,
+            Type = error.Code,
+            Detail = error.Message,
+            Status = status,
+            Extensions = { { nameof(errors), errors } }
+        };
     }
 }

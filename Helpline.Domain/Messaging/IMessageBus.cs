@@ -1,4 +1,4 @@
-﻿using Helpline.Domain.Events;
+﻿using Helpline.Domain.Events.Interfaces;
 
 namespace Helpline.Domain.Messaging
 {

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Helpline.Domain.Data;
 using Helpline.WebAPI.Controller.Configuration;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Helpline.WebAPI.Controller.v1.ServiceCallHub
@@ -9,7 +10,7 @@ namespace Helpline.WebAPI.Controller.v1.ServiceCallHub
     [Route("api/[controller]")]
     public class ServiceCaseController : BaseController
     {
-        public ServiceCaseController(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
+        public ServiceCaseController(ISender sender) : base(sender)
         {
         }
     }

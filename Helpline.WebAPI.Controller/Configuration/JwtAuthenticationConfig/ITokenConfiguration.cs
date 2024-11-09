@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace Helpline.WebAPI.Controller.Configuration.Authenticate
+namespace Helpline.WebAPI.Controller.Configuration.JwtAuthenticationConfig
 {
     public interface ITokenConfiguration
     {
