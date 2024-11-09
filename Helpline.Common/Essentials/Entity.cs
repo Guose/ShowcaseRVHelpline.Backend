@@ -3,7 +3,7 @@
     public class Entity : IEquatable<Entity>
     {
         public Entity()
-        {
+        {            
         }
         protected Entity(Guid guidId)
         {
@@ -44,18 +44,18 @@
                 return false;
 
             return Equals(entity);
-        }
+            }
 
         public override int GetHashCode()
-        {
+            {
             return IdType switch
             {
                 IdType.Guid => GuidId.GetHashCode() * 41,
                 IdType.Int => IntId.GetHashCode() * 41,
                 _ => base.GetHashCode()
             };
+            }
         }
-    }
 
     public enum IdType
     {

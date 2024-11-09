@@ -25,9 +25,11 @@ namespace Helpline.UserServices.Commands.CommandHandlers
                 return Result.Failure(CommonErrors.User.NotFound(request.UserId));
 
 
+            if (!await unitOfWork.UserRepo.UpdateEntityAsync(result))
+                return false;
 
             var result = mapper.Map(request.User, user);
-
+            
             await unitOfWork.UserRepo.UpdateEntityAsync(result, cancellationToken);
             await unitOfWork.CompleteAsync(cancellationToken);
 

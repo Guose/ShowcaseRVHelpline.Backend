@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using Helpline.Common.Types;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;

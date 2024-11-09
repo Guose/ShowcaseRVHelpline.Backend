@@ -41,7 +41,7 @@ namespace Helpline.UserServices.DTOs.Requests
             string city,
             string state,
             string zipCode)
-        {
+    {
             var address = new AddressRequest(
                 id,
                 address1,

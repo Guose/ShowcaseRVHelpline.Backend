@@ -1,4 +1,6 @@
-﻿using Helpline.WebAPI.Controller.Configuration;
+﻿using AutoMapper;
+using Helpline.Domain.Data;
+using Helpline.WebAPI.Controller.Configuration;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

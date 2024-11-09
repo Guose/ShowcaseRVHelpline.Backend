@@ -108,6 +108,5 @@ namespace Helpline.Domain.Data
                 throw new ArgumentException(ex.Message);
             }
         }
-
     }
 }

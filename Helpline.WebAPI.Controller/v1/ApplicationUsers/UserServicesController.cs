@@ -16,6 +16,7 @@ namespace Helpline.WebAPI.Controller.v1.ApplicationUsers
     {
         public UserServicesController(ISender sender) : base(sender)
         {
+            this.mediator = mediator;
         }
 
         [HttpGet]

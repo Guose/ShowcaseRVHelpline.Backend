@@ -20,12 +20,10 @@ namespace Helpline.Common.Models
         public RoleType Role { get; private set; }
         [Required]
         [JsonConverter(typeof(StringEnumConverter))]
-        public PermissionType Permissions { get; private set; }
-        public bool IsRemembered { get; private set; }
-        public bool IsActive { get; private set; }
-        public DateTime CreatedOn { get; set; }
-        public DateTime? ModifiedOn { get; set; }
-
+        public PermissionType Permssions { get; set; }
+        
+        public bool IsRemembered { get; set; } = false;
+        public bool IsActive { get; set; } = true;
 
         [ForeignKey("AddressId")]
         public int AddressId { get; private set; }

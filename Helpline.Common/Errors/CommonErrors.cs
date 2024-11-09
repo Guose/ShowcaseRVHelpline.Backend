@@ -53,10 +53,12 @@ namespace Helpline.Common.Errors
         {
             public static readonly Error Empty = new(
                 "Email.Empty",
+                "Email is empty");
                 "Email cannot be empty.");
 
             public static readonly Error InvalidFormat = new(
                 "Email.InvalidFormat",
+                "Email format is invalid");
                 "Email format is invalid.");
 
             public static readonly Error DomainBlocked = new(
