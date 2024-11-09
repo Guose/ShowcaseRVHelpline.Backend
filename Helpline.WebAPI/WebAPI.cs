@@ -82,7 +82,6 @@ namespace Helpline.WebAPI
                                 {
                                     throw new Exception("Certificate could not be loaded from the store.");
                                 }
-
                                 httpOpts.UseHttps(certificate);
                             });
                         });
@@ -141,7 +140,6 @@ namespace Helpline.WebAPI
                                 ValidAudience = builder.Configuration["JwtSettings:Audience"]!
                             };
                         });
-
                         builder.Services.AddAuthorization();
 
                         builder.Services.AddEndpointsApiExplorer();
