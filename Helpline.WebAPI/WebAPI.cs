@@ -39,6 +39,7 @@ using Helpline.Domain.Data;
 using Helpline.WebAPI.Services.Caching;
 using Helpline.WebAPI.Controller.v1.Authentication;
 
+
 namespace Helpline.WebAPI
 {
     /// <summary>
@@ -95,6 +96,7 @@ namespace Helpline.WebAPI
                             config.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
                         });
 
+
                         int port = serviceContext.CodePackageActivationContext.GetEndpoint("ServiceEndpoint").Port;
 
                         // Configure Kestrel to use HTTPS
@@ -107,7 +109,6 @@ namespace Helpline.WebAPI
                                 {
                                     throw new Exception("Certificate could not be loaded from the store.");
                                 }
-
                                 httpOpts.UseHttps(certificate);
                             });
                         });
@@ -144,6 +145,8 @@ namespace Helpline.WebAPI
                             settings.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                             settings.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                         })
+                        .AddOData(opt =>
+                            opt.Select().Filter().OrderBy().Expand())
                         .AddJsonOptions(options =>
                         {
                             options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
@@ -151,6 +154,9 @@ namespace Helpline.WebAPI
                         })
                         .AddOData(opt => opt.Select().Filter().OrderBy().Expand())
                         .AddApplicationPart(Controller.AssemblyReference.Assembly);
+                        
+                        builder.Services.AddValidatorsFromAssemblyContaining<ValidationActionFilter>();
+
                         
                         builder.Services.AddValidatorsFromAssemblyContaining<ValidationActionFilter>();
 
