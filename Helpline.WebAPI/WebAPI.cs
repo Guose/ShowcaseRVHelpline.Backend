@@ -96,7 +96,6 @@ namespace Helpline.WebAPI
                                 {
                                     throw new Exception("Certificate could not be loaded from the store.");
                                 }
-
                                 httpOpts.UseHttps(certificate);
                             });
                         });
