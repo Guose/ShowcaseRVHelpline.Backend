@@ -1,6 +1,6 @@
 ﻿namespace Helpline.Common.Constants
 {
-    public static class HelplineConstants
+    public static class HelplinePolicies
     {
         public const string AdministratorPolicy = "AdministratorPolicy";
         public const string EmployeeAdminPolicy = "EmployeeAdminPolicy";

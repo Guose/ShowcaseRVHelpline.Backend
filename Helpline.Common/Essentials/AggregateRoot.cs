@@ -4,11 +4,12 @@
     {
         private readonly List<ICommonEvent> domainEvents = new();
 
-        protected AggregateRoot(Guid id) : base(id) { }
+        protected AggregateRoot(Guid guidId) : base(guidId) { }
+        protected AggregateRoot(int intId) : base(intId) { }
 
         protected AggregateRoot() { }
 
-        public IReadOnlyCollection<ICommonEvent> GetDomainEventso() => domainEvents.ToList();
+        public IReadOnlyCollection<ICommonEvent> GetDomainEvents() => domainEvents.ToList();
 
         public void ClearDomainEvents() => domainEvents.Clear();
 

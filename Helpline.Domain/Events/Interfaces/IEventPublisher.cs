@@ -1,4 +1,4 @@
-﻿namespace Helpline.Domain.Events
+﻿namespace Helpline.Domain.Events.Interfaces
 {
     public interface IEventPublisher
     {

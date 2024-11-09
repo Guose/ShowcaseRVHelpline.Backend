@@ -10,7 +10,7 @@ namespace Helpline.Domain.Data
         protected TContext Context { get; } = context;
         protected ILogging Logging { get; } = logging;
 
-        public virtual async Task<bool> CreateEntityAsync(TEnity model)
+        public virtual async Task<bool> CreateEntityAsync(TEnity model, CancellationToken cancellationToken)
         {
             try
             {
@@ -28,7 +28,7 @@ namespace Helpline.Domain.Data
             }
         }
 
-        public virtual async Task<bool> UpdateEntityAsync(TEnity model)
+        public virtual async Task<bool> UpdateEntityAsync(TEnity model, CancellationToken cancellationToken)
         {
             try
             {
@@ -46,7 +46,7 @@ namespace Helpline.Domain.Data
             }
         }
 
-        public virtual async Task<bool> DeleteEntityAsync(TEnity model)
+        public virtual async Task<bool> DeleteEntityAsync(TEnity model, CancellationToken cancellationToken)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace Helpline.Domain.Data
             }
         }
 
-        public virtual async Task<IEnumerable<TEnity>> GetAllEntitiesAsync()
+        public virtual async Task<IEnumerable<TEnity>> GetAllEntitiesAsync(CancellationToken cancellationToken)
         {
             try
             {
@@ -77,7 +77,7 @@ namespace Helpline.Domain.Data
             }
         }
 
-        public virtual async Task<TEnity> GetEntityByIdAsync(TKey id)
+        public virtual async Task<TEnity> GetEntityByIdAsync(TKey id, CancellationToken cancellationToken)
         {
             try
             {
@@ -96,7 +96,7 @@ namespace Helpline.Domain.Data
             return Context.ChangeTracker.HasChanges();
         }
 
-        public async Task<int> SaveAsync()
+        public async Task<int> SaveAsync(CancellationToken cancellationToken)
         {            
             try
             {

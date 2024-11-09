@@ -1,19 +1,25 @@
 ﻿using Helpline.Common.Interfaces;
 using Helpline.Common.Models;
+using Helpline.Common.Shared;
 using Helpline.DataAccess.Context;
 using Helpline.Domain.Data.Interfaces;
+using Helpline.Domain.ValueObjects;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Helpline.Domain.Data.Repositories
 {
-    public class ApplicationUserRepository(HelplineContext context, ILogging logging) :
+    public class ApplicationUserRepository(HelplineContext context, ILogging logging, UserManager<ApplicationUser> userManager) :
         BaseRepository<ApplicationUser, HelplineContext, string>(context, logging), IApplicationUserRepository
     {
+
         public async Task<ApplicationUser?> GetUserByUsernameAsync(string username)
         {
             try
             {
                 ApplicationUser? user = await Context.ApplicationUsers.SingleOrDefaultAsync(u => u.UserName == username);
+
+                Result<ApplicationUser> response = await userManager.FindByNameAsync(username);
 
                 if (user == null)
                 {
@@ -29,5 +35,11 @@ namespace Helpline.Domain.Data.Repositories
                 throw new ArgumentException(ex.Message);
             }
         }
+
+        public async Task<bool> IsEmailUniqueAsync(Email email, CancellationToken cancellationToken = default) =>
+            !await Context.Users.AnyAsync(u => u.Email == email.Value, cancellationToken);
+
+        public async Task<bool> IsUserNameUniqueAsync(UserName userName, CancellationToken cancellationToken) =>
+            !await Context.Users.AnyAsync(u => u.UserName == userName.Value, cancellationToken);
     }
 }

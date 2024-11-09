@@ -1,6 +1,6 @@
 ﻿using Helpline.Common.Models;
 
-namespace Helpline.WebAPI.Controller.Configuration.Authenticate
+namespace Helpline.WebAPI.Controller.Configuration.JwtAuthenticationConfig
 {
     public class JwtSettings
     {
@@ -42,8 +42,6 @@ namespace Helpline.WebAPI.Controller.Configuration.Authenticate
             return await Task.Run(() => new ApplicationUser
             {
                 UserName = userDto.UserName,
-                Password = userDto.Password,
-                IsRemembered = userDto.IsRemembered,
             });
         }
     }

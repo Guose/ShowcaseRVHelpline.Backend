@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace Helpline.WebAPI.Controller.Configuration.Authenticate
+namespace Helpline.WebAPI.Controller.Configuration.JwtAuthenticationConfig
 {
     public class JwtSettingsProvider
     {

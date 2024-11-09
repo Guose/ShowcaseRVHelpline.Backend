@@ -10,30 +10,41 @@ namespace Helpline.Common.Models
     public class ApplicationUser : IdentityUser
     {
         [Required]
-        public string FirstName { get; set; } = string.Empty;
+        public string FirstName { get; private set; }
         [Required]
-        public string LastName { get; set; } = string.Empty;
+        public string LastName { get; private set; }
         [Phone]
-        public string? SecondaryPhone { get; set; }
+        public string? SecondaryPhone { get; private set; }
         [Required]
         [JsonConverter(typeof(StringEnumConverter))]
-        public RoleType Role { get; set; }
+        public RoleType Role { get; private set; }
         [Required]
         [JsonConverter(typeof(StringEnumConverter))]
-        public PermissionType Permssions { get; set; }
-        public bool IsRemembered { get; set; } = false;
-        public bool IsActive { get; set; } = true;
+        public PermissionType Permissions { get; private set; }
+        public bool IsRemembered { get; private set; }
+        public bool IsActive { get; private set; }
+        public DateTime CreatedOn { get; set; }
+        public DateTime? ModifiedOn { get; set; }
+
 
         [ForeignKey("AddressId")]
-        public int AddressId { get; set; }
-        public Address? Address { get; set; }
+        public int AddressId { get; private set; }
 
+
+        public Address Address { get; set; } = new();
         public Customer? Customer { get; set; }
         public Employee? Employee { get; set; }
         public Technician? Technician { get; set; }
         public DealershipContact? DealershipContact { get; set; }
 
         [NotMapped]
-        public string? Password { get; set; }
+        public string Password { get; private set; }
+
+        public ApplicationUser()
+        {
+            FirstName = string.Empty;
+            LastName = string.Empty;
+            Password = string.Empty;
+        }
     }
 }

@@ -1,77 +1,81 @@
-﻿using AutoMapper;
-using Helpline.Common.Models;
-using Helpline.Domain.Data;
-using Helpline.UserServices.Aggregator;
+﻿using Helpline.Common.Constants;
+using Helpline.Common.Shared;
 using Helpline.UserServices.Commands;
-using Helpline.UserServices.DTOs.Requests;
+using Helpline.UserServices.DTOs.Responses;
 using Helpline.UserServices.Queries;
 using Helpline.WebAPI.Controller.Configuration;
+using Helpline.WebAPI.Controller.Contracts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Helpline.WebAPI.Controller.v1.ApplicationUsers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route($"{HelplineConfig.UserControllerRoute}")]
     public class UserServicesController : BaseController
     {
-        private readonly IMediator mediator;
-        public UserServicesController(IUnitOfWork unitOfWork, IMapper mapper, IMediator mediator) : base(unitOfWork, mapper)
+        public UserServicesController(ISender sender) : base(sender)
         {
-            this.mediator = mediator;
         }
 
-        [HttpGet("Users")]
-        public async Task<IActionResult> GetAllUsers()
+        [HttpGet]
+        [Route($"{HelplineConfig.UserRoute}" + "/{id}")]
+        public async Task<IActionResult> GetUserById(Guid id, CancellationToken cancellationToken)
         {
-            var query = new GetAllUsersQuery();
-            var result = await mediator.Send(query);
+            var query = new GetUserByIdQuery(id);
 
-            return Ok(result);
+            Result<UserResponse> response = await Sender.Send(query, cancellationToken);
+
+            return response.IsSuccess ? Ok(response) : BadRequest(response.Error);
         }
 
-        [HttpGet("User/{id}")]
-        public async Task<IActionResult> GetCustomerByUserId(string id)
+        [HttpPost]
+        [Route($"{HelplineConfig.UserRoute}")]
+        public async Task<IActionResult> RegisterUserProfile(
+            Guid userId,
+            [FromBody] RegisterUserWithAddressRequest userRequest,
+            CancellationToken cancellationToken)
         {
-            var query = new GetUserQuery(id);
-            var result = await mediator.Send(query);
-
-            return Ok(result);
-        }
-
-        [HttpPost("User")]
-        public async Task<IActionResult> CreateUserRequest([FromBody] UserRequest user)
-        {
-            if (user == null)
+            if (userRequest == null)
                 return BadRequest("User data required.");
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var command = new UserCreateCommandRequest(user);
-            var result = await mediator.Send(command);
+            var command = new UserCreateCommand(
+                userRequest.Us
+                userRequest.FirstName,
+                userRequest.LastName,
+                userRequest.PhoneNumber,
+                userRequest.RequestAddress.Address);
 
-            return CreatedAtAction(nameof(CreateUserRequest), new { userId = result.Id }, result);
+            Result<Guid> result = await Sender.Send(command, cancellationToken);
+
+            if (result.IsFailure) return HandleFailure(result);
+
+            return CreatedAtAction(
+                nameof(RegisterUserProfile),
+                new { userId = result.Value },
+                result.Value);
         }
 
-        [HttpPut("User/{userId}")]
-        public async Task<IActionResult> UpdateUserRequest(string userId, [FromBody] UserRequest user)
+        [HttpPut]
+        [Route($"{HelplineConfig.UserRoute}" + "/{userId}")]
+        public async Task<IActionResult> UpdateUser(Guid userId, [FromBody] UpdateUserRequest user, CancellationToken cancellationToken)
         {
-            if (user == null)
-                return BadRequest("User data required.");
+            if (user == null || !ModelState.IsValid)
+                return BadRequest("User data bad request.");
 
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            var command = new UserUpdateCommand(
+                userId,
+                user.FirstName,
+                user.LastName,
+                user.PhoneNumber,
+                user.SecondPhone);
 
-            var command = new UserUpdateCommandRequest(user, userId);
-            return await mediator.Send(command) ? NoContent() : BadRequest();
-        }
+            Result result = await Sender.Send(command, cancellationToken);
 
-        [HttpDelete("User/{id}")]
-        public async Task<IActionResult> DeleteUserWithAssociatedEntity(string id)
-        {
-            var command = new UserDeleteCommandRequest(id);
-            return await mediator.Send(command) ? Ok("User successfully deleted.") : BadRequest();
+            return result.IsFailure ? HandleFailure(result) : NoContent();
         }
     }
 }

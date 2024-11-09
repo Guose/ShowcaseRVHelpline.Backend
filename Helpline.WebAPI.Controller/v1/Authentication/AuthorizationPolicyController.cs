@@ -19,30 +19,30 @@ namespace Helpline.WebAPI.Controller.v1.Authentication
 
             policiesToEvaluate = new List<string>()
             {
-                HelplineConstants.AdministratorPolicy,
-                HelplineConstants.EmployeeAdminPolicy,
-                HelplineConstants.EmployeeContractorPolicy,
-                HelplineConstants.EmployeeLimitedPolicy,
-                HelplineConstants.CustomerLimitedPolicy,
-                HelplineConstants.CustomerGuestPolicy,
-                HelplineConstants.RVRenterGuestPolicy,
-                HelplineConstants.TechnicianLimitedPolicy,
-                HelplineConstants.DealershipLimitedPolicy,
-                HelplineConstants.ContractorPolicy
+                HelplinePolicies.AdministratorPolicy,
+                HelplinePolicies.EmployeeAdminPolicy,
+                HelplinePolicies.EmployeeContractorPolicy,
+                HelplinePolicies.EmployeeLimitedPolicy,
+                HelplinePolicies.CustomerLimitedPolicy,
+                HelplinePolicies.CustomerGuestPolicy,
+                HelplinePolicies.RVRenterGuestPolicy,
+                HelplinePolicies.TechnicianLimitedPolicy,
+                HelplinePolicies.DealershipLimitedPolicy,
+                HelplinePolicies.ContractorPolicy
             };
         }
 
         [HttpGet]
-        [Authorize(Policy = HelplineConstants.AdministratorPolicy)]
-        [Authorize(Policy = HelplineConstants.EmployeeAdminPolicy)]
-        [Authorize(Policy = HelplineConstants.EmployeeLimitedPolicy)]
-        [Authorize(Policy = HelplineConstants.EmployeeContractorPolicy)]
-        [Authorize(Policy = HelplineConstants.CustomerLimitedPolicy)]
-        [Authorize(Policy = HelplineConstants.CustomerGuestPolicy)]
-        [Authorize(Policy = HelplineConstants.RVRenterGuestPolicy)]
-        [Authorize(Policy = HelplineConstants.TechnicianLimitedPolicy)]
-        [Authorize(Policy = HelplineConstants.DealershipLimitedPolicy)]
-        [Authorize(Policy = HelplineConstants.ContractorPolicy)]
+        [Authorize(Policy = HelplinePolicies.AdministratorPolicy)]
+        [Authorize(Policy = HelplinePolicies.EmployeeAdminPolicy)]
+        [Authorize(Policy = HelplinePolicies.EmployeeLimitedPolicy)]
+        [Authorize(Policy = HelplinePolicies.EmployeeContractorPolicy)]
+        [Authorize(Policy = HelplinePolicies.CustomerLimitedPolicy)]
+        [Authorize(Policy = HelplinePolicies.CustomerGuestPolicy)]
+        [Authorize(Policy = HelplinePolicies.RVRenterGuestPolicy)]
+        [Authorize(Policy = HelplinePolicies.TechnicianLimitedPolicy)]
+        [Authorize(Policy = HelplinePolicies.DealershipLimitedPolicy)]
+        [Authorize(Policy = HelplinePolicies.ContractorPolicy)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

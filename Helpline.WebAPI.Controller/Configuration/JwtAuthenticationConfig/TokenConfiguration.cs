@@ -4,7 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Helpline.WebAPI.Controller.Configuration.Authenticate
+namespace Helpline.WebAPI.Controller.Configuration.JwtAuthenticationConfig
 {
     public class TokenConfiguration : ITokenConfiguration
     {
