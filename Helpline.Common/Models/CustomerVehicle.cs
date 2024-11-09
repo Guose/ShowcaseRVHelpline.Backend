@@ -6,6 +6,10 @@ namespace Helpline.Common.Models
 {
     public class CustomerVehicle : BaseModel
     {
+        [Key]
+        [Required]
+        public new Guid Id { get; set; }
+
         [ForeignKey("CustomerId")]
         public int CustomerId { get; set; }
         public Customer? Customer { get; set; }

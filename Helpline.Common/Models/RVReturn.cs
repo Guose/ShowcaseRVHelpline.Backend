@@ -5,7 +5,7 @@ namespace Helpline.Common.Models
 {
     public class RVReturn : BaseModel
     {
-        public int RentalId { get; set; }
+        public Guid RentalId { get; set; }
         [ForeignKey("RentalId")]
         public RVRental? Rental { get; set; }
 

@@ -9,7 +9,7 @@ namespace Helpline.Common.Models
         public CallType? CallType { get; set; }
 
         [ForeignKey("ServiceCaseId")]
-        public int ServiceCaseId { get; set; }
+        public Guid ServiceCaseId { get; set; }
         public ServiceCase? ServiceCase { get; set; }
         public string? Item { get; set; }
         public ServiceType ServiceType { get; set; }
