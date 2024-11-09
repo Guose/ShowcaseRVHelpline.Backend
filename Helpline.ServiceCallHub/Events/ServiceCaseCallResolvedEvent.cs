@@ -1,8 +1,6 @@
-﻿using Helpline.Domain.Events;
-
-namespace Helpline.ServiceCallHub.Events
+﻿namespace Helpline.ServiceCallHub.Events
 {
-    public class ServiceCaseCallResolvedEvent : IEvent
+    public class ServiceCaseCallResolvedEvent
     {
         public int Id { get; set; }
         public DateTime CallEndTime { get; set; }

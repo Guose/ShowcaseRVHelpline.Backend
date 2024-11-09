@@ -1,5 +1,6 @@
 ﻿using Helpline.Common.Types;
 using Microsoft.AspNetCore.Identity;
+using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
@@ -14,12 +15,15 @@ namespace Helpline.Common.Models
         public string LastName { get; set; } = string.Empty;
         [Phone]
         public string? SecondaryPhone { get; set; }
+        
         [Required]
-        [JsonConverter(typeof(JsonStringEnumConverter))]
+        [JsonConverter(typeof(StringEnumConverter))]
         public RoleType Role { get; set; }
+        
         [Required]
-        [JsonConverter(typeof(JsonStringEnumConverter))]
+        [JsonConverter(typeof(StringEnumConverter))]
         public PermissionType Permssions { get; set; }
+        
         public bool IsRemembered { get; set; } = false;
         public bool IsActive { get; set; } = true;
 

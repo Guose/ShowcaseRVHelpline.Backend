@@ -118,7 +118,7 @@ namespace Helpline.DataAccess.Seeds
         public List<ApplicationUser> GetUserSeeds(List<ApplicationUser> users)
         {
             List<ApplicationUser> userSeeds = [];
-            foreach ( var user in users)
+            foreach (var user in users)
             {
                 user.PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(user, user.Password!);
                 userSeeds.Add(user);

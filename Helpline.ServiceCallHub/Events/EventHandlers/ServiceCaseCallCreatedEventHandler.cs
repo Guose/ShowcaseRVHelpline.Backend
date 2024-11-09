@@ -1,9 +1,6 @@
-﻿using Helpline.Domain.Events;
-using Helpline.ServiceCallHub.Events;
-
-namespace Helpline.ServiceCallHub.Events.EventHandlers
+﻿namespace Helpline.ServiceCallHub.Events.EventHandlers
 {
-    public class ServiceCaseCallCreatedEventHandler : IEventHandler<ServiceCaseCallCreatedEvent>
+    public class ServiceCaseCallCreatedEventHandler
     {
         public Task HandleAsync(ServiceCaseCallCreatedEvent @event, CancellationToken cancellationToken)
         {

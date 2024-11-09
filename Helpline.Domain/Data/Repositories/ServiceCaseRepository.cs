@@ -8,9 +8,5 @@ namespace Helpline.Domain.Data.Repositories
     public class ServiceCaseRepository(HelplineContext context, ILogging logging) :
         BaseRepository<ServiceCase, HelplineContext, Guid>(context, logging), IServiceCaseRepository
     {
-        public Task<bool> UpdateEntityAsync(ServiceCase serviceCase)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

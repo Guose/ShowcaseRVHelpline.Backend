@@ -11,9 +11,9 @@ namespace Helpline.Common.Models
         public string? Notes { get; set; }
         public string? Description { get; set; }
         [Required]
-        public DateTime CreatedOn { get; set; }
+        public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
         public DateTime? ModifiedOn { get; set; }
         public bool IsActive { get; set; }
-        public ICollection<string>? Attachments { get; set; }
+        public IList<string>? Attachments { get; set; }
     }
 }

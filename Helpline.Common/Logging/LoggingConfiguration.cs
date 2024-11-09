@@ -13,7 +13,7 @@ namespace Helpline.Common.Logging
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
-                .WriteTo.File("Logs/helplinelogs.txt", rollingInterval: RollingInterval.Month)
+                .WriteTo.File("./Logs/helplinelogs.txt", rollingInterval: RollingInterval.Month)
                 .CreateLogger();
         }
     }

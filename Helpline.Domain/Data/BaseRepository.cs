@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Helpline.Domain.Data
 {
-    public class BaseRepository<TEnity, TContext, TKey>(TContext context, ILogging logging) : IBaseRepository<TEnity, TKey>
+    public abstract class BaseRepository<TEnity, TContext, TKey>(TContext context, ILogging logging) : IBaseRepository<TEnity, TKey>
         where TEnity : class
         where TContext : DbContext
     {
@@ -18,13 +18,30 @@ namespace Helpline.Domain.Data
                     return false;
 
                 await Context.Set<TEnity>().AddAsync(model);
-                await SaveAsync();
 
                 return true;
             }
             catch (Exception ex)
             {
                 Logging.LogError(ex, $"{nameof(CreateEntityAsync)}:{typeof(TEnity).Name} Message: {ex.Message} InnerException: {ex.InnerException}");
+                throw new ArgumentException(ex.Message);
+            }
+        }
+
+        public virtual async Task<bool> UpdateEntityAsync(TEnity model)
+        {
+            try
+            {
+                if (model == null)
+                    return false;
+
+                await Task.Run(() => Context.Set<TEnity>().Update(model));
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Logging.LogError(ex, $"{nameof(UpdateEntityAsync)}:{typeof(TEnity).Name} Message: {ex.Message} InnerException: {ex.InnerException}");
                 throw new ArgumentException(ex.Message);
             }
         }
@@ -36,8 +53,7 @@ namespace Helpline.Domain.Data
                 if (model == null)
                     return false;
 
-                Context.Set<TEnity>().Remove(model);
-                await SaveAsync();
+                await Task.Run(() => Context.Set<TEnity>().Remove(model));
 
                 return true;
             }
@@ -52,7 +68,7 @@ namespace Helpline.Domain.Data
         {
             try
             {
-                return await Context.Set<TEnity>().ToListAsync();
+                return await Context.Set<TEnity>().AsNoTracking().ToListAsync();
             }
             catch (Exception ex)
             {
@@ -80,9 +96,17 @@ namespace Helpline.Domain.Data
             return Context.ChangeTracker.HasChanges();
         }
 
-        public async Task SaveAsync()
-        {
-            await Context.SaveChangesAsync();
+        public async Task<int> SaveAsync()
+        {            
+            try
+            {
+                return await Context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                Logging.LogError(ex, $"{nameof(SaveAsync)}: Message: {ex.Message} InnerException: {ex.InnerException}");
+                throw new ArgumentException(ex.Message);
+            }
         }
     }
 }
