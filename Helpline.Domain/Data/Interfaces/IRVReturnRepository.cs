@@ -2,7 +2,7 @@
 
 namespace Helpline.Domain.Data.Interfaces
 {
-    public interface IRVReturnRepository : IGenericRepository<RVReturn>
+    public interface IRVReturnRepository : IBaseRepository<RVReturn, int>
     {
     }
 }

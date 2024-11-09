@@ -2,7 +2,7 @@
 
 namespace Helpline.Domain.Data.Interfaces
 {
-    public interface IAuditLogRepository : IGenericRepository<AuditLog>
+    public interface IAuditLogRepository : IBaseRepository<AuditLog, int>
     {
     }
 }

@@ -1,6 +1,4 @@
-﻿using Helpline.Domain.Commands;
-
-namespace Helpline.ServiceCallHub.Commands
+﻿namespace Helpline.Domain.Commands
 {
     public abstract class CommandBase : ICommand
     {

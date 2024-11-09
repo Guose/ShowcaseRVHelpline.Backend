@@ -6,7 +6,8 @@ using Helpline.Domain.Data.Interfaces;
 namespace Helpline.Domain.Data.Repositories
 {
     public class ServiceCaseCallRepository(HelplineContext context, ILogging logging) :
-        GenericRepository<ServiceCaseCall, HelplineContext>(context, logging), IServiceCaseCallRepository
+        BaseRepository<ServiceCaseCall, HelplineContext, int>(context, logging), IServiceCaseCallRepository
     {
+
     }
 }

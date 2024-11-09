@@ -42,7 +42,7 @@ namespace Helpline.WebAPI.Middleware.AuditLogger
             catch (Exception ex)
             {
                 sw.Stop();
-                throw;
+                throw new Exception(ex.Message);
             }
         }
     }

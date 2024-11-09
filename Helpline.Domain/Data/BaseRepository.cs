@@ -1,17 +1,16 @@
 ﻿using Helpline.Common.Interfaces;
-using Helpline.Domain.Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace Helpline.Domain.Data.Repositories
+namespace Helpline.Domain.Data
 {
-    public class GenericRepository<TEnity, TContext>(TContext context, ILogging logging) : IGenericRepository<TEnity>
+    public class BaseRepository<TEnity, TContext, TKey>(TContext context, ILogging logging) : IBaseRepository<TEnity, TKey>
         where TEnity : class
         where TContext : DbContext
     {
         protected TContext Context { get; } = context;
         protected ILogging Logging { get; } = logging;
 
-        public async Task<bool> CreateEntityAsync(TEnity model)
+        public virtual async Task<bool> CreateEntityAsync(TEnity model)
         {
             try
             {
@@ -30,7 +29,7 @@ namespace Helpline.Domain.Data.Repositories
             }
         }
 
-        public async Task<bool> DeleteEntityAsync(TEnity model)
+        public virtual async Task<bool> DeleteEntityAsync(TEnity model)
         {
             try
             {
@@ -49,11 +48,25 @@ namespace Helpline.Domain.Data.Repositories
             }
         }
 
-        public async Task<IEnumerable<TEnity>> GetAllEntitiesAsync()
+        public virtual async Task<IEnumerable<TEnity>> GetAllEntitiesAsync()
         {
             try
             {
                 return await Context.Set<TEnity>().ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                Logging.LogError(ex, $"{nameof(GetAllEntitiesAsync)}:{typeof(TEnity).Name} Message: {ex.Message} InnerException: {ex.InnerException}");
+                throw new ArgumentException(ex.Message);
+            }
+        }
+
+        public virtual async Task<TEnity> GetEntityByIdAsync(TKey id)
+        {
+            try
+            {
+                var results = await Context.Set<TEnity>().FindAsync(id);
+                return results!;
             }
             catch (Exception ex)
             {

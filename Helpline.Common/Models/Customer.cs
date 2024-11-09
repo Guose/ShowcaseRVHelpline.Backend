@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using Helpline.Common.Types;
 
 namespace Helpline.Common.Models
 {
     public class Customer : BaseModel
     {
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public SubscriptionType SubscriptionType { get; set; }
         public DateTime SubscriptionStartDate { get; set; }
         public DateTime SubscriptionEndDate { get; set; }
