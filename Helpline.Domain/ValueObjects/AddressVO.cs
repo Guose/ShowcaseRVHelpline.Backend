@@ -44,7 +44,7 @@ namespace Helpline.Domain.ValueObjects
             {
                 return Result.Failure<AddressVO>(CommonErrors.Address.InvalidPostalCode);
             }
-
+            
             return new AddressVO(address);
         }
 

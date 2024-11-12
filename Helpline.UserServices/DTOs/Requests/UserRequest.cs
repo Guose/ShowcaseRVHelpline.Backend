@@ -1,5 +1,6 @@
 ﻿using Helpline.Common.Essentials;
 using Helpline.Common.Types;
+using Helpline.Domain.ValueObjects;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 

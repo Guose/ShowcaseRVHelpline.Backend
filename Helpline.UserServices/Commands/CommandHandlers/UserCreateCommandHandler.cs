@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Helpline.Common.Errors;
 using Helpline.Common.Models;
 using Helpline.Common.Shared;
 using Helpline.Domain.Data;

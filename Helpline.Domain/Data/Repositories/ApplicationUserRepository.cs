@@ -12,6 +12,7 @@ namespace Helpline.Domain.Data.Repositories
     public class ApplicationUserRepository(HelplineContext context, ILogging logging, UserManager<ApplicationUser> userManager) :
         BaseRepository<ApplicationUser, HelplineContext, string>(context, logging), IApplicationUserRepository
     {
+
         public async Task<ApplicationUser?> GetUserByUsernameAsync(string username)
         {
             try

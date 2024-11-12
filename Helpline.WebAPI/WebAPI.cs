@@ -73,17 +73,6 @@ namespace Helpline.WebAPI
                             .AddEnvironmentVariables()
                             .Build();
 
-                        //builder
-                        //    .Services
-                        //    .Scan(
-                        //        selector => selector
-                        //            .FromAssemblies(
-                        //                Helpline.DataAccess.AssemblyReference.Assembly)
-                        //            .AddClasses(false)
-                        //            .UsingRegistrationStrategy(RegistrationStrategy.Skip)
-                        //            .AsImplementedInterfaces()
-                        //            .WithScopedLifetime());
-
                         var webApiControllerAssembly = typeof(Controller.AssemblyReference).Assembly;
 
                         builder.Services.AddSingleton(serviceContext);
@@ -210,6 +199,70 @@ namespace Helpline.WebAPI
 
                         builder.Services.AddSingleton<IAuthorizationHandler, AllowHelplineAccessHandler>();
 
+                        builder.Services.AddAuthorization(options =>
+                        {
+                            var fullAccessAdminPolicyRequirement = new HelplineAccessRequirment(RoleType.Admin, PermissionType.Admin);
+
+                            var authorizationPolicyBuilder = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme);
+                            authorizationPolicyBuilder.Requirements.Add(fullAccessAdminPolicyRequirement);
+                            options.AddPolicy(HelplineConstants.AdministratorPolicy, authorizationPolicyBuilder.Build());
+
+                            var employeeAdminPolicyRequirement = new HelplineAccessRequirment(RoleType.Employee, PermissionType.Admin);
+
+                            authorizationPolicyBuilder = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme);
+                            authorizationPolicyBuilder.Requirements.Add(employeeAdminPolicyRequirement);
+                            options.AddPolicy(HelplineConstants.EmployeeAdminPolicy, authorizationPolicyBuilder.Build());
+
+                            var employeeContractorPolicyRequirement = new HelplineAccessRequirment(RoleType.Employee, PermissionType.Contractor);
+
+                            authorizationPolicyBuilder = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme);
+                            authorizationPolicyBuilder.Requirements.Add(employeeContractorPolicyRequirement);
+                            options.AddPolicy(HelplineConstants.EmployeeContractorPolicy, authorizationPolicyBuilder.Build());
+
+                            var employeeLimitedPolicyRequirement = new HelplineAccessRequirment(RoleType.Employee, PermissionType.Limited);
+
+                            authorizationPolicyBuilder = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme);
+                            authorizationPolicyBuilder.Requirements.Add(employeeLimitedPolicyRequirement);
+                            options.AddPolicy(HelplineConstants.EmployeeLimitedPolicy, authorizationPolicyBuilder.Build());
+
+                            var customerLimitedPolicyRequirement = new HelplineAccessRequirment(RoleType.Customer, PermissionType.Limited);
+
+                            authorizationPolicyBuilder = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme);
+                            authorizationPolicyBuilder.Requirements.Add(customerLimitedPolicyRequirement);
+                            options.AddPolicy(HelplineConstants.CustomerLimitedPolicy, authorizationPolicyBuilder.Build());
+
+                            var customerGuestPolicyRequirement = new HelplineAccessRequirment(RoleType.Customer, PermissionType.Guest);
+
+                            authorizationPolicyBuilder = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme);
+                            authorizationPolicyBuilder.Requirements.Add(customerGuestPolicyRequirement);
+                            options.AddPolicy(HelplineConstants.CustomerGuestPolicy, authorizationPolicyBuilder.Build());
+
+                            var rvRenterGuestPolicyRequirment = new HelplineAccessRequirment(RoleType.RVRenter, PermissionType.Guest);
+
+                            authorizationPolicyBuilder = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme);
+                            authorizationPolicyBuilder.Requirements.Add(rvRenterGuestPolicyRequirment);
+                            options.AddPolicy(HelplineConstants.RVRenterGuestPolicy, authorizationPolicyBuilder.Build());
+
+                            var technicianLimitedPolicyRequirement = new HelplineAccessRequirment(RoleType.Technician, PermissionType.Limited);
+
+                            authorizationPolicyBuilder = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme);
+                            authorizationPolicyBuilder.Requirements.Add(technicianLimitedPolicyRequirement);
+                            options.AddPolicy(HelplineConstants.TechnicianLimitedPolicy, authorizationPolicyBuilder.Build());
+
+                            var dealershipLimitedPolicyRequirement = new HelplineAccessRequirment(RoleType.Dealership, PermissionType.Limited);
+
+                            authorizationPolicyBuilder = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme);
+                            authorizationPolicyBuilder.Requirements.Add(dealershipLimitedPolicyRequirement);
+                            options.AddPolicy(HelplineConstants.DealershipLimitedPolicy, authorizationPolicyBuilder.Build());
+
+                            var contractorPolicyRequirement = new HelplineAccessRequirment(RoleType.Contractor, PermissionType.Limited);
+
+                            authorizationPolicyBuilder = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme);
+                            authorizationPolicyBuilder.Requirements.Add(contractorPolicyRequirement);
+                            options.AddPolicy(HelplineConstants.ContractorPolicy, authorizationPolicyBuilder.Build());
+                        });
+
+                        builder.Services.AddSingleton<IAuthorizationHandler, AllowHelplineAccessHandler>();
 
                         // Add Authorization
                         builder.Services.AddAuthorization(options =>

@@ -38,10 +38,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Helpline.Common\Helpline.Common.csproj" />
-    <ProjectReference Include="..\Helpline.DataAccess\Helpline.DataAccess.csproj" />
-    <ProjectReference Include="..\Helpline.Domain\Helpline.Domain.csproj" />
-    <ProjectReference Include="..\Helpline.UserServices\Helpline.UserServices.csproj" />
     <ProjectReference Include="..\Helpline.WebAPI.Controller\Helpline.WebAPI.Controller.csproj" />
   </ItemGroup>
 

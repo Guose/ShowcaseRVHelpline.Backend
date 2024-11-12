@@ -1,4 +1,6 @@
-﻿namespace Helpline.UserServices.DTOs.Requests
+﻿using Helpline.Common.Essentials;
+
+namespace Helpline.UserServices.DTOs.Requests
 {
     public sealed class AddressRequest
     {
