@@ -17,6 +17,10 @@ namespace Helpline.Common.Errors
             public static readonly Error AreNull = new(
                 "User.Properties_AreNull",
                 "The user's properties cannot be null.");
+
+            public static readonly Func<Guid, Error> UpdateError = id => new Error(
+                "User.UpdateError",
+                $"The user with the identifier {id} could not update.");
         }
 
         public static class UserName
@@ -53,12 +57,10 @@ namespace Helpline.Common.Errors
         {
             public static readonly Error Empty = new(
                 "Email.Empty",
-                "Email is empty");
                 "Email cannot be empty.");
 
             public static readonly Error InvalidFormat = new(
                 "Email.InvalidFormat",
-                "Email format is invalid");
                 "Email format is invalid.");
 
             public static readonly Error DomainBlocked = new(
@@ -79,6 +81,10 @@ namespace Helpline.Common.Errors
 
         public static class Address
         {
+            public static readonly Error NotFound = new(
+                "Address.NotFound",
+                $"The addres was not found.");
+
             public static readonly Error StreetEmpty = new(
                 "Address.StreetEmpty",
                 "Street cannot be empty.");

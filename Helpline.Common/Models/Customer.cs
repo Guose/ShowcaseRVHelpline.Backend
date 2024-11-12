@@ -1,8 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
-using Helpline.Common.Types;
+﻿using Helpline.Common.Types;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Helpline.Common.Models
 {
@@ -13,7 +12,7 @@ namespace Helpline.Common.Models
         public DateTime SubscriptionStartDate { get; set; }
         public DateTime SubscriptionEndDate { get; set; }
         public bool SubscriptionStatus { get; set; }
-        
+
 
         [ForeignKey("UserId")]
         public string UserId { get; set; }

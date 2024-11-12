@@ -1,6 +1,5 @@
 ﻿using Helpline.Common.Models;
 using Helpline.Common.Types;
-using Helpline.DataAccess.Seeds;
 
 namespace ConsoleApp1
 {

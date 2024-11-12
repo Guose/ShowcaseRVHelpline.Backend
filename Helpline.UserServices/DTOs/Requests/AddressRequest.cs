@@ -2,7 +2,7 @@
 
 namespace Helpline.UserServices.DTOs.Requests
 {
-    public sealed class AddressRequest : AggregateRoot
+    public sealed class AddressRequest
     {
         private readonly List<UserRequest> _users = [];
         private AddressRequest()
@@ -11,12 +11,11 @@ namespace Helpline.UserServices.DTOs.Requests
             PostalCode = string.Empty;
         }
         private AddressRequest(
-            int id,
             string address1,
             string address2,
             string city,
             string state,
-            string zipCode) : base(id)
+            string zipCode)
         {
             Address1 = address1;
             Address2 = address2;
@@ -25,6 +24,7 @@ namespace Helpline.UserServices.DTOs.Requests
             PostalCode = zipCode;
         }
 
+        public int Id { get; private set; }
         public string Address1 { get; private set; }
         public string? Address2 { get; private set; }
         public string? City { get; private set; }
@@ -35,15 +35,13 @@ namespace Helpline.UserServices.DTOs.Requests
         public ICollection<UserRequest> Users => _users;
 
         public static AddressRequest Create(
-            int id,
             string address1,
             string address2,
             string city,
             string state,
             string zipCode)
-    {
+        {
             var address = new AddressRequest(
-                id,
                 address1,
                 address2,
                 city,

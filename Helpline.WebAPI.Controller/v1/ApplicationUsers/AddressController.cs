@@ -1,4 +1,7 @@
 ﻿using Helpline.Common.Constants;
+using Helpline.Common.Shared;
+using Helpline.UserServices.DTOs.Responses;
+using Helpline.UserServices.Queries;
 using Helpline.WebAPI.Controller.Configuration;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -15,21 +18,13 @@ namespace Helpline.WebAPI.Controller.v1.ApplicationUsers
 
         [HttpGet]
         [Route($"{HelplineConfig.AddressRoute}")]
-        public Task<IActionResult> GetUserAddress(string userId)
+        public async Task<IActionResult> GetUserAddress(Guid userId, CancellationToken cancellationToken)
         {
-            //var user = await unitOfWork.UserRepo.GetEntityByIdAsync(userId);
+            var query = new AddressByUserIdQuery(userId);
 
-            //if (user == null)
-            //    return NotFound("User not found");
+            Result<AddressResponse> response = await Sender.Send(query, cancellationToken);
 
-            //var address = await unitOfWork.AddressRepo.GetEntityByIdAsync(user.AddressId);
-
-            //if (address == null)
-            //    return NotFound("Address for user not found");
-
-            //var result = mapper.Map<AddressResponse>(address);
-
-            return Ok();
+            return response.IsSuccess ? Ok(response.Value) : BadRequest(response.Error);
         }
     }
 }

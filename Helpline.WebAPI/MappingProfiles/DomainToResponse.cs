@@ -9,13 +9,10 @@ namespace Helpline.WebAPI.MappingProfiles
         public DomainToResponse()
         {
             // Base User to User Response mapping
-            CreateMap<ApplicationUser, UserResponse>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address));
+            CreateMap<ApplicationUser, UserResponse>();
 
             // Customer-specific mapping
-            CreateMap<Customer, CustomerResponse>()
-                .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.User));
+            CreateMap<Customer, CustomerResponse>();
 
             // Employee-specific mapping
             CreateMap<Employee, EmployeeResponse>();

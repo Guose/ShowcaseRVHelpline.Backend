@@ -1,5 +1,4 @@
-﻿using Helpline.Common.Models;
-using Helpline.Common.Types;
+﻿using Helpline.Common.Types;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 

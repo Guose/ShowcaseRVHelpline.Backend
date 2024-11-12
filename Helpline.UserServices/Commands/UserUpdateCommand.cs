@@ -7,5 +7,5 @@ namespace Helpline.UserServices.Commands
         string FirstName,
         string LastName,
         string PhoneNumber,
-        string SecondPhone) : ICommand;
+        string SecondaryPhone) : ICommand;
 }

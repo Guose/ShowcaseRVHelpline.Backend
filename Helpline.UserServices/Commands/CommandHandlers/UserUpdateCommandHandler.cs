@@ -24,13 +24,14 @@ namespace Helpline.UserServices.Commands.CommandHandlers
             if (user is null)
                 return Result.Failure(CommonErrors.User.NotFound(request.UserId));
 
+            user.FirstName = request.FirstName;
+            user.LastName = request.LastName;
+            user.PhoneNumber = request.PhoneNumber;
+            user.SecondaryPhone = request.SecondaryPhone;
 
-            if (!await unitOfWork.UserRepo.UpdateEntityAsync(result))
-                return false;
+            //var result = mapper.Map<ApplicationUser>(response);
 
-            var result = mapper.Map(request.User, user);
-            
-            await unitOfWork.UserRepo.UpdateEntityAsync(result, cancellationToken);
+            await unitOfWork.UserRepo.UpdateEntityAsync(user, cancellationToken);
             await unitOfWork.CompleteAsync(cancellationToken);
 
             return Result.Success();

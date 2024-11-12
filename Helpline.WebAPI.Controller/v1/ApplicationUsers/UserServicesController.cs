@@ -16,14 +16,24 @@ namespace Helpline.WebAPI.Controller.v1.ApplicationUsers
     {
         public UserServicesController(ISender sender) : base(sender)
         {
-            this.mediator = mediator;
+        }
+
+        [HttpGet]
+        [Route(HelplineConfig.UserRoute)]
+        public async Task<IActionResult> GetAllUsers(CancellationToken cancellationToken)
+        {
+            var query = new UsersQuery();
+
+            Result<IEnumerable<UserResponse>> response = await Sender.Send(query, cancellationToken);
+
+            return response.IsSuccess ? Ok(response) : BadRequest(response.Error);
         }
 
         [HttpGet]
         [Route($"{HelplineConfig.UserRoute}" + "/{id}")]
         public async Task<IActionResult> GetUserById(Guid id, CancellationToken cancellationToken)
         {
-            var query = new GetUserByIdQuery(id);
+            var query = new UserByIdQuery(id);
 
             Result<UserResponse> response = await Sender.Send(query, cancellationToken);
 
@@ -44,7 +54,6 @@ namespace Helpline.WebAPI.Controller.v1.ApplicationUsers
                 return BadRequest(ModelState);
 
             var command = new UserCreateCommand(
-                userRequest.Us
                 userRequest.FirstName,
                 userRequest.LastName,
                 userRequest.PhoneNumber,
@@ -62,7 +71,10 @@ namespace Helpline.WebAPI.Controller.v1.ApplicationUsers
 
         [HttpPut]
         [Route($"{HelplineConfig.UserRoute}" + "/{userId}")]
-        public async Task<IActionResult> UpdateUser(Guid userId, [FromBody] UpdateUserRequest user, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateUser(
+            Guid userId,
+            [FromBody] UpdateUserRequest user,
+            CancellationToken cancellationToken)
         {
             if (user == null || !ModelState.IsValid)
                 return BadRequest("User data bad request.");
