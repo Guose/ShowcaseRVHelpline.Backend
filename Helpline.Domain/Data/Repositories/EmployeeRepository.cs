@@ -9,7 +9,7 @@ namespace Helpline.Domain.Data.Repositories
     public class EmployeeRepository(HelplineContext context, ILogging logging) :
         BaseRepository<Employee, HelplineContext, int>(context, logging), IEmployeeRepository
     {
-        public async Task<Employee?> GetEmployeeByUserIdAsync(string userId)
+        public async Task<Employee?> GetEmployeeByUserIdAsync(string userId, CancellationToken cancellationToken)
         {
             return await Context.Employees.SingleOrDefaultAsync(x => x.UserId == userId);
         }

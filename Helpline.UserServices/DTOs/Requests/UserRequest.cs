@@ -1,6 +1,5 @@
 ﻿using Helpline.Common.Essentials;
 using Helpline.Common.Types;
-using Helpline.Domain.ValueObjects;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -11,44 +10,65 @@ namespace Helpline.UserServices.DTOs.Requests
     /// </summary>
     public sealed class UserRequest : AggregateRoot
     {
-        private UserRequest(Guid id, FirstName firstName, LastName lastName, PhoneNumber phoneNumber, AddressRequest address) : base(id)
+        private UserRequest(Guid id, string firstName, string lastName, string phoneNumber, AddressRequest address) : base(id)
         {
             FirstName = firstName;
             LastName = lastName;
             PhoneNumber = phoneNumber;
             Address = address;
         }
-        private UserRequest()
+
+        private UserRequest(Guid id, string firstName, string lastName, string phoneNumber, string secondPhone) : base(id)
         {
+            FirstName = firstName;
+            LastName = lastName;
+            PhoneNumber = phoneNumber;
+            SecondaryPhone = secondPhone;
         }
 
-        public FirstName? FirstName { get; private set; }
-        public LastName? LastName { get; private set; }
-        public Email? Email { get; private set; }
-        public UserName? UserName { get; private set; }
-        public Password? Password { get; private set; }
-        public PhoneNumber? PhoneNumber { get; private set; }
+        public UserRequest() { }
+        public string FirstName { get; private set; } = string.Empty;
+        public string LastName { get; private set; } = string.Empty;
+        public string PhoneNumber { get; private set; } = string.Empty;
+        public string? SecondaryPhone { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
         public RoleType Role { get; private set; }
         [JsonConverter(typeof(StringEnumConverter))]
         public PermissionType Permissions { get; private set; }
         public bool IsRemembered { get; private set; } = false;
         public bool IsActive { get; private set; } = true;
-        public AddressRequest? Address { get; private set; }
+        public AddressRequest? Address { get; set; }
 
         public static UserRequest Create(
             Guid id,
-            FirstName firstName,
-            LastName lastName,
-            PhoneNumber phoneNumber,
-            AddressRequest addressId)
+            string firstName,
+            string lastName,
+            string phoneNumber,
+            AddressRequest address)
         {
             var user = new UserRequest(
                 id,
                 firstName,
                 lastName,
                 phoneNumber,
-                addressId);
+                address);
+
+            return user;
+        }
+
+        public static UserRequest Update(
+            Guid id,
+            string firstName,
+            string lastName,
+            string phoneNumber,
+            string secondPhone)
+        {
+            var user = new UserRequest(
+                id,
+                firstName,
+                lastName,
+                phoneNumber,
+                secondPhone);
 
             return user;
         }

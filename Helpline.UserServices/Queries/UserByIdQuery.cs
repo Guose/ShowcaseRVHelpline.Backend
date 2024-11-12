@@ -3,5 +3,5 @@ using Helpline.UserServices.DTOs.Responses;
 
 namespace Helpline.UserServices.Queries
 {
-    public sealed record GetUserByIdQuery(Guid UserId) : IQuery<UserResponse>;
+    public sealed record UserByIdQuery(Guid UserId) : IQuery<UserResponse>;
 }

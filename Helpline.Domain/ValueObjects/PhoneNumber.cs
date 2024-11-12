@@ -25,7 +25,7 @@ namespace Helpline.Domain.ValueObjects
 
         public override IEnumerable<object> GetAtomicValues()
         {
-            throw new NotImplementedException();
+            yield return Value;
         }
     }
 }

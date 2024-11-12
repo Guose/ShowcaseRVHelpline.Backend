@@ -14,6 +14,5 @@ namespace Helpline.UserServices.DTOs.Responses
         public PermissionType Permssions { get; set; }
         public bool IsRemembered { get; set; }
         public bool IsActive { get; set; }
-        public AddressResponse? Address { get; set; }
     }
 }

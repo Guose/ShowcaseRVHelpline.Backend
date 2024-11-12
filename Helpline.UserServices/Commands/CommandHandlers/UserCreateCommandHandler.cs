@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Helpline.Common.Errors;
 using Helpline.Common.Models;
 using Helpline.Common.Shared;
 using Helpline.Domain.Data;
@@ -28,7 +27,7 @@ namespace Helpline.UserServices.Commands.CommandHandlers
 
             if (phoneResult.IsFailure || firstNameResult.IsFailure || lastNameResult.IsFailure)
             {
-                return Result.Failure<Guid>(CommonErrors.User.AreNull);
+                return Result.Failure<Guid>(new Error("User.Create", "Validation failed for user data."));
             }
 
             var address = AddressRequest.Create(
@@ -38,14 +37,15 @@ namespace Helpline.UserServices.Commands.CommandHandlers
                 request.Address.State!,
                 request.Address.PostalCode);
 
+            await unitOfWork.AddressRepo.CreateEntityAsync(mapper.Map<Address>(address), cancellationToken);
+
             var user = UserRequest.Create(
-                request.UserId,
-                firstNameResult.Value,
-                lastNameResult.Value,
-                phoneResult.Value,
+                Guid.NewGuid(),
+                request.FirstName,
+                request.LastName,
+                request.PhoneNumber,
                 address);
 
-            await unitOfWork.AddressRepo.CreateEntityAsync(mapper.Map<Address>(address), cancellationToken);
             await unitOfWork.UserRepo.CreateEntityAsync(mapper.Map<ApplicationUser>(request), cancellationToken);
 
             await unitOfWork.CompleteAsync(cancellationToken);

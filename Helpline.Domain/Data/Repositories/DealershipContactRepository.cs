@@ -9,7 +9,7 @@ namespace Helpline.Domain.Data.Repositories
     public class DealershipContactRepository(HelplineContext context, ILogging logging) :
         BaseRepository<DealershipContact, HelplineContext, int>(context, logging), IDealershipContactRepository
     {
-        public async Task<DealershipContact?> GetDealershipContactByUserIdAsync(string userId)
+        public async Task<DealershipContact?> GetDealershipContactByUserIdAsync(string userId, CancellationToken cancellationToken)
         {
             return await Context.DealershipContacts.SingleOrDefaultAsync(x => x.UserId == userId);
         }

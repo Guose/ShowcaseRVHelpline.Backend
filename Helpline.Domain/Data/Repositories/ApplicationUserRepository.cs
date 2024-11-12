@@ -12,12 +12,11 @@ namespace Helpline.Domain.Data.Repositories
     public class ApplicationUserRepository(HelplineContext context, ILogging logging, UserManager<ApplicationUser> userManager) :
         BaseRepository<ApplicationUser, HelplineContext, string>(context, logging), IApplicationUserRepository
     {
-
         public async Task<ApplicationUser?> GetUserByUsernameAsync(string username)
         {
             try
             {
-                ApplicationUser? user = await Context.ApplicationUsers.SingleOrDefaultAsync(u => u.UserName == username);
+                ApplicationUser? user = await Context.Users.SingleOrDefaultAsync(u => u.UserName == username);
 
                 Result<ApplicationUser> response = await userManager.FindByNameAsync(username);
 
@@ -41,5 +40,17 @@ namespace Helpline.Domain.Data.Repositories
 
         public async Task<bool> IsUserNameUniqueAsync(UserName userName, CancellationToken cancellationToken) =>
             !await Context.Users.AnyAsync(u => u.UserName == userName.Value, cancellationToken);
+
+        public async Task<ApplicationUser?> GetByIdWithNoTrackingToUpdateUserProfileAsync(Guid userId, CancellationToken cancellationToken)
+        {
+            var user = await Context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == userId.ToString(), cancellationToken: cancellationToken);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            return user;
+        }
     }
 }
