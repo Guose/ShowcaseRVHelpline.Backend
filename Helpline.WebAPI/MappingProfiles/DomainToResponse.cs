@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Helpline.Common.Models;
-using Helpline.UserServices.DTOs.Responses;
+using Helpline.Contracts.v1.Responses;
 
 namespace Helpline.WebAPI.MappingProfiles
 {

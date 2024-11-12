@@ -1,0 +1,11 @@
+﻿using Helpline.Domain.Messaging;
+
+namespace Helpline.UserServices.ApplicationUsers.Commands
+{
+    public sealed record UserUpdateCommand(
+        Guid UserId,
+        string FirstName,
+        string LastName,
+        string PhoneNumber,
+        string SecondaryPhone) : ICommand;
+}
