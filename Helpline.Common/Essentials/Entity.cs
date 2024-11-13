@@ -3,7 +3,7 @@
     public class Entity : IEquatable<Entity>
     {
         public Entity()
-        {            
+        {
         }
         protected Entity(Guid guidId)
         {
@@ -16,10 +16,10 @@
             IdType = IdType.Int;
         }
 
-        public Guid GuidId { get; private set; }
-        public int IntId { get; private set; }
+        public Guid GuidId { get; private init; }
+        public int IntId { get; private init; }
 
-        public IdType IdType { get; set; }
+        public IdType IdType { get; private init; }
 
         public static bool operator ==(Entity? first, Entity? second) =>
             first is not null && second is not null && first.Equals(second);
@@ -44,18 +44,18 @@
                 return false;
 
             return Equals(entity);
-            }
+        }
 
         public override int GetHashCode()
-            {
+        {
             return IdType switch
             {
                 IdType.Guid => GuidId.GetHashCode() * 41,
                 IdType.Int => IntId.GetHashCode() * 41,
                 _ => base.GetHashCode()
             };
-            }
         }
+    }
 
     public enum IdType
     {

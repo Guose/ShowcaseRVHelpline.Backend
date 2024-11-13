@@ -8,11 +8,10 @@ using Helpline.Common.Models;
 using Helpline.Common.Types;
 using Helpline.DataAccess.Context;
 using Helpline.Domain.Data;
-using Helpline.Domain.Data.Interfaces;
-using Helpline.Domain.Data.Repositories;
 using Helpline.WebAPI.Controller.Configuration.JwtAuthenticationConfig;
 using Helpline.WebAPI.Controller.Validation;
 using Helpline.WebAPI.Services.Caching;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -30,6 +29,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System.Fabric;
 using System.Net.WebSockets;
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -44,6 +44,15 @@ namespace Helpline.WebAPI
     internal sealed class WebAPI : StatelessService
     {
         private readonly string swaggerXMLFileName = "SomeFile.XML";
+
+        private readonly List<Assembly> assemblies = [
+            UserServices.AssemblyReference.Assembly,
+            EmailServices.AssemblyReference.Assembly,
+            RvRentalHub.AssemblyReference.Assembly,
+            ServiceCallHub.AssemblyReference.Assembly,
+            Controller.AssemblyReference.Assembly,
+        ];
+
         public WebAPI(StatelessServiceContext context)
             : base(context)
         {
@@ -77,26 +86,6 @@ namespace Helpline.WebAPI
 
                         builder.Services.AddSingleton(serviceContext);
                         builder.Services.AddHttpContextAccessor();
-
-                        // Add Automapper to DI configuration
-                        builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
-                        // Add services to the container.
-
-                        builder.Services.AddScoped<ILogging, Logging>();
-                        builder.Services.AddScoped<ITokenConfiguration, TokenConfiguration>();
-                        builder.Services.AddScoped<IAddressRepository, AddressRepository>();
-                        builder.Services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
-                        builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
-                        builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-                        builder.Services.AddScoped<IRedisCacheService, RedisCacheService>();
-
-                        // Injecting the MediatR into DI
-                        builder.Services.AddMediatR(config =>
-                        {
-                            config.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
-                        });
-
                         int port = serviceContext.CodePackageActivationContext.GetEndpoint("ServiceEndpoint").Port;
 
                         // Configure Kestrel to use HTTPS
@@ -111,19 +100,28 @@ namespace Helpline.WebAPI
                                 }
                                 httpOpts.UseHttps(certificate);
                             });
+                        });                        
+
+                        // Add Automapper to DI configuration
+                        builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+                        // Injecting the MediatR into DI
+                        builder.Services.AddMediatR(config =>
+                        {
+                            config.RegisterServicesFromAssemblies(UserServices.AssemblyReference.Assembly);
                         });
 
-                        // Use the Service Fabric integration
-                        builder.WebHost
-                            .UseServiceFabricIntegration(listener, ServiceFabricIntegrationOptions.None)
-                            .UseContentRoot(Directory.GetCurrentDirectory())
-                            .UseUrls(url);
+                        // Add Pipeline Validation
+                        builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+                        builder.Services.AddValidatorsFromAssemblies(assemblies, includeInternalTypes: true);
 
+                        // Add DBContext
                         builder.Services.AddDbContext<HelplineContext>(options =>
                             options.UseSqlServer(configuration.GetConnectionString("SqlServerConnection"))
                             .EnableSensitiveDataLogging()
                             .UseRootApplicationServiceProvider());
 
+                        // Add IdentityUser to User and DbContext
                         builder.Services.AddIdentityCore<ApplicationUser>()
                             .AddEntityFrameworkStores<HelplineContext>()
                             .AddDefaultTokenProviders()
@@ -133,7 +131,13 @@ namespace Helpline.WebAPI
                         {
                             options.Configuration = builder.Configuration.GetConnectionString("Redis");
                             options.InstanceName = "RVHelplineAPI_";
-                        });                        
+                        });
+
+                        // Add services to the container.
+                        builder.Services.AddScoped<ILogging, Logging>();
+                        builder.Services.AddScoped<ITokenConfiguration, TokenConfiguration>();
+                        builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+                        builder.Services.AddScoped<IRedisCacheService, RedisCacheService>();
 
                         // Add Controllers
                         builder.Services.AddControllers(options =>
@@ -157,8 +161,6 @@ namespace Helpline.WebAPI
                         .AddOData(opt => opt.Select().Filter().OrderBy().Expand())
                         .AddApplicationPart(Controller.AssemblyReference.Assembly);
 
-                        builder.Services.AddValidatorsFromAssemblyContaining<ValidationActionFilter>();
-
                         builder.Services.AddCors(options =>
                         {
                             options.AddPolicy("CorsPolicy", corsBuilder =>
@@ -181,86 +183,6 @@ namespace Helpline.WebAPI
                         })
                         .AddCookie(IdentityConstants.ApplicationScheme)
                         .AddBearerToken(IdentityConstants.BearerScheme);
-
-                        //.AddJwtBearer(opt =>
-                        //{
-                        //    opt.RequireHttpsMetadata = false;
-                        //    opt.SaveToken = true;
-                        //    opt.TokenValidationParameters = new TokenValidationParameters
-                        //    {
-                        //        ValidateIssuerSigningKey = true,
-                        //        IssuerSigningKey = new SymmetricSecurityKey(key),
-                        //        ValidateIssuer = true,
-                        //        ValidateAudience = true,
-                        //        ValidIssuer = builder.Configuration["JwtSettings:Issuer"]!,
-                        //        ValidAudience = builder.Configuration["JwtSettings:Audience"]!
-                        //    };
-                        //});
-
-                        builder.Services.AddSingleton<IAuthorizationHandler, AllowHelplineAccessHandler>();
-
-                        builder.Services.AddAuthorization(options =>
-                        {
-                            var fullAccessAdminPolicyRequirement = new HelplineAccessRequirment(RoleType.Admin, PermissionType.Admin);
-
-                            var authorizationPolicyBuilder = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme);
-                            authorizationPolicyBuilder.Requirements.Add(fullAccessAdminPolicyRequirement);
-                            options.AddPolicy(HelplineConstants.AdministratorPolicy, authorizationPolicyBuilder.Build());
-
-                            var employeeAdminPolicyRequirement = new HelplineAccessRequirment(RoleType.Employee, PermissionType.Admin);
-
-                            authorizationPolicyBuilder = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme);
-                            authorizationPolicyBuilder.Requirements.Add(employeeAdminPolicyRequirement);
-                            options.AddPolicy(HelplineConstants.EmployeeAdminPolicy, authorizationPolicyBuilder.Build());
-
-                            var employeeContractorPolicyRequirement = new HelplineAccessRequirment(RoleType.Employee, PermissionType.Contractor);
-
-                            authorizationPolicyBuilder = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme);
-                            authorizationPolicyBuilder.Requirements.Add(employeeContractorPolicyRequirement);
-                            options.AddPolicy(HelplineConstants.EmployeeContractorPolicy, authorizationPolicyBuilder.Build());
-
-                            var employeeLimitedPolicyRequirement = new HelplineAccessRequirment(RoleType.Employee, PermissionType.Limited);
-
-                            authorizationPolicyBuilder = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme);
-                            authorizationPolicyBuilder.Requirements.Add(employeeLimitedPolicyRequirement);
-                            options.AddPolicy(HelplineConstants.EmployeeLimitedPolicy, authorizationPolicyBuilder.Build());
-
-                            var customerLimitedPolicyRequirement = new HelplineAccessRequirment(RoleType.Customer, PermissionType.Limited);
-
-                            authorizationPolicyBuilder = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme);
-                            authorizationPolicyBuilder.Requirements.Add(customerLimitedPolicyRequirement);
-                            options.AddPolicy(HelplineConstants.CustomerLimitedPolicy, authorizationPolicyBuilder.Build());
-
-                            var customerGuestPolicyRequirement = new HelplineAccessRequirment(RoleType.Customer, PermissionType.Guest);
-
-                            authorizationPolicyBuilder = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme);
-                            authorizationPolicyBuilder.Requirements.Add(customerGuestPolicyRequirement);
-                            options.AddPolicy(HelplineConstants.CustomerGuestPolicy, authorizationPolicyBuilder.Build());
-
-                            var rvRenterGuestPolicyRequirment = new HelplineAccessRequirment(RoleType.RVRenter, PermissionType.Guest);
-
-                            authorizationPolicyBuilder = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme);
-                            authorizationPolicyBuilder.Requirements.Add(rvRenterGuestPolicyRequirment);
-                            options.AddPolicy(HelplineConstants.RVRenterGuestPolicy, authorizationPolicyBuilder.Build());
-
-                            var technicianLimitedPolicyRequirement = new HelplineAccessRequirment(RoleType.Technician, PermissionType.Limited);
-
-                            authorizationPolicyBuilder = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme);
-                            authorizationPolicyBuilder.Requirements.Add(technicianLimitedPolicyRequirement);
-                            options.AddPolicy(HelplineConstants.TechnicianLimitedPolicy, authorizationPolicyBuilder.Build());
-
-                            var dealershipLimitedPolicyRequirement = new HelplineAccessRequirment(RoleType.Dealership, PermissionType.Limited);
-
-                            authorizationPolicyBuilder = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme);
-                            authorizationPolicyBuilder.Requirements.Add(dealershipLimitedPolicyRequirement);
-                            options.AddPolicy(HelplineConstants.DealershipLimitedPolicy, authorizationPolicyBuilder.Build());
-
-                            var contractorPolicyRequirement = new HelplineAccessRequirment(RoleType.Contractor, PermissionType.Limited);
-
-                            authorizationPolicyBuilder = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme);
-                            authorizationPolicyBuilder.Requirements.Add(contractorPolicyRequirement);
-                            options.AddPolicy(HelplineConstants.ContractorPolicy, authorizationPolicyBuilder.Build());
-                        });
 
                         builder.Services.AddSingleton<IAuthorizationHandler, AllowHelplineAccessHandler>();
 
@@ -359,6 +281,12 @@ namespace Helpline.WebAPI
 
                             c.AddSecurityRequirement(securityRequirement);
                         });
+
+                        // Use the Service Fabric integration
+                        builder.WebHost
+                            .UseServiceFabricIntegration(listener, ServiceFabricIntegrationOptions.None)
+                            .UseContentRoot(Directory.GetCurrentDirectory())
+                            .UseUrls(url);
 
                         var app = builder.Build();
 

@@ -8,8 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Addresses\Commands\Handlers\" />
     <Folder Include="Events\" />
     <Folder Include="Events\EventHandlers\" />
+    <Folder Include="Customers\" />
+    <Folder Include="Employees\" />
+    <Folder Include="DealershipContacts\" />
+    <Folder Include="RvRenters\" />
+    <Folder Include="Technicians\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Helpline.Common\Helpline.Common.csproj" />
+    <ProjectReference Include="..\Helpline.Contracts\Helpline.Contracts.csproj" />
     <ProjectReference Include="..\Helpline.Domain\Helpline.Domain.csproj" />
   </ItemGroup>
 

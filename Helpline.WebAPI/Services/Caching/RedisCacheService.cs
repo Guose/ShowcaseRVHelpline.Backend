@@ -24,8 +24,8 @@ namespace Helpline.WebAPI.Services.Caching
 
         public void SetData<T>(string key, T value)
         {
-            var options = new DistributedCacheEntryOptions 
-            { 
+            var options = new DistributedCacheEntryOptions
+            {
                 AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5),
             };
 

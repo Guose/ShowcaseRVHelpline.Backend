@@ -50,7 +50,7 @@ namespace Helpline.WebAPI.Controller.Validation
                 .GetGenericTypeDefinition()
                 .MakeGenericType(typeof(TResult).GenericTypeArguments[0])
                 .GetMethod(nameof(ValidationResult.WithErrors))!
-                .Invoke(null, new object?[] { errors })!;
+                .Invoke(null, [errors])!;
 
             return (TResult)validationResult;
         }

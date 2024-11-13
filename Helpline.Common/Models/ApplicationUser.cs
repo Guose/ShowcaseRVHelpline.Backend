@@ -20,7 +20,7 @@ namespace Helpline.Common.Models
         public RoleType Role { get; set; }
         [Required]
         [JsonConverter(typeof(StringEnumConverter))]
-        public PermissionType Permissions { get; set; }
+        public PermissionType Permssions { get; set; }
 
         public bool IsRemembered { get; set; } = false;
         public bool IsActive { get; set; } = true;
@@ -29,7 +29,6 @@ namespace Helpline.Common.Models
         public int? AddressId { get; set; }
         public Address? Address { get; set; }
 
-        public Address Address { get; set; } = new();
         public Customer? Customer { get; set; }
         public Employee? Employee { get; set; }
         public Technician? Technician { get; set; }

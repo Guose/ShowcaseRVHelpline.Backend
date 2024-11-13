@@ -1,17 +1,17 @@
 ﻿using Helpline.Common.Constants;
 using Helpline.Common.Shared;
-using Helpline.UserServices.Commands;
-using Helpline.UserServices.DTOs.Responses;
-using Helpline.UserServices.Queries;
+using Helpline.Contracts.v1.Responses;
+using Helpline.UserServices.ApplicationUsers.Commands;
+using Helpline.UserServices.ApplicationUsers.Queries;
 using Helpline.WebAPI.Controller.Configuration;
-using Helpline.WebAPI.Controller.Contracts;
+using Helpline.WebAPI.Controller.v1.ApplicationUsers.Contracts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Helpline.WebAPI.Controller.v1.ApplicationUsers
 {
     [ApiController]
-    [Route($"{HelplineConfig.UserControllerRoute}")]
+    [Route($"{HelplineRoutes.UserControllerRoute}")]
     public class UserServicesController : BaseController
     {
         public UserServicesController(ISender sender) : base(sender)
@@ -19,7 +19,7 @@ namespace Helpline.WebAPI.Controller.v1.ApplicationUsers
         }
 
         [HttpGet]
-        [Route(HelplineConfig.UserRoute)]
+        [Route(HelplineRoutes.GetUsersRoute)]
         public async Task<IActionResult> GetAllUsers(CancellationToken cancellationToken)
         {
             var query = new UsersQuery();
@@ -30,10 +30,10 @@ namespace Helpline.WebAPI.Controller.v1.ApplicationUsers
         }
 
         [HttpGet]
-        [Route($"{HelplineConfig.UserRoute}" + "/{id}")]
-        public async Task<IActionResult> GetUserById(Guid id, CancellationToken cancellationToken)
+        [Route(HelplineRoutes.UserRouteById)]
+        public async Task<IActionResult> GetUserById(Guid userId, CancellationToken cancellationToken)
         {
-            var query = new UserByIdQuery(id);
+            var query = new UserByIdQuery(userId);
 
             Result<UserResponse> response = await Sender.Send(query, cancellationToken);
 
@@ -41,9 +41,8 @@ namespace Helpline.WebAPI.Controller.v1.ApplicationUsers
         }
 
         [HttpPost]
-        [Route($"{HelplineConfig.UserRoute}")]
+        [Route(HelplineRoutes.UserRoute)]
         public async Task<IActionResult> RegisterUserProfile(
-            Guid userId,
             [FromBody] RegisterUserWithAddressRequest userRequest,
             CancellationToken cancellationToken)
         {
@@ -70,7 +69,7 @@ namespace Helpline.WebAPI.Controller.v1.ApplicationUsers
         }
 
         [HttpPut]
-        [Route($"{HelplineConfig.UserRoute}" + "/{userId}")]
+        [Route(HelplineRoutes.UserRouteById)]
         public async Task<IActionResult> UpdateUser(
             Guid userId,
             [FromBody] UpdateUserRequest user,
