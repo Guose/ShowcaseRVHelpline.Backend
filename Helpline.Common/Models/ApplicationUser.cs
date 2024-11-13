@@ -20,7 +20,7 @@ namespace Helpline.Common.Models
         public RoleType Role { get; set; }
         [Required]
         [JsonConverter(typeof(StringEnumConverter))]
-        public PermissionType Permissions { get; set; }
+        public PermissionType Permssions { get; set; }
 
         public bool IsRemembered { get; set; } = false;
         public bool IsActive { get; set; } = true;

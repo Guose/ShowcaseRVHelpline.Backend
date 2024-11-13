@@ -11,7 +11,7 @@ namespace Helpline.Contracts.v1.Responses
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public RoleType Role { get; set; }
-        public PermissionType Permissions { get; set; }
+        public PermissionType Permssions { get; set; }
         public bool IsRemembered { get; set; }
         public bool IsActive { get; set; }
     }

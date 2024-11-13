@@ -31,9 +31,9 @@ namespace Helpline.WebAPI.Controller.v1.ApplicationUsers
 
         [HttpGet]
         [Route(HelplineRoutes.UserRouteById)]
-        public async Task<IActionResult> GetUserById(Guid id, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetUserById(Guid userId, CancellationToken cancellationToken)
         {
-            var query = new UserByIdQuery(id);
+            var query = new UserByIdQuery(userId);
 
             Result<UserResponse> response = await Sender.Send(query, cancellationToken);
 
