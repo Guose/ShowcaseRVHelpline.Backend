@@ -1,6 +1,5 @@
 ﻿using Helpline.Common.Constants;
 using Helpline.Common.Shared;
-using Helpline.Contracts.v1.Requests;
 using Helpline.Contracts.v1.Responses;
 using Helpline.UserServices.Addresses.Commands;
 using Helpline.UserServices.Addresses.Queries;
@@ -34,12 +33,13 @@ namespace Helpline.WebAPI.Controller.v1.ApplicationUsers
         [Route(HelplineRoutes.AddressByIdRoute)]
         public async Task<IActionResult> UpdateAddress(Guid userId, [FromBody] UpdateAddressRequest request, CancellationToken cancellationToken)
         {
-            var command = new AddressUpdateCommand(userId, AddressRequest.Create(
+            var command = new AddressUpdateCommand(
+                userId,
                 request.Address1,
                 request.Address2,
                 request.City,
                 request.State,
-                request.ZipCode));
+                request.ZipCode);
 
             Result result = await Sender.Send(command, cancellationToken);
 

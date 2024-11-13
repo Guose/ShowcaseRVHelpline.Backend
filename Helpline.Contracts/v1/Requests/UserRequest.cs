@@ -10,12 +10,11 @@ namespace Helpline.Contracts.v1.Requests
     /// </summary>
     public sealed class UserRequest : AggregateRoot
     {
-        private UserRequest(Guid id, string firstName, string lastName, string phoneNumber, AddressRequest address) : base(id)
+        private UserRequest(Guid id, string firstName, string lastName, string phoneNumber) : base(id)
         {
             FirstName = firstName;
             LastName = lastName;
             PhoneNumber = phoneNumber;
-            Address = address;
         }
 
         private UserRequest(Guid id, string firstName, string lastName, string phoneNumber, string secondPhone) : base(id)
@@ -27,31 +26,28 @@ namespace Helpline.Contracts.v1.Requests
         }
 
         public UserRequest() { }
-        public string FirstName { get; private set; } = string.Empty;
-        public string LastName { get; private set; } = string.Empty;
-        public string PhoneNumber { get; private set; } = string.Empty;
+        public string FirstName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
+        public string PhoneNumber { get; set; } = string.Empty;
         public string? SecondaryPhone { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
-        public RoleType Role { get; private set; }
+        public RoleType Role { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
-        public PermissionType Permssions { get; private set; }
-        public bool IsRemembered { get; private set; } = false;
-        public bool IsActive { get; private set; } = true;
-        public AddressRequest? Address { get; set; }
+        public PermissionType Permssions { get; set; }
+        public bool IsRemembered { get; set; }
+        public bool IsActive { get; set; }
 
         public static UserRequest Create(
             Guid id,
             string firstName,
             string lastName,
-            string phoneNumber,
-            AddressRequest address)
+            string phoneNumber)
         {
             var user = new UserRequest(
                 id,
                 firstName,
                 lastName,
-                phoneNumber,
-                address);
+                phoneNumber);
 
             return user;
         }

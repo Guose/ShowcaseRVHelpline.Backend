@@ -5,7 +5,7 @@ using Helpline.Contracts.v1.Responses;
 using Helpline.Domain.Data;
 using Helpline.Domain.Messaging;
 
-namespace Helpline.UserServices.Addresses.Queries.Handlers
+namespace Helpline.UserServices.Addresses.Queries
 {
     public class AddressByUserIdQueryHandler : IQueryHandler<AddressByUserIdQuery, AddressResponse>
     {

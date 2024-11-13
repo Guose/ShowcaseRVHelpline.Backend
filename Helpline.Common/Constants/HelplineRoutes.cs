@@ -17,6 +17,7 @@
         public const string AddressByIdRoute = "Address/{userId}";
 
         // CustomerRoutes
+        public const string CustomerControllerRoute = BaseUri + "Customer";
         public const string CustomersRoute = "Customers";
         public const string CustomerByIdRoute = "Customer/{userId}";
 

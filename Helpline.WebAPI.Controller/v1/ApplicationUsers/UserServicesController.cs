@@ -56,7 +56,7 @@ namespace Helpline.WebAPI.Controller.v1.ApplicationUsers
                 userRequest.FirstName,
                 userRequest.LastName,
                 userRequest.PhoneNumber,
-                userRequest.RequestAddress.Address);
+                userRequest.AddressRequest);
 
             Result<Guid> result = await Sender.Send(command, cancellationToken);
 
