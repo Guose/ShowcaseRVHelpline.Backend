@@ -33,7 +33,7 @@ namespace Helpline.Contracts.v1.Requests
         [JsonConverter(typeof(StringEnumConverter))]
         public RoleType Role { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
-        public PermissionType Permssions { get; set; }
+        public PermissionType Permissions { get; set; }
         public bool IsRemembered { get; set; }
         public bool IsActive { get; set; }
 

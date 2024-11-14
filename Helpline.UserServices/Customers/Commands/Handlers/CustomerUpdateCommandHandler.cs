@@ -24,7 +24,12 @@ namespace Helpline.UserServices.Customers.Commands.Handlers
             {
                 Result.Failure(new Error("Customer.Failure", "Customer has not been created yet..."));
             }
-            customer.SubscriptionStatus = request.su
+            customer!.SubscriptionStatus = request.SubscriptionStatus;
+
+            await unitOfWork.CustomerRepo.UpdateEntityAsync(customer, cancellationToken);
+            await unitOfWork.CompleteAsync(cancellationToken);
+
+            return Result.Success();
         }
     }
 }
