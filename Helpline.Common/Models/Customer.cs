@@ -7,6 +7,11 @@ namespace Helpline.Common.Models
 {
     public class Customer : BaseModel
     {
+        internal Customer(string userId)
+        {
+            UserId = userId;
+        }
+
         [JsonConverter(typeof(StringEnumConverter))]
         public SubscriptionType SubscriptionType { get; set; }
         public DateTime SubscriptionStartDate { get; set; }
@@ -24,10 +29,5 @@ namespace Helpline.Common.Models
 
         public ICollection<CustomerVehicle> CustomerVehicles { get; set; } = [];
         public ICollection<ServiceCase> ServiceCases { get; set; } = [];
-
-        public Customer()
-        {
-            UserId = Guid.NewGuid().ToString();
-        }
     }
 }

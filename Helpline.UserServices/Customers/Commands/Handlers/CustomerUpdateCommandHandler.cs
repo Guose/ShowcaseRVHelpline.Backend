@@ -5,7 +5,7 @@ using Helpline.Domain.Messaging;
 
 namespace Helpline.UserServices.Customers.Commands.Handlers
 {
-    public class CustomerUpdateCommandHandler : ICommandHandler<CustomerUpdateCommand>
+    public class CustomerUpdateCommandHandler : ICommandHandler<CustomerUpdateCommand, Guid>
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
@@ -16,7 +16,7 @@ namespace Helpline.UserServices.Customers.Commands.Handlers
             this.mapper = mapper;
         }
 
-        public async Task<Result> Handle(CustomerUpdateCommand request, CancellationToken cancellationToken)
+        public async Task<Result<Guid>> Handle(CustomerUpdateCommand request, CancellationToken cancellationToken)
         {
             var customer = await unitOfWork.CustomerRepo.GetCustomerByUserIdAsync(request.UserId.ToString(), cancellationToken);
 
@@ -26,10 +26,10 @@ namespace Helpline.UserServices.Customers.Commands.Handlers
             }
             customer!.SubscriptionStatus = request.SubscriptionStatus;
 
-            await unitOfWork.CustomerRepo.UpdateEntityAsync(customer, cancellationToken);
-            await unitOfWork.CompleteAsync(cancellationToken);
-
-            return Result.Success();
+            return (await unitOfWork.CustomerRepo.UpdateEntityAsync(customer, cancellationToken) &&
+            await unitOfWork.CompleteAsync(cancellationToken)) ?
+            Result.Success(Guid.Parse(customer.UserId)) :
+            Result.Failure<Guid>(new Error("Customer.Update", $"Could not update and save Customer with UserId: {customer.UserId}"));
         }
     }
 }

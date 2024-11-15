@@ -27,7 +27,7 @@ namespace Helpline.UserServices.Customers.Queries
                 Result.Failure(CommonErrors.User.NotFound(request.UserId));
             }
 
-            var response = new CustomerResponse();
+            var response = mapper.Map<CustomerResponse>(customer);
 
             return response;
         }

@@ -29,8 +29,6 @@ namespace Helpline.UserServices.ApplicationUsers.Commands.Handlers
             user.PhoneNumber = request.PhoneNumber;
             user.SecondaryPhone = request.SecondaryPhone;
 
-            //var result = mapper.Map<ApplicationUser>(response);
-
             await unitOfWork.UserRepo.UpdateEntityAsync(user, cancellationToken);
             await unitOfWork.CompleteAsync(cancellationToken);
 

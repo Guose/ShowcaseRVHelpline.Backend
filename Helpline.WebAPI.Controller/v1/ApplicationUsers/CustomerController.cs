@@ -1,5 +1,6 @@
 ﻿using Helpline.Common.Constants;
 using Helpline.Common.Shared;
+using Helpline.Contracts.v1.Requests;
 using Helpline.Contracts.v1.Responses;
 using Helpline.UserServices.Customers.Commands;
 using Helpline.UserServices.Customers.Queries;
@@ -30,13 +31,17 @@ namespace Helpline.WebAPI.Controller.v1.ApplicationUsers
         [Route(HelplineRoutes.CustomerByIdRoute)]
         public async Task<IActionResult> UpdateCustomer(
             Guid userId,
-            [FromBody] bool subscriptionStatus,
+            [FromBody] CustomerRequest request,
             CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
                 return BadRequest("User data bad request.");
 
-            var command = new CustomerUpdateCommand(userId, subscriptionStatus);
+            var command = new CustomerUpdateCommand(
+                userId,
+                request.SubscriptionId,
+                request.SubscriptionType,
+                request.SubscriptionStatus);
 
             Result result = await Sender.Send(command, cancellationToken);
 

@@ -1,6 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Helpline.Common.Types;
+﻿using Helpline.Common.Types;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.ComponentModel.DataAnnotations;
 
 namespace Helpline.Common.Models
 {
@@ -11,6 +13,7 @@ namespace Helpline.Common.Models
         public new Guid Id { get; set; }
 
         [Required]
+        [JsonConverter(typeof(StringEnumConverter))]
         public SubscriptionType SubscriptionType { get; set; }
         public string? Term { get; set; }
 

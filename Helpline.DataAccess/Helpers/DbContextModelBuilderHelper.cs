@@ -1,5 +1,5 @@
-﻿using Helpline.DataAccess.Seeds;
-using Helpline.Common.Models;
+﻿using Helpline.Common.Models;
+using Helpline.DataAccess.Seeds;
 using Microsoft.EntityFrameworkCore;
 
 namespace Helpline.DataAccess.Helpers

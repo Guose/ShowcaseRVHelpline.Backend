@@ -17,8 +17,7 @@ namespace Helpline.Common.Models
         public ICollection<ServiceCase>? ServiceCases { get; set; }
         public ICollection<RVRental>? Rentals { get; set; }
         public ICollection<VehicleRvRenter>? VehicleRvRenters { get; set; }
-
-        public ICollection<BedType>? BedTypes { get; set; }
+        public List<BedType> BedTypes { get; set; } = [];
 
         [Required]
         public int Year { get; set; }

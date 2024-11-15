@@ -57,9 +57,9 @@
         }
     }
 
-    public enum IdType
+    public enum IdType : byte
     {
-        Guid,
-        Int,
+        Guid = 1,
+        Int = 2,
     }
 }
