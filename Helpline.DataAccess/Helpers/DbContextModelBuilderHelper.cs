@@ -1,4 +1,5 @@
 ﻿using Helpline.Common.Models;
+using Helpline.Common.Models.Associations;
 using Helpline.DataAccess.Seeds;
 using Microsoft.EntityFrameworkCore;
 

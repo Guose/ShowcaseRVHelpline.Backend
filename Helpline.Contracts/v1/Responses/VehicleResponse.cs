@@ -1,5 +1,6 @@
 ﻿using Helpline.Common.Essentials;
 using Helpline.Common.Models;
+using Helpline.Common.Models.Associations;
 using Helpline.Common.Types;
 
 namespace Helpline.Contracts.v1.Responses

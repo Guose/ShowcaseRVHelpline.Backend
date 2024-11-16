@@ -33,7 +33,8 @@ namespace Helpline.SubscriptionServices.Customers.Commands.Handlers
                 return Result.Failure<Guid>(new Error("", ""));
             }
 
-
+            customer.SubscriptionStatus = request.SubscriptionStatus;
+            customer.IsActive = request.IsActive;
 
             return await unitOfWork.CustomerRepo.UpdateEntityAsync(customer, cancellationToken) &&
             await unitOfWork.CompleteAsync(cancellationToken) ?

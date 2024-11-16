@@ -1,4 +1,6 @@
-﻿namespace Helpline.Common.Models
+﻿using Helpline.Common.Models.Associations;
+
+namespace Helpline.Common.Models
 {
     public class Tag : BaseModel
     {

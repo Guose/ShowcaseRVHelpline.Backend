@@ -1,5 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Helpline.Common.Models.Associations;
 using Helpline.Common.Types;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Helpline.Common.Models
 {

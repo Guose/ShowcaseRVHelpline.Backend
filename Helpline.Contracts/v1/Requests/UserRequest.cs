@@ -24,7 +24,7 @@ namespace Helpline.Contracts.v1.Requests
             LastName = lastName;
             PhoneNumber = phoneNumber;
             SecondaryPhone = secondPhone;
-            LastModifiedOn = date;
+            ModifiedOn = date;
         }
 
         public UserRequest() { }
@@ -39,7 +39,7 @@ namespace Helpline.Contracts.v1.Requests
         public bool IsRemembered { get; set; }
         public bool IsActive { get; set; }
         public DateTime CreatedOn { get; set; } = DateTime.Now;
-        public DateTime? LastModifiedOn { get; set; }
+        public DateTime? ModifiedOn { get; set; }
 
         public static UserRequest Create(
             Guid id,

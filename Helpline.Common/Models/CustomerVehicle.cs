@@ -1,4 +1,5 @@
-﻿using Helpline.Common.Types;
+﻿using Helpline.Common.Models.Associations;
+using Helpline.Common.Types;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;

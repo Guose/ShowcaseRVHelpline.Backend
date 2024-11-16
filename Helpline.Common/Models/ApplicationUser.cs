@@ -22,7 +22,7 @@ namespace Helpline.Common.Models
         [JsonConverter(typeof(StringEnumConverter))]
         public PermissionType Permissions { get; set; }
         public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
-        public DateTime? LastModifiedOn { get; set; }
+        public DateTime? ModifiedOn { get; set; }
 
         public bool IsRemembered { get; set; }
         public bool IsActive { get; set; }

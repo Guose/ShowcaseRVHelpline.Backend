@@ -1200,7 +1200,7 @@ namespace Helpline.DataAccess.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.ServiceClass", b =>
+            modelBuilder.Entity("Helpline.Common.Models.ServiceType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1728,7 +1728,7 @@ namespace Helpline.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Helpline.Common.Models.ServiceClass", "Service")
+                    b.HasOne("Helpline.Common.Models.ServiceType", "Service")
                         .WithMany("EmployeeServices")
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -1868,7 +1868,7 @@ namespace Helpline.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Helpline.Common.Models.ServiceClass", "ServiceType")
+                    b.HasOne("Helpline.Common.Models.ServiceType", "ServiceType")
                         .WithMany("ServiceCaseCallServiceTypes")
                         .HasForeignKey("ServiceTypeId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -1910,7 +1910,7 @@ namespace Helpline.DataAccess.Migrations
 
             modelBuilder.Entity("Helpline.Common.Models.TechnicianService", b =>
                 {
-                    b.HasOne("Helpline.Common.Models.ServiceClass", "Service")
+                    b.HasOne("Helpline.Common.Models.ServiceType", "Service")
                         .WithMany("TechnicianServices")
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -2079,7 +2079,7 @@ namespace Helpline.DataAccess.Migrations
                     b.Navigation("ServiceCaseCallServiceTypes");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.ServiceClass", b =>
+            modelBuilder.Entity("Helpline.Common.Models.ServiceType", b =>
                 {
                     b.Navigation("EmployeeServices");
 

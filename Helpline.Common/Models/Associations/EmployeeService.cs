@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Helpline.Common.Models
+namespace Helpline.Common.Models.Associations
 {
     public class EmployeeService
     {

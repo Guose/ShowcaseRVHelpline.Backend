@@ -1,4 +1,4 @@
-﻿namespace Helpline.Common.Models
+﻿namespace Helpline.Common.Models.Associations
 {
     public class LookupItem
     {

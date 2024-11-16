@@ -1,4 +1,5 @@
-﻿using Helpline.Common.Types;
+﻿using Helpline.Common.Models.Associations;
+using Helpline.Common.Types;
 
 namespace Helpline.Common.Models
 {
