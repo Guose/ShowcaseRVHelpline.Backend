@@ -14,6 +14,10 @@ namespace Helpline.Common.Errors
                 "User.NotFound",
                 $"The user with the identifier {id} was not found.");
 
+            public static readonly Error CollectionNotFound = new(
+                "User.NotFound",
+                "The Query to 'GetAll' had an error. See log for more detail.");
+
             public static readonly Error AreNull = new(
                 "User.Properties_AreNull",
                 "The user's properties cannot be null.");

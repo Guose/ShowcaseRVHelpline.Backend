@@ -11,6 +11,8 @@ namespace Helpline.Contracts.v1.Requests
         public DateTime SubscriptionStartDate { get; set; }
         public DateTime SubscriptionEndDate { get; set; }
         public bool SubscriptionStatus { get; set; }
-        public UserRequest User { get; set; } = new();
+        public bool IsActive { get; set; }
+        public Guid UserId { get; set; }
+        public Guid SubscriptionId { get; set; }
     }
 }

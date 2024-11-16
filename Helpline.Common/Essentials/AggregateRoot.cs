@@ -5,7 +5,7 @@
         private readonly List<ICommonEvent> domainEvents = new();
 
         protected AggregateRoot(Guid guidId) : base(guidId) { }
-        protected AggregateRoot(int intId) : base(intId) { }
+        protected AggregateRoot(Guid guidId, int intId) : base(guidId, intId) { }
 
         protected AggregateRoot() { }
 

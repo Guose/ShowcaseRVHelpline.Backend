@@ -8,50 +8,52 @@ namespace Helpline.Contracts.v1.Requests
     /// <summary>
     /// User that sends to the data access layer (DB)
     /// </summary>
-    public sealed class UserRequest : AggregateRoot
+    public sealed class UserRequest : AggregateRoot, IAuditableEntity
     {
-        private UserRequest(Guid id, string firstName, string lastName, string phoneNumber, AddressRequest address) : base(id)
+        private UserRequest(Guid id, string firstName, string lastName, string phoneNumber, DateTime date) : base(id)
         {
             FirstName = firstName;
             LastName = lastName;
             PhoneNumber = phoneNumber;
-            Address = address;
+            CreatedOn = date;
         }
 
-        private UserRequest(Guid id, string firstName, string lastName, string phoneNumber, string secondPhone) : base(id)
+        private UserRequest(Guid id, string firstName, string lastName, string phoneNumber, string secondPhone, DateTime date) : base(id)
         {
             FirstName = firstName;
             LastName = lastName;
             PhoneNumber = phoneNumber;
             SecondaryPhone = secondPhone;
+            ModifiedOn = date;
         }
 
         public UserRequest() { }
-        public string FirstName { get; private set; } = string.Empty;
-        public string LastName { get; private set; } = string.Empty;
-        public string PhoneNumber { get; private set; } = string.Empty;
+        public string FirstName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
+        public string PhoneNumber { get; set; } = string.Empty;
         public string? SecondaryPhone { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
-        public RoleType Role { get; private set; }
+        public RoleType Role { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
-        public PermissionType Permssions { get; private set; }
-        public bool IsRemembered { get; private set; } = false;
-        public bool IsActive { get; private set; } = true;
-        public AddressRequest? Address { get; set; }
+        public PermissionType Permissions { get; set; }
+        public bool IsRemembered { get; set; }
+        public bool IsActive { get; set; }
+        public DateTime CreatedOn { get; set; } = DateTime.Now;
+        public DateTime? ModifiedOn { get; set; }
 
         public static UserRequest Create(
             Guid id,
             string firstName,
             string lastName,
             string phoneNumber,
-            AddressRequest address)
+            DateTime createdOn)
         {
             var user = new UserRequest(
                 id,
                 firstName,
                 lastName,
                 phoneNumber,
-                address);
+                createdOn);
 
             return user;
         }
@@ -61,14 +63,16 @@ namespace Helpline.Contracts.v1.Requests
             string firstName,
             string lastName,
             string phoneNumber,
-            string secondPhone)
+            string secondPhone,
+            DateTime modifiedOn)
         {
             var user = new UserRequest(
                 id,
                 firstName,
                 lastName,
                 phoneNumber,
-                secondPhone);
+                secondPhone,
+                modifiedOn);
 
             return user;
         }

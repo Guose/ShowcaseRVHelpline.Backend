@@ -3,6 +3,6 @@
     public interface IAuditableEntity
     {
         DateTime CreatedOn { get; set; }
-        DateTime? LastModifiedOn { get; set; }
+        DateTime? ModifiedOn { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Helpline.Common.Errors;
 using Helpline.Common.Shared;
 using Helpline.Contracts.v1.Responses;
 using Helpline.Domain.Data;
@@ -23,9 +24,7 @@ namespace Helpline.UserServices.ApplicationUsers.Queries.Handlers
 
             if (users is null)
             {
-                return Result.Failure<IEnumerable<UserResponse>>(new Error(
-                    "Users.NotFound",
-                    "There are no users to be retrieved"));
+                return Result.Failure<IEnumerable<UserResponse>>(CommonErrors.User.CollectionNotFound);
             }
 
             var response = mapper.Map<IEnumerable<UserResponse>>(users);

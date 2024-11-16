@@ -8,13 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Addresses\Commands\Handlers\" />
     <Folder Include="Events\" />
     <Folder Include="Events\EventHandlers\" />
-    <Folder Include="Customers\" />
-    <Folder Include="Employees\" />
     <Folder Include="DealershipContacts\" />
-    <Folder Include="RvRenters\" />
     <Folder Include="Technicians\" />
   </ItemGroup>
 

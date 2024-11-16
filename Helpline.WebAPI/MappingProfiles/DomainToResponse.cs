@@ -22,6 +22,12 @@ namespace Helpline.WebAPI.MappingProfiles
 
             // Address mapping
             CreateMap<Address, AddressResponse>();
+
+            // Vehicle mapping
+            CreateMap<CustomerVehicle, VehicleResponse>();
+
+            // Subscription mapping
+            CreateMap<Subscription, SubscriptionResponse>();
         }
     }
 }

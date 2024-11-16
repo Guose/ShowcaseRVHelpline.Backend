@@ -11,7 +11,11 @@ namespace Helpline.Domain.Data.Repositories
     {
         public async Task<Employee?> GetEmployeeByUserIdAsync(string userId, CancellationToken cancellationToken)
         {
-            return await Context.Employees.SingleOrDefaultAsync(x => x.UserId == userId);
+            return await Context.Employees
+                .Include(u => u.User)
+                    .ThenInclude(a => a!.Address)
+                .Include(sc => sc.ServiceCases)
+                .FirstOrDefaultAsync(x => x.UserId == userId);
         }
     }
 }

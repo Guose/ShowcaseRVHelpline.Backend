@@ -1,4 +1,5 @@
-﻿using Helpline.Common.Models;
+﻿using Helpline.Common.Essentials;
+using Helpline.Common.Models;
 using Helpline.Common.Types;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -28,7 +29,7 @@ namespace Helpline.DataAccess.Seeds
             return JsonSerializer.Deserialize<List<T>>(json)!;
         }
 
-        public List<T> UpdateCreatedOnData<T>(List<T> items) where T : IHasCreatedOn
+        public List<T> UpdateCreatedOnData<T>(List<T> items) where T : IAuditableEntity
         {
             List<T> updatedItems = [];
 
@@ -46,7 +47,7 @@ namespace Helpline.DataAccess.Seeds
             List<RVRental> rentalSeeds = [];
             DateTime start = new DateTime();
 
-            foreach(var rental in rentals)
+            foreach (var rental in rentals)
             {
                 switch (rental.RentalStatus)
                 {
@@ -108,7 +109,7 @@ namespace Helpline.DataAccess.Seeds
                 item.SubscriptionStartDate = DateTime.Now.AddMonths(month);
                 item.SubscriptionEndDate = item.SubscriptionStartDate.AddMonths(12);
                 item.CreatedOn = DateTime.Now;
-                
+
                 custsomerSeeds.Add(item);
             }
 

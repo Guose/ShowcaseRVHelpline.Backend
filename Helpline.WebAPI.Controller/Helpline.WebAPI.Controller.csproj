@@ -18,6 +18,7 @@
     <ProjectReference Include="..\Helpline.EmailServices\Helpline.EmailServices.csproj" />
     <ProjectReference Include="..\Helpline.RentalServices\Helpline.RvRentalHub.csproj" />
     <ProjectReference Include="..\Helpline.ServiceCallHub\Helpline.ServiceCallHub.csproj" />
+    <ProjectReference Include="..\Helpline.SubscriptionServices\Helpline.SubscriptionServices.csproj" />
     <ProjectReference Include="..\Helpline.UserServices\Helpline.UserServices.csproj" />
   </ItemGroup>
 

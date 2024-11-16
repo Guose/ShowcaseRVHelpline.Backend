@@ -1,8 +1,11 @@
-﻿using Helpline.DataAccess.Helpers;
-using Helpline.Common.Models;
+﻿using Helpline.Common.Models;
+using Helpline.Common.Models.Associations;
+using Helpline.Common.Types;
+using Helpline.DataAccess.Helpers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Helpline.DataAccess.Context
 {
@@ -49,6 +52,19 @@ namespace Helpline.DataAccess.Context
             modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims");
 
             modelBuilder.ModelCreator();
+
+            modelBuilder.Entity<CustomerVehicle>()
+                .Property(e => e.BedTypes)
+                .HasConversion(
+                    v => string.Join(",", v!.Select(b => b.ToString())),
+                    v => v.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                          .Select(b => Enum.Parse<BedType>(b))
+                          .ToList())
+                .Metadata.SetValueComparer(new ValueComparer<List<BedType>>(
+                    (c1, c2) => c1!.SequenceEqual(c2!),
+                    c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                    c => c.ToList()));
+
             // modelBuilder.ModelSeeds();
         }
     }

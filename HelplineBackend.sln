@@ -21,9 +21,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helpline.UserServices", "He
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helpline.RvRentalHub", "Helpline.RentalServices\Helpline.RvRentalHub.csproj", "{C940F0B6-230D-40D0-9286-9342673D9694}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helpline.Contracts", "Helpline.Contracts\Helpline.Contracts.csproj", "{58BBA51A-93DA-4A96-958A-0F664CC2F74B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helpline.Contracts", "Helpline.Contracts\Helpline.Contracts.csproj", "{58BBA51A-93DA-4A96-958A-0F664CC2F74B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helpline.EmailServices", "Helpline.EmailServices\Helpline.EmailServices.csproj", "{B8FEF0CE-6581-48C2-89CE-5062B42F85E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helpline.EmailServices", "Helpline.EmailServices\Helpline.EmailServices.csproj", "{B8FEF0CE-6581-48C2-89CE-5062B42F85E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helpline.SubscriptionServices", "Helpline.SubscriptionServices\Helpline.SubscriptionServices.csproj", "{6C232AEC-FC92-48B9-94C7-A0A57F392548}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -125,6 +127,14 @@ Global
 		{B8FEF0CE-6581-48C2-89CE-5062B42F85E8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B8FEF0CE-6581-48C2-89CE-5062B42F85E8}.Release|x64.ActiveCfg = Release|Any CPU
 		{B8FEF0CE-6581-48C2-89CE-5062B42F85E8}.Release|x64.Build.0 = Release|Any CPU
+		{6C232AEC-FC92-48B9-94C7-A0A57F392548}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C232AEC-FC92-48B9-94C7-A0A57F392548}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C232AEC-FC92-48B9-94C7-A0A57F392548}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6C232AEC-FC92-48B9-94C7-A0A57F392548}.Debug|x64.Build.0 = Debug|Any CPU
+		{6C232AEC-FC92-48B9-94C7-A0A57F392548}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C232AEC-FC92-48B9-94C7-A0A57F392548}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C232AEC-FC92-48B9-94C7-A0A57F392548}.Release|x64.ActiveCfg = Release|Any CPU
+		{6C232AEC-FC92-48B9-94C7-A0A57F392548}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

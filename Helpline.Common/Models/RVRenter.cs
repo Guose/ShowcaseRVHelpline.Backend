@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using Helpline.Common.Models.Associations;
 
 namespace Helpline.Common.Models
 {

@@ -1,7 +1,12 @@
-﻿using Helpline.Contracts.v1.Requests;
-using Helpline.Domain.Messaging;
+﻿using Helpline.Domain.Messaging;
 
 namespace Helpline.UserServices.Addresses.Commands
 {
-    public sealed record AddressUpdateCommand(Guid UserId, AddressRequest Address) : ICommand;
+    public sealed record AddressUpdateCommand(
+        Guid UserId,
+        string Address1,
+        string Address2,
+        string City,
+        string State,
+        string PostalCode) : ICommand;
 }
