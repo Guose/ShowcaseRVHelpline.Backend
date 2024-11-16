@@ -5,7 +5,7 @@ using Helpline.Contracts.v1.Responses;
 using Helpline.Domain.Data;
 using Helpline.Domain.Messaging;
 
-namespace Helpline.UserServices.Customers.Queries
+namespace Helpline.SubscriptionServices.Customers.Queries
 {
     public class CustomerByIdQueryHandler : IQueryHandler<CustomerByIdQuery, CustomerResponse>
     {

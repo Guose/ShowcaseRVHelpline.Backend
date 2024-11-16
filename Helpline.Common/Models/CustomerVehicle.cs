@@ -1,4 +1,5 @@
 ﻿using Helpline.Common.Types;
+using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -12,6 +13,7 @@ namespace Helpline.Common.Models
 
         [ForeignKey("CustomerId")]
         public int CustomerId { get; set; }
+        [JsonIgnore]
         public Customer? Customer { get; set; }
 
         public ICollection<ServiceCase>? ServiceCases { get; set; }

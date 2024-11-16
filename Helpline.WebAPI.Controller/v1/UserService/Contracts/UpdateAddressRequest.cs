@@ -1,6 +1,6 @@
-﻿namespace Helpline.WebAPI.Controller.v1.ApplicationUsers.Contracts
+﻿namespace Helpline.WebAPI.Controller.v1.SubscriptionService.Contracts
 {
-    public sealed record RegisterAddressRequest(
+    public sealed record UpdateAddressRequest(
         string Address1,
         string Address2,
         string City,

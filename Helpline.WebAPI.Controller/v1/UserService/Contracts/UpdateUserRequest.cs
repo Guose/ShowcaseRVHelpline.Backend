@@ -1,4 +1,4 @@
-﻿namespace Helpline.WebAPI.Controller.v1.ApplicationUsers.Contracts
+﻿namespace Helpline.WebAPI.Controller.v1.SubscriptionService.Contracts
 {
     public sealed record UpdateUserRequest(
         string FirstName,

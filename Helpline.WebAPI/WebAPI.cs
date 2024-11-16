@@ -32,7 +32,6 @@ using System.Net.WebSockets;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using System.Text.Json.Serialization;
 using System.Xml;
 using System.Xml.XPath;
 
@@ -109,6 +108,7 @@ namespace Helpline.WebAPI
                         builder.Services.AddMediatR(config =>
                         {
                             config.RegisterServicesFromAssemblies(UserServices.AssemblyReference.Assembly);
+                            config.RegisterServicesFromAssemblies(SubscriptionServices.AssemblyReference.Assembly);
                         });
 
                         // Add Pipeline Validation
@@ -150,13 +150,8 @@ namespace Helpline.WebAPI
                         {
                             settings.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                             settings.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                        })
-                        .AddOData(opt =>
-                            opt.Select().Filter().OrderBy().Expand())
-                        .AddJsonOptions(options =>
-                        {
-                            options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
-                            options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                            settings.SerializerSettings.DateFormatString = "yyyy-MM-dd";
+                            settings.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
                         })
                         .AddOData(opt => opt.Select().Filter().OrderBy().Expand())
                         .AddApplicationPart(Controller.AssemblyReference.Assembly);

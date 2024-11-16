@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="RvRenters\" />
+    <ProjectReference Include="..\Helpline.Contracts\Helpline.Contracts.csproj" />
+    <ProjectReference Include="..\Helpline.Domain\Helpline.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Subscriptions\Commands\" />
   </ItemGroup>
 
 </Project>

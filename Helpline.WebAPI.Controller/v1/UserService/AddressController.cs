@@ -3,20 +3,13 @@ using Helpline.Common.Shared;
 using Helpline.Contracts.v1.Responses;
 using Helpline.UserServices.Addresses.Commands;
 using Helpline.UserServices.Addresses.Queries;
-using Helpline.WebAPI.Controller.Configuration;
-using Helpline.WebAPI.Controller.v1.ApplicationUsers.Contracts;
-using MediatR;
+using Helpline.WebAPI.Controller.v1.SubscriptionService.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Helpline.WebAPI.Controller.v1.ApplicationUsers
+namespace Helpline.WebAPI.Controller.v1.UserService
 {
-    [ApiController]
-    [Route(HelplineRoutes.AddressControllerRoute)]
-    public class AddressController : BaseController
+    public partial class UserServicesController
     {
-        public AddressController(ISender sender) : base(sender)
-        {
-        }
 
         [HttpGet]
         [Route(HelplineRoutes.AddressByIdRoute)]

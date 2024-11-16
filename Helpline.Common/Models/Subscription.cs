@@ -22,6 +22,7 @@ namespace Helpline.Common.Models
         [Precision(10, 2)]
         public decimal Price { get; set; }
 
+        [JsonIgnore]
         public ICollection<Customer>? Customers { get; set; }
 
     }

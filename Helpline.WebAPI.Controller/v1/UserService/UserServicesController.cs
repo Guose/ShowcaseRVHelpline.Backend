@@ -4,19 +4,17 @@ using Helpline.Contracts.v1.Responses;
 using Helpline.UserServices.ApplicationUsers.Commands;
 using Helpline.UserServices.ApplicationUsers.Queries;
 using Helpline.WebAPI.Controller.Configuration;
-using Helpline.WebAPI.Controller.v1.ApplicationUsers.Contracts;
+using Helpline.WebAPI.Controller.v1.SubscriptionService.Contracts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Helpline.WebAPI.Controller.v1.ApplicationUsers
+namespace Helpline.WebAPI.Controller.v1.UserService
 {
     [ApiController]
     [Route($"{HelplineRoutes.UserControllerRoute}")]
-    public class UserServicesController : BaseController
+    public partial class UserServicesController : BaseController
     {
-        public UserServicesController(ISender sender) : base(sender)
-        {
-        }
+        public UserServicesController(ISender sender) : base(sender) { }
 
         [HttpGet]
         [Route(HelplineRoutes.GetUsersRoute)]

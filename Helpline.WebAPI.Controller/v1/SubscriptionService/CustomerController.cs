@@ -2,16 +2,16 @@
 using Helpline.Common.Shared;
 using Helpline.Contracts.v1.Requests;
 using Helpline.Contracts.v1.Responses;
-using Helpline.UserServices.Customers.Commands;
-using Helpline.UserServices.Customers.Queries;
+using Helpline.SubscriptionServices.Customers.Commands;
+using Helpline.SubscriptionServices.Customers.Queries;
 using Helpline.WebAPI.Controller.Configuration;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Helpline.WebAPI.Controller.v1.ApplicationUsers
+namespace Helpline.WebAPI.Controller.v1.SubscriptionService
 {
     [ApiController]
-    [Route(HelplineRoutes.CustomerControllerRoute)]
+    [Route(HelplineRoutes.SubscriptionControllerRoute)]
     public class CustomerController : BaseController
     {
         public CustomerController(ISender sender) : base(sender) { }
@@ -37,11 +37,10 @@ namespace Helpline.WebAPI.Controller.v1.ApplicationUsers
             if (!ModelState.IsValid)
                 return BadRequest("User data bad request.");
 
-            var command = new CustomerUpdateCommand(
+            var command = new CustomerUpdateStatusCommand(
                 userId,
-                request.SubscriptionId,
-                request.SubscriptionType,
-                request.SubscriptionStatus);
+                request.SubscriptionStatus,
+                request.IsActive);
 
             Result result = await Sender.Send(command, cancellationToken);
 

@@ -31,7 +31,8 @@ namespace Helpline.UserServices.ApplicationUsers.Commands.Handlers
                 Guid.NewGuid(),
                 request.FirstName,
                 request.LastName,
-                request.PhoneNumber);
+                request.PhoneNumber,
+                DateTime.Now);
 
             await unitOfWork.UserRepo.CreateEntityAsync(mapper.Map<ApplicationUser>(user), cancellationToken);
 

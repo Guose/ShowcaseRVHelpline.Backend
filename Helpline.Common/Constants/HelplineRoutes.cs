@@ -11,13 +11,16 @@
         public const string UserRoute = "User";
         public const string UserRouteById = "User/{userId}";
 
+        // EmployeeRoutes
+        public const string EmployeeRoute = "Employee";
+        public const string EmployeeRouteById = "Employee/{userId}";
+
         // AddressRoutes
-        public const string AddressControllerRoute = BaseUri + "Address";
         public const string AddressesRoute = "Addresses";
         public const string AddressByIdRoute = "Address/{userId}";
 
         // CustomerRoutes
-        public const string CustomerControllerRoute = BaseUri + "Customer";
+        public const string SubscriptionControllerRoute = BaseUri + "SubscriptionService";
         public const string CustomersRoute = "Customers";
         public const string CustomerByIdRoute = "Customer/{userId}";
 
