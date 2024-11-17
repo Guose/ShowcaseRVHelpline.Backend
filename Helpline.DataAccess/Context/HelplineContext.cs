@@ -21,6 +21,7 @@ namespace Helpline.DataAccess.Context
         public DbSet<Dealership> Dealerships => Set<Dealership>();
         public DbSet<DealershipContact> DealershipContacts => Set<DealershipContact>();
         public DbSet<Employee> Employees => Set<Employee>();
+        public DbSet<EmployeeService> EmployeeServices => Set<EmployeeService>();
         public DbSet<KnowledgeBaseLibrary> KnowledgeBaseLibraries => Set<KnowledgeBaseLibrary>();
         public DbSet<KnowledgeBaseTag> KnowledgeBaseTags => Set<KnowledgeBaseTag>();
         public DbSet<RVCheckout> Checkouts => Set<RVCheckout>();
@@ -29,10 +30,10 @@ namespace Helpline.DataAccess.Context
         public DbSet<RVReturn> Returns => Set<RVReturn>();
         public DbSet<ServiceCase> ServiceCases => Set<ServiceCase>();
         public DbSet<ServiceCaseCall> ServiceCaseCalls => Set<ServiceCaseCall>();
-        public DbSet<ServiceCaseCallServiceType> ServiceCaseCallServiceTypes => Set<ServiceCaseCallServiceType>();
+        public DbSet<ServiceCaseCallServiceClass> ServiceCaseCallServiceClasses => Set<ServiceCaseCallServiceClass>();
         public DbSet<ServiceCaseTag> ServiceCaseTags => Set<ServiceCaseTag>();
         public DbSet<RVService> RVServices => Set<RVService>();
-        public DbSet<ServiceClass> ServiceTypes => Set<ServiceClass>();
+        public DbSet<ServiceClass> ServiceClasses => Set<ServiceClass>();
         public DbSet<Subscription> Subscriptions => Set<Subscription>();
         public DbSet<Tag> Tags => Set<Tag>();
         public DbSet<Technician> Technicians => Set<Technician>();
@@ -52,6 +53,9 @@ namespace Helpline.DataAccess.Context
             modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims");
 
             modelBuilder.ModelCreator();
+
+            modelBuilder.Entity<ServiceClass>()
+                .HasKey(x => x.Id);
 
             modelBuilder.Entity<CustomerVehicle>()
                 .Property(e => e.BedTypes)

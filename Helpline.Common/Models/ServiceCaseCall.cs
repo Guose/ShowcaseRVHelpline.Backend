@@ -25,6 +25,6 @@ namespace Helpline.Common.Models
 
 
         public ICollection<ServiceCase>? RelatedServiceCases { get; set; }
-        public ICollection<ServiceCaseCallServiceType>? ServiceCaseCallServiceTypes { get; set; }
+        public ICollection<ServiceCaseCallServiceClass>? ServiceCaseCallServiceClasses { get; set; }
     }
 }

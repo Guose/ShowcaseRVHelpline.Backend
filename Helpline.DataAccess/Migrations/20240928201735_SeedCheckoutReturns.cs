@@ -158,7 +158,7 @@ namespace Helpline.DataAccess.Migrations
 
             migrationBuilder.InsertData(
                 table: "ServiceCaseCalls",
-                columns: new[] { "Id", "Attachments", "CallType", "Caller", "CreatedOn", "Description", "IsActive", "Item", "KnowledgeBaseLibraryId", "ModifiedOn", "Notes", "ResolveDate", "ServiceCaseId", "ServiceType", "Status" },
+                columns: new[] { "Id", "Attachments", "CallType", "Caller", "CreatedOn", "Description", "IsActive", "Item", "KnowledgeBaseLibraryId", "ModifiedOn", "Notes", "ResolveDate", "ServiceCaseId", "ServiceClass", "Status" },
                 values: new object[,]
                 {
                     { -2, null, (byte)4, "Jane Doe", new DateTime(2024, 9, 28, 13, 14, 11, 5, DateTimeKind.Local).AddTicks(2245), null, false, null, -2, null, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), -2, (byte)18, 0 },

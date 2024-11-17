@@ -31,11 +31,11 @@ namespace Helpline.DataAccess.Migrations
 
             migrationBuilder.DropForeignKey(
                 name: "FK_ServiceCaseCallServiceTypes_ServiceCaseCalls_ServiceCaseCallId",
-                table: "ServiceCaseCallServiceTypes");
+                table: "ServiceCaseCallServiceClasses");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_ServiceCaseCallServiceTypes_ServiceTypes_ServiceTypeId",
-                table: "ServiceCaseCallServiceTypes");
+                table: "ServiceCaseCallServiceClasses");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_ServiceCaseTags_ServiceCases_ServiceCaseId",
@@ -79,10 +79,10 @@ namespace Helpline.DataAccess.Migrations
 
             migrationBuilder.InsertData(
                 table: "RVServices",
-                columns: new[] { "Id", "Attachments", "CostPercent", "CreatedOn", "Description", "Frequency", "GrossProfitPercent", "IsActive", "ModifiedOn", "Notes", "RetailPrice", "ServiceType", "ServiceCode", "ServiceMethod", "UOM" },
+                columns: new[] { "Id", "Attachments", "CostPercent", "CreatedOn", "Description", "Frequency", "GrossProfitPercent", "IsActive", "ModifiedOn", "Notes", "RetailPrice", "ServiceClass", "ServiceCode", "ServiceMethod", "UOM" },
                 values: new object[,]
                 {
-                    { 1, null, 65m, new DateTime(2024, 9, 27, 4, 57, 13, 752, DateTimeKind.Utc).AddTicks(768), "Top off fluids, clean terminals and posts, test amps/volts, and apply anti-corrosive (up to 3 batteries).", "As needed", 35m, true, null, null, 135.00m, "Battery ServiceType", "M00001", "Mobile", "3 batteries" },
+                    { 1, null, 65m, new DateTime(2024, 9, 27, 4, 57, 13, 752, DateTimeKind.Utc).AddTicks(768), "Top off fluids, clean terminals and posts, test amps/volts, and apply anti-corrosive (up to 3 batteries).", "As needed", 35m, true, null, null, 135.00m, "Battery ServiceClass", "M00001", "Mobile", "3 batteries" },
                     { 2, null, 65m, new DateTime(2024, 9, 27, 4, 57, 13, 752, DateTimeKind.Utc).AddTicks(771), "Clean and check battery and connections; visual inspection of exhaust system; clean spark arrester; replace air filter, change oil and filter; perform load test; replace fuel filter as necessary.", "150 hours", 35m, true, null, null, 240.00m, "Generator Tuneups", "M00002", "Mobile", "Each" },
                     { 3, null, 65m, new DateTime(2024, 9, 27, 4, 57, 13, 752, DateTimeKind.Utc).AddTicks(772), "Lube chassis, check transmission fluids, battery water level, check/add coolant level; inspect wiper blades, and top off washer fluid.", "5000 miles or 6 months", 35m, true, null, null, 160.00m, "Oil Changes", "M00003", "Mobile", "Each" },
                     { 4, null, 65m, new DateTime(2024, 9, 27, 4, 57, 13, 752, DateTimeKind.Utc).AddTicks(773), "Drain fresh water tank and water heater; blow out water lines with compressed air, including toilet, shower and sinks; fill P-Traps with anti-freeze; pump anti-freeze through water lines with water heater bypass; includes up to 2 gallons of anti-freeze.", "Winter", 35m, true, null, null, 105.00m, "Winterization", "M00004", "Mobile", "Each" },
@@ -90,10 +90,10 @@ namespace Helpline.DataAccess.Migrations
                     { 6, null, 65m, new DateTime(2024, 9, 27, 4, 57, 13, 752, DateTimeKind.Utc).AddTicks(776), "Pressure wash; buff all four sides, using polishing compound; wax all four sides for fiberglass gel coats; clean windows, tires, and chrome.", "As needed", 35m, true, null, null, 675.00m, "Detail - Exterior", "M00006", "Mobile", "Each" },
                     { 7, null, 65m, new DateTime(2024, 9, 27, 4, 57, 13, 752, DateTimeKind.Utc).AddTicks(776), "Full exterior and interior detail.", "As needed", 35m, true, null, null, 1099.00m, "Detail - Full", "M00007", "Mobile", "Each" },
                     { 8, null, 65m, new DateTime(2024, 9, 27, 4, 57, 13, 752, DateTimeKind.Utc).AddTicks(777), "Clean roof with specially designed cleaning agents and apply UV-Blocking treatment to protect roof, and check for leaks & seal if necessary", "Annual", 35m, true, null, null, 500.00m, "Roof Maintenance", "M00008", "Mobile", "Each" },
-                    { 9, null, 65m, new DateTime(2024, 9, 27, 4, 57, 13, 752, DateTimeKind.Utc).AddTicks(777), "Perform annually for operating safety and fuel efficiency. Clean main burner orifice; clean blower wheel; clean/Inspect/Adjust electrode assembly; test module board/inspect and clean board contacts; clean and inspect combustion chamber; inspect fan motor; clean and inspect vent tubes and outer casing; reassemble furnace using new gaskets.", "Annual", 35m, true, null, null, 200.00m, "Furnace ServiceType", "B00001", "Both", "Each" },
-                    { 10, null, 65m, new DateTime(2024, 9, 27, 4, 57, 13, 752, DateTimeKind.Utc).AddTicks(778), "Recommended annually for operating safety and fuel efficiency. Check condition of anode rod; check relief valve; adjust burners and electrodes; check thermocouple; check module", "Annual", 35m, true, null, null, 105.00m, "Water Heater ServiceType", "B00002", "Both", "Each" },
-                    { 11, null, 65m, new DateTime(2024, 9, 27, 4, 57, 13, 752, DateTimeKind.Utc).AddTicks(779), "Recommended annually to maintain trouble-free operation and long life. Verify unit is air tight in compartment; refrigerator is properly vented (roof and sidewall); clean and adjust burner and orifice; inspect and test all door seals; check LP pressure and proper voltage; clean roof vent and check baffle.", "Annual", 35m, true, null, null, 125.00m, "Refrigerator ServiceType", "B00003", "Both", "Each" },
-                    { 12, null, 65m, new DateTime(2024, 9, 27, 4, 57, 13, 752, DateTimeKind.Utc).AddTicks(779), "Recommended annually to improve performance and operating efficiency. Examine shroud for cracks and damage; check compressor voltage; check compressor amperage; remove and clean A/C filter; clean and unclog A/C roof drains; check air temperature drop across the evaporator coil.", "Annual", 35m, true, null, null, 125.00m, "Air Conditioner ServiceType", "B00004", "Both", "Each" },
+                    { 9, null, 65m, new DateTime(2024, 9, 27, 4, 57, 13, 752, DateTimeKind.Utc).AddTicks(777), "Perform annually for operating safety and fuel efficiency. Clean main burner orifice; clean blower wheel; clean/Inspect/Adjust electrode assembly; test module board/inspect and clean board contacts; clean and inspect combustion chamber; inspect fan motor; clean and inspect vent tubes and outer casing; reassemble furnace using new gaskets.", "Annual", 35m, true, null, null, 200.00m, "Furnace ServiceClass", "B00001", "Both", "Each" },
+                    { 10, null, 65m, new DateTime(2024, 9, 27, 4, 57, 13, 752, DateTimeKind.Utc).AddTicks(778), "Recommended annually for operating safety and fuel efficiency. Check condition of anode rod; check relief valve; adjust burners and electrodes; check thermocouple; check module", "Annual", 35m, true, null, null, 105.00m, "Water Heater ServiceClass", "B00002", "Both", "Each" },
+                    { 11, null, 65m, new DateTime(2024, 9, 27, 4, 57, 13, 752, DateTimeKind.Utc).AddTicks(779), "Recommended annually to maintain trouble-free operation and long life. Verify unit is air tight in compartment; refrigerator is properly vented (roof and sidewall); clean and adjust burner and orifice; inspect and test all door seals; check LP pressure and proper voltage; clean roof vent and check baffle.", "Annual", 35m, true, null, null, 125.00m, "Refrigerator ServiceClass", "B00003", "Both", "Each" },
+                    { 12, null, 65m, new DateTime(2024, 9, 27, 4, 57, 13, 752, DateTimeKind.Utc).AddTicks(779), "Recommended annually to improve performance and operating efficiency. Examine shroud for cracks and damage; check compressor voltage; check compressor amperage; remove and clean A/C filter; clean and unclog A/C roof drains; check air temperature drop across the evaporator coil.", "Annual", 35m, true, null, null, 125.00m, "Air Conditioner ServiceClass", "B00004", "Both", "Each" },
                     { 13, null, 65m, new DateTime(2024, 9, 27, 4, 57, 13, 752, DateTimeKind.Utc).AddTicks(780), "Perform annually to help keep appliances and accessories operating efficiently and provide trouble-free travels. Check all of the following for proper operation: antennas, water heater, awnings, furnace, refrigerator, TVs, DVD players, range/oven, washer/dryer, roof A/Cs.", "Annual", 35m, true, null, null, 200.00m, "Pre-Delivery Inspection", "S00001", "Shop", "Each" }
                 });
 
@@ -134,7 +134,7 @@ namespace Helpline.DataAccess.Migrations
                 name: "FK_EmployeeService_ServiceTypes_ServiceId",
                 table: "EmployeeService",
                 column: "ServiceId",
-                principalTable: "ServiceTypes",
+                principalTable: "ServiceClasses",
                 principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
@@ -153,16 +153,16 @@ namespace Helpline.DataAccess.Migrations
 
             migrationBuilder.AddForeignKey(
                 name: "FK_ServiceCaseCallServiceTypes_ServiceCaseCalls_ServiceCaseCallId",
-                table: "ServiceCaseCallServiceTypes",
+                table: "ServiceCaseCallServiceClasses",
                 column: "ServiceCaseCallId",
                 principalTable: "ServiceCaseCalls",
                 principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_ServiceCaseCallServiceTypes_ServiceTypes_ServiceTypeId",
-                table: "ServiceCaseCallServiceTypes",
-                column: "ServiceTypeId",
-                principalTable: "ServiceTypes",
+                table: "ServiceCaseCallServiceClasses",
+                column: "ServiceClassId",
+                principalTable: "ServiceClasses",
                 principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
@@ -183,7 +183,7 @@ namespace Helpline.DataAccess.Migrations
                 name: "FK_TechnicianServices_ServiceTypes_ServiceId",
                 table: "TechnicianServices",
                 column: "ServiceId",
-                principalTable: "ServiceTypes",
+                principalTable: "ServiceClasses",
                 principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
@@ -229,11 +229,11 @@ namespace Helpline.DataAccess.Migrations
 
             migrationBuilder.DropForeignKey(
                 name: "FK_ServiceCaseCallServiceTypes_ServiceCaseCalls_ServiceCaseCallId",
-                table: "ServiceCaseCallServiceTypes");
+                table: "ServiceCaseCallServiceClasses");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_ServiceCaseCallServiceTypes_ServiceTypes_ServiceTypeId",
-                table: "ServiceCaseCallServiceTypes");
+                table: "ServiceCaseCallServiceClasses");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_ServiceCaseTags_ServiceCases_ServiceCaseId",
@@ -441,7 +441,7 @@ namespace Helpline.DataAccess.Migrations
                 name: "FK_EmployeeService_ServiceTypes_ServiceId",
                 table: "EmployeeService",
                 column: "ServiceId",
-                principalTable: "ServiceTypes",
+                principalTable: "ServiceClasses",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
 
@@ -463,7 +463,7 @@ namespace Helpline.DataAccess.Migrations
 
             migrationBuilder.AddForeignKey(
                 name: "FK_ServiceCaseCallServiceTypes_ServiceCaseCalls_ServiceCaseCallId",
-                table: "ServiceCaseCallServiceTypes",
+                table: "ServiceCaseCallServiceClasses",
                 column: "ServiceCaseCallId",
                 principalTable: "ServiceCaseCalls",
                 principalColumn: "Id",
@@ -471,9 +471,9 @@ namespace Helpline.DataAccess.Migrations
 
             migrationBuilder.AddForeignKey(
                 name: "FK_ServiceCaseCallServiceTypes_ServiceTypes_ServiceTypeId",
-                table: "ServiceCaseCallServiceTypes",
-                column: "ServiceTypeId",
-                principalTable: "ServiceTypes",
+                table: "ServiceCaseCallServiceClasses",
+                column: "ServiceClassId",
+                principalTable: "ServiceClasses",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
 
@@ -497,7 +497,7 @@ namespace Helpline.DataAccess.Migrations
                 name: "FK_TechnicianServices_ServiceTypes_ServiceId",
                 table: "TechnicianServices",
                 column: "ServiceId",
-                principalTable: "ServiceTypes",
+                principalTable: "ServiceClasses",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
 
