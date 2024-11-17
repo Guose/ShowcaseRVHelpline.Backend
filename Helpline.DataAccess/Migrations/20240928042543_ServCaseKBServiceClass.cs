@@ -15,7 +15,7 @@ namespace Helpline.DataAccess.Migrations
         {
             migrationBuilder.InsertData(
                 table: "KnowledgeBaseLibraries",
-                columns: new[] { "Id", "Attachments", "CreatedOn", "Description", "IsActive", "ModifiedOn", "Notes", "ServiceType", "Title", "VideoDIY", "VideoURL" },
+                columns: new[] { "Id", "Attachments", "CreatedOn", "Description", "IsActive", "ModifiedOn", "Notes", "ServiceClass", "Title", "VideoDIY", "VideoURL" },
                 values: new object[,]
                 {
                     { -2, null, new DateTime(2024, 9, 27, 21, 25, 42, 460, DateTimeKind.Local).AddTicks(6560), "rv water heater troubleshooting", false, null, null, (byte)3, "Won't ignite", null, "https://www.bing.com/videos/search?&q=rv+water+heater+troubleshooting&view=detail&mid=4229C6383CE098F3696B4229C6383CE098F3696B&FORM=VDRVRV&ru=%2Fvideos%2Fsearch%3Fq%3Drv%2Bwater%2Bheater%2Btroubleshooting%26FORM%3DHDRSC3&rvsmid=E4CDD1246F058D189852E4CDD1246F058D189852&ajaxhist=0" },
@@ -32,8 +32,8 @@ namespace Helpline.DataAccess.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "ServiceTypes",
-                columns: new[] { "Id", "Attachments", "CreatedOn", "Description", "IsActive", "ModifiedOn", "Notes", "ServiceType" },
+                table: "ServiceClasses",
+                columns: new[] { "Id", "Attachments", "CreatedOn", "Description", "IsActive", "ModifiedOn", "Notes", "ServiceClass" },
                 values: new object[,]
                 {
                     { 1, null, new DateTime(2024, 9, 27, 21, 25, 42, 460, DateTimeKind.Local).AddTicks(3316), null, true, null, null, (byte)6 },
@@ -83,102 +83,102 @@ namespace Helpline.DataAccess.Migrations
                 keyValue: -1);
 
             migrationBuilder.DeleteData(
-                table: "ServiceTypes",
+                table: "ServiceClasses",
                 keyColumn: "Id",
                 keyValue: 1);
 
             migrationBuilder.DeleteData(
-                table: "ServiceTypes",
+                table: "ServiceClasses",
                 keyColumn: "Id",
                 keyValue: 2);
 
             migrationBuilder.DeleteData(
-                table: "ServiceTypes",
+                table: "ServiceClasses",
                 keyColumn: "Id",
                 keyValue: 3);
 
             migrationBuilder.DeleteData(
-                table: "ServiceTypes",
+                table: "ServiceClasses",
                 keyColumn: "Id",
                 keyValue: 4);
 
             migrationBuilder.DeleteData(
-                table: "ServiceTypes",
+                table: "ServiceClasses",
                 keyColumn: "Id",
                 keyValue: 5);
 
             migrationBuilder.DeleteData(
-                table: "ServiceTypes",
+                table: "ServiceClasses",
                 keyColumn: "Id",
                 keyValue: 6);
 
             migrationBuilder.DeleteData(
-                table: "ServiceTypes",
+                table: "ServiceClasses",
                 keyColumn: "Id",
                 keyValue: 7);
 
             migrationBuilder.DeleteData(
-                table: "ServiceTypes",
+                table: "ServiceClasses",
                 keyColumn: "Id",
                 keyValue: 8);
 
             migrationBuilder.DeleteData(
-                table: "ServiceTypes",
+                table: "ServiceClasses",
                 keyColumn: "Id",
                 keyValue: 9);
 
             migrationBuilder.DeleteData(
-                table: "ServiceTypes",
+                table: "ServiceClasses",
                 keyColumn: "Id",
                 keyValue: 10);
 
             migrationBuilder.DeleteData(
-                table: "ServiceTypes",
+                table: "ServiceClasses",
                 keyColumn: "Id",
                 keyValue: 11);
 
             migrationBuilder.DeleteData(
-                table: "ServiceTypes",
+                table: "ServiceClasses",
                 keyColumn: "Id",
                 keyValue: 12);
 
             migrationBuilder.DeleteData(
-                table: "ServiceTypes",
+                table: "ServiceClasses",
                 keyColumn: "Id",
                 keyValue: 13);
 
             migrationBuilder.DeleteData(
-                table: "ServiceTypes",
+                table: "ServiceClasses",
                 keyColumn: "Id",
                 keyValue: 14);
 
             migrationBuilder.DeleteData(
-                table: "ServiceTypes",
+                table: "ServiceClasses",
                 keyColumn: "Id",
                 keyValue: 15);
 
             migrationBuilder.DeleteData(
-                table: "ServiceTypes",
+                table: "ServiceClasses",
                 keyColumn: "Id",
                 keyValue: 16);
 
             migrationBuilder.DeleteData(
-                table: "ServiceTypes",
+                table: "ServiceClasses",
                 keyColumn: "Id",
                 keyValue: 17);
 
             migrationBuilder.DeleteData(
-                table: "ServiceTypes",
+                table: "ServiceClasses",
                 keyColumn: "Id",
                 keyValue: 18);
 
             migrationBuilder.DeleteData(
-                table: "ServiceTypes",
+                table: "ServiceClasses",
                 keyColumn: "Id",
                 keyValue: 19);
 
             migrationBuilder.DeleteData(
-                table: "ServiceTypes",
+                table: "ServiceClasses",
                 keyColumn: "Id",
                 keyValue: 20);
         }

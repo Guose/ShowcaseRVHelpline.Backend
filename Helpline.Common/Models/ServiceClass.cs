@@ -11,6 +11,6 @@ namespace Helpline.Common.Models
 
         public ICollection<EmployeeService>? EmployeeServices { get; set; }
         public ICollection<TechnicianService>? TechnicianServices { get; set; }
-        public ICollection<ServiceCaseCallServiceType>? ServiceCaseCallServiceTypes { get; set; }
+        public ICollection<ServiceCaseCallServiceClass>? ServiceCaseCallServiceClasses { get; set; }
     }
 }

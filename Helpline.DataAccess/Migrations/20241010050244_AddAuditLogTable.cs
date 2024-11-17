@@ -44,18 +44,18 @@ namespace Helpline.DataAccess.Migrations
             //    keyValues: new object[] { -1, -1 });
 
             //migrationBuilder.DeleteData(
-            //    table: "ServiceCaseCallServiceTypes",
-            //    keyColumns: new[] { "ServiceCaseCallId", "ServiceTypeId" },
+            //    table: "ServiceCaseCallServiceClasses",
+            //    keyColumns: new[] { "ServiceCaseCallId", "ServiceClassId" },
             //    keyValues: new object[] { -2, 7 });
 
             //migrationBuilder.DeleteData(
-            //    table: "ServiceCaseCallServiceTypes",
-            //    keyColumns: new[] { "ServiceCaseCallId", "ServiceTypeId" },
+            //    table: "ServiceCaseCallServiceClasses",
+            //    keyColumns: new[] { "ServiceCaseCallId", "ServiceClassId" },
             //    keyValues: new object[] { -2, 9 });
 
             //migrationBuilder.DeleteData(
-            //    table: "ServiceCaseCallServiceTypes",
-            //    keyColumns: new[] { "ServiceCaseCallId", "ServiceTypeId" },
+            //    table: "ServiceCaseCallServiceClasses",
+            //    keyColumns: new[] { "ServiceCaseCallId", "ServiceClassId" },
             //    keyValues: new object[] { -1, 18 });
 
             //migrationBuilder.DeleteData(
@@ -240,8 +240,8 @@ namespace Helpline.DataAccess.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "ServiceCaseCallServiceTypes",
-                columns: new[] { "ServiceCaseCallId", "ServiceTypeId" },
+                table: "ServiceCaseCallServiceClasses",
+                columns: new[] { "ServiceCaseCallId", "ServiceClassId" },
                 values: new object[,]
                 {
                     { -2, 7 },

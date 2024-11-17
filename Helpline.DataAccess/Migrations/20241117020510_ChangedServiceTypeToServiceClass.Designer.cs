@@ -4,6 +4,7 @@ using Helpline.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Helpline.DataAccess.Migrations
 {
     [DbContext(typeof(HelplineContext))]
-    partial class HelplineContextModelSnapshot : ModelSnapshot
+    [Migration("20241117020510_ChangedServiceTypeToServiceClass")]
+    partial class ChangedServiceTypeToServiceClass
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -172,7 +175,7 @@ namespace Helpline.DataAccess.Migrations
 
                     b.HasIndex("ServiceId");
 
-                    b.ToTable("EmployeeServices");
+                    b.ToTable("EmployeeService");
                 });
 
             modelBuilder.Entity("Helpline.Common.Models.Associations.KnowledgeBaseTag", b =>
@@ -198,8 +201,7 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<int?>("ServiceClassId")
                         .HasColumnType("int");
 
-                    b.HasKey("ServiceCaseCallId", "ServiceClassId")
-                        .HasName("PK_ServiceCaseCallServiceClasses");
+                    b.HasKey("ServiceCaseCallId", "ServiceClassId");
 
                     b.HasIndex("ServiceClassId");
 
@@ -1241,8 +1243,7 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<int>("ServiceType")
                         .HasColumnType("int");
 
-                    b.HasKey("Id")
-                        .HasName("PK_ServiceClasses");
+                    b.HasKey("Id");
 
                     b.ToTable("ServiceClasses");
                 });

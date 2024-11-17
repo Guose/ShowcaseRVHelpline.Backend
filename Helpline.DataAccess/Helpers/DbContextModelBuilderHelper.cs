@@ -13,6 +13,8 @@ namespace Helpline.DataAccess.Helpers
                 .HasIndex(t => t.TagName)
                 .IsUnique();
 
+
+
             // ONE-TO-ONE RELATIONSHIP
             modelBuilder.Entity<Dealership>()
                 .HasOne(a => a.Address)
@@ -106,7 +108,7 @@ namespace Helpline.DataAccess.Helpers
                 .HasForeignKey(e => e.EmployeeId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            // Service Case Call to ServiceType Cases
+            // Service Case Call to ServiceClass Cases
             modelBuilder.Entity<ServiceCaseCall>()
                 .HasOne(scc => scc.ServiceCase)
                 .WithMany(sc => sc.ServiceCaseCalls)
@@ -129,19 +131,44 @@ namespace Helpline.DataAccess.Helpers
 
 
             // Many to Many relationship between Rv and Rental
-            // ServiceCaseCall-to-ServiceType (Many-to-Many)
-            modelBuilder.Entity<ServiceCaseCallServiceType>()
-                .HasKey(sc => new { sc.ServiceCaseCallId, sc.ServiceTypeId });
-            modelBuilder.Entity<ServiceCaseCallServiceType>()
+            // ServiceCaseCall-to-ServiceClass (Many-to-Many)
+            modelBuilder.Entity<ServiceCaseCallServiceClass>()
+                .HasKey(sc => new { sc.ServiceCaseCallId, sc.ServiceClassId });
+
+            modelBuilder.Entity<ServiceCaseCallServiceClass>()
                 .HasOne(sc => sc.ServiceCaseCall)
-                .WithMany(s => s.ServiceCaseCallServiceTypes)
+                .WithMany(s => s.ServiceCaseCallServiceClasses)
                 .HasForeignKey(sc => sc.ServiceCaseCallId)
                 .OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<ServiceCaseCallServiceType>()
-                .HasOne(sc => sc.ServiceType)
-                .WithMany(s => s.ServiceCaseCallServiceTypes)
-                .HasForeignKey(sc => sc.ServiceTypeId)
+
+            modelBuilder.Entity<ServiceCaseCallServiceClass>()
+                .HasOne(sc => sc.ServiceClass)
+                .WithMany(s => s.ServiceCaseCallServiceClasses)
+                .HasForeignKey(sc => sc.ServiceClassId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<ServiceCaseCallServiceClass>()
+                .HasKey(scc => new { scc.ServiceCaseCallId, scc.ServiceClassId })
+                .HasName("PK_ServiceCaseCallServiceClasses");
+
+            modelBuilder.Entity<ServiceClass>()
+                .HasMany(sc => sc.ServiceCaseCallServiceClasses)
+                .WithOne(sc => sc.ServiceClass)
+                .HasForeignKey(sc => sc.ServiceClassId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<ServiceClass>()
+                .HasKey(sc => sc.Id)
+                .HasName("PK_ServiceClasses");
+
+
+            modelBuilder.Entity<ServiceClass>()
+                .Property(sc => sc.ServiceType)
+                .HasConversion<int>();
+
+            modelBuilder.Entity<KnowledgeBaseLibrary>()
+                .Property(k => k.ServiceType)
+                .HasConversion<int>();
 
             // CustomerVehicle-to-Renter (Many-to-Many)
             modelBuilder.Entity<VehicleRvRenter>()
@@ -185,7 +212,7 @@ namespace Helpline.DataAccess.Helpers
                 .HasForeignKey(kbt => kbt.TagId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            // Employee-to-ServiceType (Many-to-Many)
+            // Employee-to-ServiceClass (Many-to-Many)
             modelBuilder.Entity<EmployeeService>()
                 .HasKey(es => new { es.EmployeeId, es.ServiceId });
             modelBuilder.Entity<EmployeeService>()
@@ -199,7 +226,7 @@ namespace Helpline.DataAccess.Helpers
                 .HasForeignKey(es => es.ServiceId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            // Technician-to-ServiceType (Many-to-Many)
+            // Technician-to-ServiceClass (Many-to-Many)
             modelBuilder.Entity<TechnicianService>()
                 .HasKey(ts => new { ts.TechnicianId, ts.ServiceId });
             modelBuilder.Entity<TechnicianService>()
@@ -294,8 +321,8 @@ namespace Helpline.DataAccess.Helpers
             var kbTags = seedData.LoadJsonDataAsync<KnowledgeBaseTag>("knowledgeBaseTag.json");
             modelBuilder.Entity<KnowledgeBaseTag>().HasData(kbTags);
 
-            var serviceCallServiceType = seedData.LoadJsonDataAsync<ServiceCaseCallServiceType>("serviceCaseCallServiceType.json");
-            modelBuilder.Entity<ServiceCaseCallServiceType>().HasData(serviceCallServiceType);
+            var serviceCallServiceType = seedData.LoadJsonDataAsync<ServiceCaseCallServiceClass>("serviceCaseCallServiceType.json");
+            modelBuilder.Entity<ServiceCaseCallServiceClass>().HasData(serviceCallServiceType);
 
             var serviceCaseTags = seedData.LoadJsonDataAsync<ServiceCaseTag>("serviceCaseTags.json");
             modelBuilder.Entity<ServiceCaseTag>().HasData(serviceCaseTags);

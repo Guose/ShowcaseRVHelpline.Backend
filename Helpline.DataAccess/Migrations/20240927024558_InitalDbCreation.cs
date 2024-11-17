@@ -170,7 +170,7 @@ namespace Helpline.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ServiceTypes",
+                name: "ServiceClasses",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -661,7 +661,7 @@ namespace Helpline.DataAccess.Migrations
                     table.ForeignKey(
                         name: "FK_EmployeeService_ServiceTypes_ServiceId",
                         column: x => x.ServiceId,
-                        principalTable: "ServiceTypes",
+                        principalTable: "ServiceClasses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                 });
@@ -679,7 +679,7 @@ namespace Helpline.DataAccess.Migrations
                     table.ForeignKey(
                         name: "FK_TechnicianServices_ServiceTypes_ServiceId",
                         column: x => x.ServiceId,
-                        principalTable: "ServiceTypes",
+                        principalTable: "ServiceClasses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
@@ -797,7 +797,7 @@ namespace Helpline.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ServiceCaseCallServiceTypes",
+                name: "ServiceCaseCallServiceClasses",
                 columns: table => new
                 {
                     ServiceCaseCallId = table.Column<int>(type: "int", nullable: false),
@@ -815,7 +815,7 @@ namespace Helpline.DataAccess.Migrations
                     table.ForeignKey(
                         name: "FK_ServiceCaseCallServiceTypes_ServiceTypes_ServiceTypeId",
                         column: x => x.ServiceTypeId,
-                        principalTable: "ServiceTypes",
+                        principalTable: "ServiceClasses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                 });
@@ -1007,8 +1007,8 @@ namespace Helpline.DataAccess.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_ServiceCaseCallServiceTypes_ServiceTypeId",
-                table: "ServiceCaseCallServiceTypes",
-                column: "ServiceTypeId");
+                table: "ServiceCaseCallServiceClasses",
+                column: "ServiceClassId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ServiceCases_CustomerId",
@@ -1165,7 +1165,7 @@ namespace Helpline.DataAccess.Migrations
                 name: "RVServices");
 
             migrationBuilder.DropTable(
-                name: "ServiceCaseCallServiceTypes");
+                name: "ServiceCaseCallServiceClasses");
 
             migrationBuilder.DropTable(
                 name: "ServiceCaseTags");
@@ -1201,7 +1201,7 @@ namespace Helpline.DataAccess.Migrations
                 name: "Tags");
 
             migrationBuilder.DropTable(
-                name: "ServiceTypes");
+                name: "ServiceClasses");
 
             migrationBuilder.DropTable(
                 name: "Roles");
