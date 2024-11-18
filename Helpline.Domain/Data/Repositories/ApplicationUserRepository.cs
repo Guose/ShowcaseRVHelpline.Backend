@@ -42,9 +42,10 @@ namespace Helpline.Domain.Data.Repositories
         public async Task<bool> IsUserNameUniqueAsync(UserName userName, CancellationToken cancellationToken) =>
             !await Context.Users.AnyAsync(u => u.UserName == userName.Value, cancellationToken);
 
+
         public async Task<ApplicationUser?> GetByIdWithNoTrackingToUpdateUserProfileAsync(Guid userId, CancellationToken cancellationToken)
         {
-            var user = await Context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == userId.ToString(), cancellationToken: cancellationToken);
+            var user = await Context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == userId.ToString(), cancellationToken);
 
             if (user == null)
             {

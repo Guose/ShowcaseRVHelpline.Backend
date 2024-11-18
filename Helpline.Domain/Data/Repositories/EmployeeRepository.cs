@@ -9,12 +9,25 @@ namespace Helpline.Domain.Data.Repositories
     public class EmployeeRepository(HelplineContext context, ILogging logging) :
         BaseRepository<Employee, HelplineContext, int>(context, logging), IEmployeeRepository
     {
+        public override async Task<IEnumerable<Employee>> GetAllEntitiesAsync(CancellationToken cancellationToken = default)
+        {
+            return await Context.Employees
+                .Include(u => u.User)
+                    .ThenInclude(a => a!.Address)
+                .ToListAsync();
+        }
+
         public async Task<Employee?> GetEmployeeByUserIdAsync(string userId, CancellationToken cancellationToken)
         {
             return await Context.Employees
                 .Include(u => u.User)
                     .ThenInclude(a => a!.Address)
-                .Include(sc => sc.ServiceCases)
+                .Include(sc => sc.ServiceCases!)
+                    .ThenInclude(rv => rv.CustomerVehicle)
+                .Include(sc => sc.ServiceCases!)
+                    .ThenInclude(c => c.Customer)
+                .Include(sc => sc.ServiceCases!)
+                    .ThenInclude(t => t.Technician)
                 .FirstOrDefaultAsync(x => x.UserId == userId);
         }
     }

@@ -28,6 +28,9 @@ namespace Helpline.WebAPI.MappingProfiles
 
             // Subscription mapping
             CreateMap<Subscription, SubscriptionResponse>();
+
+            // ServiceCase mapping
+            CreateMap<ServiceCase, ServiceCaseResponse>();
         }
     }
 }
