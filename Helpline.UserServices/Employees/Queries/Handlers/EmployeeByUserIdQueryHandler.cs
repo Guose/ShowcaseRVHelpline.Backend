@@ -4,7 +4,7 @@ using Helpline.Contracts.v1.Responses;
 using Helpline.Domain.Data;
 using Helpline.Domain.Messaging;
 
-namespace Helpline.UserServices.Employees.Queries
+namespace Helpline.UserServices.Employees.Queries.Handlers
 {
     public class EmployeeByUserIdQueryHandler : IQueryHandler<EmployeeByUserIdQuery, EmployeeResponse>
     {

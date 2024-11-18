@@ -11,6 +11,18 @@ namespace Helpline.WebAPI.Controller.v1.UserService
     public partial class UserServicesController
     {
         [HttpGet]
+        [Route(HelplineRoutes.EmployeeRoute)]
+        public async Task<IActionResult> GetAllEmployees(CancellationToken cancellationToken)
+        {
+            var query = new EmployeesAllQuery();
+
+            Result<IEnumerable<EmployeeResponse>> response = await Sender.Send(query, cancellationToken);
+
+            return response.IsSuccess ? Ok(response) : BadRequest(response.Error);
+        }
+
+
+        [HttpGet]
         [Route(HelplineRoutes.EmployeeRouteById)]
         public async Task<IActionResult> GetEmployeeByUserId(Guid userId, CancellationToken cancellationToken)
         {

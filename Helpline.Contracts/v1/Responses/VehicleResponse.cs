@@ -5,7 +5,7 @@ using Helpline.Common.Types;
 
 namespace Helpline.Contracts.v1.Responses
 {
-    public class VehicleResponse : AggregateRoot, IEquatable<VehicleResponse>
+    public class VehicleResponse : AggregateRoot
     {
         private readonly List<ServiceCase> serviceCases = [];
         private readonly List<RVRental> rentals = [];
@@ -28,10 +28,5 @@ namespace Helpline.Contracts.v1.Responses
         public ICollection<ServiceCase> ServiceCases => serviceCases;
         public ICollection<RVRental> Rentals => rentals;
         public ICollection<VehicleRvRenter> VehicleRvRenters => vehicleRvRenters;
-
-        public bool Equals(VehicleResponse? other)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

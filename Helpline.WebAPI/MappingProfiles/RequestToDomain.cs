@@ -30,6 +30,9 @@ namespace Helpline.WebAPI.MappingProfiles
 
             // Address mapping
             CreateMap<AddressRequest, Address>();
+
+            // Service Case mapping
+            CreateMap<ServiceCaseRequest, ServiceCase>();
         }
 
         //private static string HashPassword(UserRequest src)

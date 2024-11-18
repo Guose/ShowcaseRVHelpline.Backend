@@ -2,14 +2,14 @@
 {
     public class LookupItem
     {
-        public int Id { get; set; }
-        public Guid UserId { get; set; }
+        public int IntId { get; set; }
+        public Guid GuidId { get; set; }
         public string DisplayMember { get; set; } = string.Empty;
     }
 
     public class NullLookupItem : LookupItem
     {
-        public new int? Id { get { return null; } }
-        public new Guid? UserId { get { return null; } }
+        public new int? IntId { get { return null; } }
+        public new Guid? GuidId { get { return null; } }
     }
 }

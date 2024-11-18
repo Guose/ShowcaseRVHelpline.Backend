@@ -22,9 +22,6 @@ namespace Helpline.Common.Models
         public int KnowledgeBaseLibraryId { get; set; }
         public KnowledgeBaseLibrary? KnowledgeBaseLibrary { get; set; }
 
-
-
-        public ICollection<ServiceCase>? RelatedServiceCases { get; set; }
         public ICollection<ServiceCaseCallServiceClass>? ServiceCaseCallServiceClasses { get; set; }
     }
 }
