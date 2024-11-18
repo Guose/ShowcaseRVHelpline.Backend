@@ -21,7 +21,6 @@ namespace Helpline.WebAPI.Controller.v1.UserService
             return response.IsSuccess ? Ok(response) : BadRequest(response.Error);
         }
 
-
         [HttpGet]
         [Route(HelplineRoutes.EmployeeRouteById)]
         public async Task<IActionResult> GetEmployeeByUserId(Guid userId, CancellationToken cancellationToken)
