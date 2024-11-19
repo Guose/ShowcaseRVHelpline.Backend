@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using Helpline.Common.Shared;
 using Helpline.Contracts.v1.Requests;
 using Helpline.DataAccess.Models.Entities;
 using Helpline.Domain.Data;
 using Helpline.Domain.Messaging;
+using Helpline.Domain.Shared;
 
 namespace Helpline.UserServices.ApplicationUsers.Commands.Handlers
 {

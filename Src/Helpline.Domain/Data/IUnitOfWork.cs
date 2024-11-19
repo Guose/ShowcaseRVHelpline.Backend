@@ -2,7 +2,7 @@
 
 namespace Helpline.Domain.Data
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork : IDisposable
     {
         IAddressRepository AddressRepo { get; }
         IApplicationUserRepository UserRepo { get; }

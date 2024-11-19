@@ -64,6 +64,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Helpline.DataAccess.Models\Helpline.DataAccess.Models.csproj" />
     <ProjectReference Include="..\Helpline.Common\Helpline.Common.csproj" />
+    <ProjectReference Include="..\Helpline.Domain\Helpline.Domain.csproj" />
   </ItemGroup>
 
 </Project>

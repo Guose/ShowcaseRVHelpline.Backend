@@ -1,19 +1,14 @@
-﻿using Helpline.Common.Essentials;
-using Helpline.DataAccess.Models.Entities;
-using Helpline.DataAccess.Models.Entities.Associations;
-using Helpline.DataAccess.Models.Types;
+﻿using Helpline.Contracts.v1.Types;
 
 namespace Helpline.Contracts.v1.Responses
 {
-    public class VehicleResponse : AggregateRoot
+    public class VehicleResponse
     {
-        private readonly List<ServiceCase> serviceCases = [];
-        private readonly List<RVRental> rentals = [];
-        private readonly List<VehicleRvRenter> vehicleRvRenters = [];
+        private readonly List<ServiceCaseResponse> serviceCases = [];
+        private readonly List<RVRentalResponse> rentals = [];
+        private readonly List<VehicleRvRenterResponse> vehicleRvRenters = [];
 
-        public VehicleResponse(
-            Guid id,
-            int customerId) : base(id)
+        public VehicleResponse(int customerId)
         {
             CustomerId = customerId;
         }
@@ -25,8 +20,8 @@ namespace Helpline.Contracts.v1.Responses
         public string Make { get; set; } = string.Empty;
         public string Model { get; set; } = string.Empty;
 
-        public IReadOnlyCollection<ServiceCase> ServiceCases => serviceCases;
-        public IReadOnlyCollection<RVRental> Rentals => rentals;
-        public IReadOnlyCollection<VehicleRvRenter> VehicleRvRenters => vehicleRvRenters;
+        public IReadOnlyCollection<ServiceCaseResponse> ServiceCases => serviceCases;
+        public IReadOnlyCollection<RVRentalResponse> Rentals => rentals;
+        public IReadOnlyCollection<VehicleRvRenterResponse> VehicleRvRenters => vehicleRvRenters;
     }
 }

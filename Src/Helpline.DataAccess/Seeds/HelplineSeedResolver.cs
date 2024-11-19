@@ -1,4 +1,4 @@
-﻿using Helpline.Common.Essentials;
+﻿using Helpline.DataAccess.Models.CoreElements;
 using Helpline.DataAccess.Models.Entities;
 using Helpline.DataAccess.Models.Types;
 using Microsoft.AspNetCore.Identity;

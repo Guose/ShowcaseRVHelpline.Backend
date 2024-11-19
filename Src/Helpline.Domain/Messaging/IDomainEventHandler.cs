@@ -1,4 +1,4 @@
-﻿using Helpline.Common.Essentials;
+﻿using Helpline.DataAccess.Models.CoreElements;
 using MediatR;
 
 namespace Helpline.Domain.Messaging

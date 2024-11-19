@@ -6,7 +6,7 @@ namespace Helpline.DataAccess.Models.Helpers
 {
     public class BedTypeDictionaryHelper : IBedTypeConvertable
     {
-        public IDictionary<BedType, int> ConvertToDictionaryAsync(string bedDetails)
+        public IDictionary<BedType, int> ConvertToDictionary(string bedDetails)
         {
             try
             {

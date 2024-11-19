@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using Helpline.Common.Shared;
+using Helpline.Domain.Shared;
 using MediatR;
 
 namespace Helpline.WebAPI.Controller.Validation

@@ -1,6 +1,6 @@
 ﻿using Helpline.Common.Constants;
-using Helpline.Common.Shared;
 using Helpline.Contracts.v1.Responses;
+using Helpline.Domain.Shared;
 using Helpline.UserServices.ApplicationUsers.Commands;
 using Helpline.UserServices.ApplicationUsers.Queries;
 using Helpline.WebAPI.Controller.Configuration;

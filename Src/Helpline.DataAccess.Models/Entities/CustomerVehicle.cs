@@ -10,7 +10,7 @@ namespace Helpline.DataAccess.Models.Entities
 {
     public class CustomerVehicle : BaseModel
     {
-        private readonly IBedTypeConvertable bedTypeDictionaryHelper;
+        private readonly IBedTypeConvertable? bedTypeDictionaryHelper;
 
         public CustomerVehicle(IBedTypeConvertable bedTypeDictionaryHelper, string bedDetails)
         {
@@ -20,7 +20,7 @@ namespace Helpline.DataAccess.Models.Entities
 
         public CustomerVehicle()
         {
-
+            Customer = new Customer();
         }
 
         [Key]
@@ -40,12 +40,12 @@ namespace Helpline.DataAccess.Models.Entities
         [Required]
         public string BedDetails { get; set; } = "[]";
 
-        [NotMapped]
-        public IDictionary<BedType, int> Beds
-        {
-            get => bedTypeDictionaryHelper.ConvertToDictionaryAsync(BedDetails);
-            set => BedDetails = bedTypeDictionaryHelper.ConvertToJsonAsync(value).Result;
-        }
+        //[NotMapped]
+        //public IDictionary<BedType, int> Beds
+        //{
+        //    get => bedTypeDictionaryHelper.ConvertToDictionary(BedDetails);
+        //    set => BedDetails = bedTypeDictionaryHelper.ConvertToJsonAsync(value).Result;
+        //}
 
         [Required]
         [JsonConverter(typeof(StringEnumConverter))]

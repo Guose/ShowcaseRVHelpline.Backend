@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Helpline.Common.Shared;
 using Helpline.Domain.Data;
 using Helpline.Domain.Messaging;
+using Helpline.Domain.Shared;
 
 namespace Helpline.SubscriptionServices.Customers.Commands.Handlers
 {
