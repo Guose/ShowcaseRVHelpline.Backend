@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Helpline.WebAPI.Controller.Validation
+namespace Helpline.WebAPI.Controller.Filters
 {
     public sealed class ValidationActionFilter : IActionFilter
     {

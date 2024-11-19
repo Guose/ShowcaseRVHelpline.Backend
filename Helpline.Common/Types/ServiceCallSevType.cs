@@ -1,6 +1,6 @@
 ﻿namespace Helpline.Common.Types
 {
-    public enum ServiceCallSevType
+    public enum ServiceCallSevType : byte
     {
         None = 0,
         One = 1,

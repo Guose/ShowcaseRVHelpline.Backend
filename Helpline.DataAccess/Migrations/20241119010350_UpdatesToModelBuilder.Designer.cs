@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Helpline.DataAccess.Migrations
 {
     [DbContext(typeof(HelplineContext))]
-    [Migration("20240928021440_SeedCustomerVehicles")]
-    partial class SeedCustomerVehicles
+    [Migration("20241119010350_UpdatesToModelBuilder")]
+    partial class UpdatesToModelBuilder
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.8")
+                .HasAnnotation("ProductVersion", "8.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -79,6 +79,9 @@ namespace Helpline.DataAccess.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -89,6 +92,9 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsRemembered")
                         .HasColumnType("bit");
@@ -103,6 +109,9 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -114,7 +123,7 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte>("Permssions")
+                    b.Property<byte>("Permissions")
                         .HasColumnType("tinyint");
 
                     b.Property<string>("PhoneNumber")
@@ -154,6 +163,150 @@ namespace Helpline.DataAccess.Migrations
                     b.ToTable("Users", (string)null);
                 });
 
+            modelBuilder.Entity("Helpline.Common.Models.Associations.EmployeeService", b =>
+                {
+                    b.Property<int?>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ServiceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EmployeeId", "ServiceId");
+
+                    b.HasIndex("ServiceId");
+
+                    b.ToTable("EmployeeServices");
+                });
+
+            modelBuilder.Entity("Helpline.Common.Models.Associations.KnowledgeBaseTag", b =>
+                {
+                    b.Property<int?>("KnowledgeBaseId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TagId")
+                        .HasColumnType("int");
+
+                    b.HasKey("KnowledgeBaseId", "TagId");
+
+                    b.HasIndex("TagId");
+
+                    b.ToTable("KnowledgeBaseTags");
+                });
+
+            modelBuilder.Entity("Helpline.Common.Models.Associations.ServiceCaseCallServiceClass", b =>
+                {
+                    b.Property<int?>("ServiceCaseCallId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ServiceClassId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ServiceCaseCallId", "ServiceClassId")
+                        .HasName("PK_ServiceCaseCallServiceClasses");
+
+                    b.HasIndex("ServiceClassId");
+
+                    b.ToTable("ServiceCaseCallServiceClasses");
+                });
+
+            modelBuilder.Entity("Helpline.Common.Models.Associations.ServiceCaseTag", b =>
+                {
+                    b.Property<Guid?>("ServiceCaseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("TagId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ServiceCaseId", "TagId");
+
+                    b.HasIndex("TagId");
+
+                    b.ToTable("ServiceCaseTags");
+                });
+
+            modelBuilder.Entity("Helpline.Common.Models.Associations.TechnicianService", b =>
+                {
+                    b.Property<int?>("TechnicianId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ServiceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TechnicianId", "ServiceId");
+
+                    b.HasIndex("ServiceId");
+
+                    b.ToTable("TechnicianServices");
+                });
+
+            modelBuilder.Entity("Helpline.Common.Models.Associations.VehicleRvRenter", b =>
+                {
+                    b.Property<int>("RenterId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("VehicleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("RenterId", "VehicleId");
+
+                    b.HasIndex("VehicleId");
+
+                    b.ToTable("VehicleRvRenters");
+                });
+
+            modelBuilder.Entity("Helpline.Common.Models.AuditLog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Attachments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IPAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Method")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StatusCode")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StatusMessage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AuditLogs");
+                });
+
             modelBuilder.Entity("Helpline.Common.Models.Customer", b =>
                 {
                     b.Property<int>("Id")
@@ -183,8 +336,8 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<DateTime>("SubscriptionEndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("SubscriptionId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("SubscriptionId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("SubscriptionStartDate")
                         .HasColumnType("datetime2");
@@ -211,16 +364,15 @@ namespace Helpline.DataAccess.Migrations
 
             modelBuilder.Entity("Helpline.Common.Models.CustomerVehicle", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Attachments")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("BedTypes")
+                    b.Property<string>("BedDetails")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Chassis")
@@ -380,132 +532,6 @@ namespace Helpline.DataAccess.Migrations
                     b.HasIndex("CustomerId");
 
                     b.ToTable("CustomerVehicles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = -1,
-                            Chassis = "Ford",
-                            Class = (byte)3,
-                            CreatedOn = new DateTime(2024, 9, 27, 19, 14, 39, 90, DateTimeKind.Local).AddTicks(797),
-                            CustomerId = -1,
-                            GeneratorDefinition = "Onan 4000",
-                            GeneratorHours = 80,
-                            HasAwning = true,
-                            HasCDPlayer = false,
-                            HasDVDPlayer = false,
-                            HasExteriorShower = false,
-                            HasFireExtingusher = true,
-                            HasFireplace = false,
-                            HasFurnace = true,
-                            HasGenerator = true,
-                            HasInteriorShower = true,
-                            HasMicrowave = true,
-                            HasNavigation = false,
-                            HasPropane = true,
-                            HasRange = true,
-                            HasRearVisionCamera = true,
-                            HasRefrigerator = true,
-                            HasRoofAC = true,
-                            HasSlideout = false,
-                            HasSnowChains = true,
-                            HasTV = true,
-                            HasWaterHeater = true,
-                            HasiPodDocking = false,
-                            IsActive = true,
-                            IsBooked = false,
-                            Length = 23,
-                            Make = "Minnie Winnie",
-                            Manufacture = "Winnebago",
-                            Model = "22R",
-                            Odometer = 96519.0,
-                            SeatbeltsQty = 6,
-                            Sleeps = 6,
-                            VIN = "1FDWE3FL8EDA51997",
-                            Year = 2015
-                        },
-                        new
-                        {
-                            Id = -2,
-                            Chassis = "Ford",
-                            Class = (byte)3,
-                            CreatedOn = new DateTime(2024, 9, 27, 19, 14, 39, 90, DateTimeKind.Local).AddTicks(857),
-                            CustomerId = -1,
-                            GeneratorHours = 56,
-                            HasAwning = true,
-                            HasCDPlayer = false,
-                            HasDVDPlayer = false,
-                            HasExteriorShower = false,
-                            HasFireExtingusher = true,
-                            HasFireplace = false,
-                            HasFurnace = true,
-                            HasGenerator = true,
-                            HasInteriorShower = true,
-                            HasMicrowave = true,
-                            HasNavigation = false,
-                            HasPropane = true,
-                            HasRange = true,
-                            HasRearVisionCamera = false,
-                            HasRefrigerator = true,
-                            HasRoofAC = true,
-                            HasSlideout = true,
-                            HasSnowChains = true,
-                            HasTV = true,
-                            HasWaterHeater = true,
-                            HasiPodDocking = false,
-                            IsActive = true,
-                            IsBooked = false,
-                            Length = 27,
-                            Make = "Sunseeker",
-                            Manufacture = "Forest River",
-                            Model = "2560S",
-                            Odometer = 79492.0,
-                            SeatbeltsQty = 7,
-                            Sleeps = 6,
-                            SlideoutDefinition = "Kitchenette",
-                            VIN = "1FDXE4FS1JDC19197",
-                            Year = 2019
-                        },
-                        new
-                        {
-                            Id = -3,
-                            Chassis = "Ford",
-                            Class = (byte)3,
-                            CreatedOn = new DateTime(2024, 9, 27, 19, 14, 39, 90, DateTimeKind.Local).AddTicks(859),
-                            CustomerId = -2,
-                            GeneratorHours = 46,
-                            HasAwning = true,
-                            HasCDPlayer = false,
-                            HasDVDPlayer = false,
-                            HasExteriorShower = false,
-                            HasFireExtingusher = false,
-                            HasFireplace = false,
-                            HasFurnace = true,
-                            HasGenerator = true,
-                            HasInteriorShower = true,
-                            HasMicrowave = true,
-                            HasNavigation = false,
-                            HasPropane = true,
-                            HasRange = true,
-                            HasRearVisionCamera = true,
-                            HasRefrigerator = true,
-                            HasRoofAC = true,
-                            HasSlideout = false,
-                            HasSnowChains = false,
-                            HasTV = true,
-                            HasWaterHeater = true,
-                            HasiPodDocking = false,
-                            IsActive = true,
-                            IsBooked = false,
-                            Length = 25,
-                            Make = "Freedom",
-                            Manufacture = "Thor",
-                            Model = "Elite",
-                            Odometer = 56412.0,
-                            SeatbeltsQty = 6,
-                            Sleeps = 6,
-                            Year = 2017
-                        });
                 });
 
             modelBuilder.Entity("Helpline.Common.Models.Dealership", b =>
@@ -655,21 +681,6 @@ namespace Helpline.DataAccess.Migrations
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.EmployeeService", b =>
-                {
-                    b.Property<int?>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ServiceId")
-                        .HasColumnType("int");
-
-                    b.HasKey("EmployeeId", "ServiceId");
-
-                    b.HasIndex("ServiceId");
-
-                    b.ToTable("EmployeeService");
-                });
-
             modelBuilder.Entity("Helpline.Common.Models.KnowledgeBaseLibrary", b =>
                 {
                     b.Property<int>("Id")
@@ -696,8 +707,8 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte>("ServiceClass")
-                        .HasColumnType("tinyint");
+                    b.Property<int>("ServiceType")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
@@ -713,21 +724,6 @@ namespace Helpline.DataAccess.Migrations
                     b.ToTable("KnowledgeBaseLibraries");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.KnowledgeBaseTag", b =>
-                {
-                    b.Property<int?>("KnowledgeBaseId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TagId")
-                        .HasColumnType("int");
-
-                    b.HasKey("KnowledgeBaseId", "TagId");
-
-                    b.HasIndex("TagId");
-
-                    b.ToTable("KnowledgeBaseTags");
-                });
-
             modelBuilder.Entity("Helpline.Common.Models.RVCheckout", b =>
                 {
                     b.Property<int>("Id")
@@ -739,8 +735,8 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Attachments")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("BlackWater")
-                        .HasColumnType("int");
+                    b.Property<byte>("BlackWater")
+                        .HasColumnType("tinyint");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -748,11 +744,14 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("FuelLevel")
-                        .HasColumnType("int");
+                    b.Property<byte>("FreshWater")
+                        .HasColumnType("tinyint");
 
-                    b.Property<int>("GrayWater")
-                        .HasColumnType("int");
+                    b.Property<byte>("FuelLevel")
+                        .HasColumnType("tinyint");
+
+                    b.Property<byte>("GrayWater")
+                        .HasColumnType("tinyint");
 
                     b.Property<bool>("IsACChecked")
                         .HasColumnType("bit");
@@ -802,11 +801,11 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Propane")
-                        .HasColumnType("int");
+                    b.Property<byte>("Propane")
+                        .HasColumnType("tinyint");
 
-                    b.Property<int>("RentalId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("RentalId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -815,11 +814,9 @@ namespace Helpline.DataAccess.Migrations
 
             modelBuilder.Entity("Helpline.Common.Models.RVRental", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Attachments")
                         .HasColumnType("nvarchar(max)");
@@ -851,8 +848,8 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<DateTime>("RentalStart")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("RentalStatus")
-                        .HasColumnType("int");
+                    b.Property<byte>("RentalStatus")
+                        .HasColumnType("tinyint");
 
                     b.Property<int?>("RenterId")
                         .HasColumnType("int");
@@ -860,8 +857,8 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<int?>("ReturnId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("VehicleId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("VehicleId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -946,8 +943,8 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Attachments")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("BlackWater")
-                        .HasColumnType("int");
+                    b.Property<byte>("BlackWater")
+                        .HasColumnType("tinyint");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -955,11 +952,14 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("FuelLevel")
-                        .HasColumnType("int");
+                    b.Property<byte>("FreshWater")
+                        .HasColumnType("tinyint");
 
-                    b.Property<int>("GrayWater")
-                        .HasColumnType("int");
+                    b.Property<byte>("FuelLevel")
+                        .HasColumnType("tinyint");
+
+                    b.Property<byte>("GrayWater")
+                        .HasColumnType("tinyint");
 
                     b.Property<string>("InsuranceClaimDefinition")
                         .HasColumnType("nvarchar(max)");
@@ -1021,11 +1021,11 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("PhotosReturn")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Propane")
-                        .HasColumnType("int");
+                    b.Property<byte>("Propane")
+                        .HasColumnType("tinyint");
 
-                    b.Property<int>("RentalId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("RentalId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -1074,7 +1074,7 @@ namespace Helpline.DataAccess.Migrations
                         .HasPrecision(10, 2)
                         .HasColumnType("decimal(10,2)");
 
-                    b.Property<string>("ServiceClass")
+                    b.Property<string>("Service")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -1097,11 +1097,9 @@ namespace Helpline.DataAccess.Migrations
 
             modelBuilder.Entity("Helpline.Common.Models.ServiceCase", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Attachments")
                         .HasColumnType("nvarchar(max)");
@@ -1112,8 +1110,8 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CustomerVehicleId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CustomerVehicleId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -1133,11 +1131,8 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ServiceCaseCallId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Sev")
-                        .HasColumnType("int");
+                    b.Property<byte>("Sev")
+                        .HasColumnType("tinyint");
 
                     b.Property<int>("TechnicianId")
                         .HasColumnType("int");
@@ -1153,8 +1148,6 @@ namespace Helpline.DataAccess.Migrations
                     b.HasIndex("CustomerVehicleId");
 
                     b.HasIndex("EmployeeId");
-
-                    b.HasIndex("ServiceCaseCallId");
 
                     b.HasIndex("TechnicianId");
 
@@ -1172,7 +1165,7 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Attachments")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte?>("CallType")
+                    b.Property<byte>("CallType")
                         .HasColumnType("tinyint");
 
                     b.Property<string>("Caller")
@@ -1202,52 +1195,23 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<DateTime>("ResolveDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ServiceCaseId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ServiceCaseId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<byte>("ServiceClass")
+                    b.Property<byte>("ServiceType")
                         .HasColumnType("tinyint");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<byte>("Status")
+                        .HasColumnType("tinyint");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("PK_ServiceCaseCalls");
 
                     b.HasIndex("KnowledgeBaseLibraryId");
 
                     b.HasIndex("ServiceCaseId");
 
                     b.ToTable("ServiceCaseCalls");
-                });
-
-            modelBuilder.Entity("Helpline.Common.Models.ServiceCaseCallServiceType", b =>
-                {
-                    b.Property<int?>("ServiceCaseCallId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ServiceClassId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ServiceCaseCallId", "ServiceClassId");
-
-                    b.HasIndex("ServiceClassId");
-
-                    b.ToTable("ServiceCaseCallServiceClasses");
-                });
-
-            modelBuilder.Entity("Helpline.Common.Models.ServiceCaseTag", b =>
-                {
-                    b.Property<int?>("ServiceCaseId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TagId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ServiceCaseId", "TagId");
-
-                    b.HasIndex("TagId");
-
-                    b.ToTable("ServiceCaseTags");
                 });
 
             modelBuilder.Entity("Helpline.Common.Models.ServiceClass", b =>
@@ -1273,24 +1237,23 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<byte>("ServiceClass")
-                        .HasColumnType("tinyint");
-
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.Property<byte>("ServiceType")
+                        .HasColumnType("tinyint");
+
+                    b.HasKey("Id")
+                        .HasName("PK_ServiceClasses");
 
                     b.ToTable("ServiceClasses");
                 });
 
             modelBuilder.Entity("Helpline.Common.Models.Subscription", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Attachments")
                         .HasColumnType("nvarchar(max)");
@@ -1413,36 +1376,6 @@ namespace Helpline.DataAccess.Migrations
                     b.ToTable("Technicians");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.TechnicianService", b =>
-                {
-                    b.Property<int?>("TechnicianId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ServiceId")
-                        .HasColumnType("int");
-
-                    b.HasKey("TechnicianId", "ServiceId");
-
-                    b.HasIndex("ServiceId");
-
-                    b.ToTable("TechnicianServices");
-                });
-
-            modelBuilder.Entity("Helpline.Common.Models.VehicleRvRenter", b =>
-                {
-                    b.Property<int?>("RenterId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("VehicleId")
-                        .HasColumnType("int");
-
-                    b.HasKey("RenterId", "VehicleId");
-
-                    b.HasIndex("VehicleId");
-
-                    b.ToTable("VehicleRvRenters");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -1452,7 +1385,7 @@ namespace Helpline.DataAccess.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ServiceClass")
+                    b.Property<string>("Name")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -1565,13 +1498,13 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("LoginProvider")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ServiceClass")
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Quantity")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserId", "LoginProvider", "ServiceClass");
+                    b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("UserTokens", (string)null);
                 });
@@ -1585,6 +1518,120 @@ namespace Helpline.DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("Address");
+                });
+
+            modelBuilder.Entity("Helpline.Common.Models.Associations.EmployeeService", b =>
+                {
+                    b.HasOne("Helpline.Common.Models.Employee", "Employee")
+                        .WithMany("EmployeeServices")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Helpline.Common.Models.ServiceClass", "Service")
+                        .WithMany("EmployeeServices")
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Service");
+                });
+
+            modelBuilder.Entity("Helpline.Common.Models.Associations.KnowledgeBaseTag", b =>
+                {
+                    b.HasOne("Helpline.Common.Models.KnowledgeBaseLibrary", "KnowledgeBaseLibrary")
+                        .WithMany("KnowledgeBaseTags")
+                        .HasForeignKey("KnowledgeBaseId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Helpline.Common.Models.Tag", "Tag")
+                        .WithMany("KnowledgeBaseTags")
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("KnowledgeBaseLibrary");
+
+                    b.Navigation("Tag");
+                });
+
+            modelBuilder.Entity("Helpline.Common.Models.Associations.ServiceCaseCallServiceClass", b =>
+                {
+                    b.HasOne("Helpline.Common.Models.ServiceCaseCall", "ServiceCaseCall")
+                        .WithMany("ServiceCaseCallServiceClasses")
+                        .HasForeignKey("ServiceCaseCallId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Helpline.Common.Models.ServiceClass", "ServiceClass")
+                        .WithMany("ServiceCaseCallServiceClasses")
+                        .HasForeignKey("ServiceClassId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("ServiceCaseCall");
+
+                    b.Navigation("ServiceClass");
+                });
+
+            modelBuilder.Entity("Helpline.Common.Models.Associations.ServiceCaseTag", b =>
+                {
+                    b.HasOne("Helpline.Common.Models.ServiceCase", "ServiceCase")
+                        .WithMany("ServiceCaseTags")
+                        .HasForeignKey("ServiceCaseId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Helpline.Common.Models.Tag", "Tag")
+                        .WithMany("ServiceCaseTags")
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("ServiceCase");
+
+                    b.Navigation("Tag");
+                });
+
+            modelBuilder.Entity("Helpline.Common.Models.Associations.TechnicianService", b =>
+                {
+                    b.HasOne("Helpline.Common.Models.ServiceClass", "Service")
+                        .WithMany("TechnicianServices")
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Helpline.Common.Models.Technician", "Technician")
+                        .WithMany("TechnicianServices")
+                        .HasForeignKey("TechnicianId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Service");
+
+                    b.Navigation("Technician");
+                });
+
+            modelBuilder.Entity("Helpline.Common.Models.Associations.VehicleRvRenter", b =>
+                {
+                    b.HasOne("Helpline.Common.Models.RVRenter", "Renter")
+                        .WithMany("VehicleRvRenters")
+                        .HasForeignKey("RenterId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Helpline.Common.Models.CustomerVehicle", "Vehicle")
+                        .WithMany("VehicleRvRenters")
+                        .HasForeignKey("VehicleId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Renter");
+
+                    b.Navigation("Vehicle");
                 });
 
             modelBuilder.Entity("Helpline.Common.Models.Customer", b =>
@@ -1656,44 +1703,6 @@ namespace Helpline.DataAccess.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.EmployeeService", b =>
-                {
-                    b.HasOne("Helpline.Common.Models.Employee", "Employee")
-                        .WithMany("EmployeeServices")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Helpline.Common.Models.ServiceClass", "ServiceClass")
-                        .WithMany("EmployeeServices")
-                        .HasForeignKey("ServiceId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
-
-                    b.Navigation("ServiceClass");
-                });
-
-            modelBuilder.Entity("Helpline.Common.Models.KnowledgeBaseTag", b =>
-                {
-                    b.HasOne("Helpline.Common.Models.KnowledgeBaseLibrary", "KnowledgeBaseLibrary")
-                        .WithMany("KnowledgeBaseTags")
-                        .HasForeignKey("KnowledgeBaseId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Helpline.Common.Models.Tag", "Tag")
-                        .WithMany("KnowledgeBaseTags")
-                        .HasForeignKey("TagId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("KnowledgeBaseLibrary");
-
-                    b.Navigation("Tag");
-                });
-
             modelBuilder.Entity("Helpline.Common.Models.RVRental", b =>
                 {
                     b.HasOne("Helpline.Common.Models.RVCheckout", "Checkout")
@@ -1758,10 +1767,6 @@ namespace Helpline.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Helpline.Common.Models.ServiceCaseCall", null)
-                        .WithMany("RelatedServiceCases")
-                        .HasForeignKey("ServiceCaseCallId");
-
                     b.HasOne("Helpline.Common.Models.Technician", "Technician")
                         .WithMany("ServiceCases")
                         .HasForeignKey("TechnicianId")
@@ -1796,44 +1801,6 @@ namespace Helpline.DataAccess.Migrations
                     b.Navigation("ServiceCase");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.ServiceCaseCallServiceType", b =>
-                {
-                    b.HasOne("Helpline.Common.Models.ServiceCaseCall", "ServiceCaseCall")
-                        .WithMany("ServiceCaseCallServiceClasses")
-                        .HasForeignKey("ServiceCaseCallId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Helpline.Common.Models.ServiceClass", "ServiceClass")
-                        .WithMany("ServiceCaseCallServiceClasses")
-                        .HasForeignKey("ServiceClassId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("ServiceCaseCall");
-
-                    b.Navigation("ServiceClass");
-                });
-
-            modelBuilder.Entity("Helpline.Common.Models.ServiceCaseTag", b =>
-                {
-                    b.HasOne("Helpline.Common.Models.ServiceCase", "ServiceCase")
-                        .WithMany("ServiceCaseTags")
-                        .HasForeignKey("ServiceCaseId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Helpline.Common.Models.Tag", "Tag")
-                        .WithMany("ServiceCaseTags")
-                        .HasForeignKey("TagId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("ServiceCase");
-
-                    b.Navigation("Tag");
-                });
-
             modelBuilder.Entity("Helpline.Common.Models.Technician", b =>
                 {
                     b.HasOne("Helpline.Common.Models.ApplicationUser", "User")
@@ -1842,44 +1809,6 @@ namespace Helpline.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Helpline.Common.Models.TechnicianService", b =>
-                {
-                    b.HasOne("Helpline.Common.Models.ServiceClass", "ServiceClass")
-                        .WithMany("TechnicianServices")
-                        .HasForeignKey("ServiceId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Helpline.Common.Models.Technician", "Technician")
-                        .WithMany("TechnicianServices")
-                        .HasForeignKey("TechnicianId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("ServiceClass");
-
-                    b.Navigation("Technician");
-                });
-
-            modelBuilder.Entity("Helpline.Common.Models.VehicleRvRenter", b =>
-                {
-                    b.HasOne("Helpline.Common.Models.RVRenter", "Renter")
-                        .WithMany("VehicleRvRenters")
-                        .HasForeignKey("RenterId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Helpline.Common.Models.CustomerVehicle", "Vehicle")
-                        .WithMany("VehicleRvRenters")
-                        .HasForeignKey("VehicleId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Renter");
-
-                    b.Navigation("Vehicle");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -2010,8 +1939,6 @@ namespace Helpline.DataAccess.Migrations
 
             modelBuilder.Entity("Helpline.Common.Models.ServiceCaseCall", b =>
                 {
-                    b.Navigation("RelatedServiceCases");
-
                     b.Navigation("ServiceCaseCallServiceClasses");
                 });
 

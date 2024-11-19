@@ -25,8 +25,8 @@ namespace Helpline.Contracts.v1.Responses
         public string Make { get; set; } = string.Empty;
         public string Model { get; set; } = string.Empty;
 
-        public ICollection<ServiceCase> ServiceCases => serviceCases;
-        public ICollection<RVRental> Rentals => rentals;
-        public ICollection<VehicleRvRenter> VehicleRvRenters => vehicleRvRenters;
+        public IReadOnlyCollection<ServiceCase> ServiceCases => serviceCases;
+        public IReadOnlyCollection<RVRental> Rentals => rentals;
+        public IReadOnlyCollection<VehicleRvRenter> VehicleRvRenters => vehicleRvRenters;
     }
 }

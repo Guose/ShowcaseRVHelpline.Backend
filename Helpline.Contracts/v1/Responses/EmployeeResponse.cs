@@ -33,7 +33,7 @@
         public string JobTitle { get; set; }
         public UserResponse User { get; set; }
 
-        public ICollection<ServiceCaseResponse> ServiceCases => serviceCases;
+        public IReadOnlyCollection<ServiceCaseResponse> ServiceCases => serviceCases;
 
         public static EmployeeResponse Create(
             string fullname,

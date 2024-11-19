@@ -9,6 +9,7 @@ using Helpline.Common.Types;
 using Helpline.DataAccess.Context;
 using Helpline.Domain.Data;
 using Helpline.WebAPI.Controller.Configuration.JwtAuthenticationConfig;
+using Helpline.WebAPI.Controller.Filters;
 using Helpline.WebAPI.Controller.Validation;
 using Helpline.WebAPI.Services.Caching;
 using MediatR;
@@ -26,6 +27,7 @@ using Microsoft.ServiceFabric.Services.Communication.AspNetCore;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using System.Fabric;
 using System.Net.WebSockets;
@@ -34,6 +36,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Xml;
 using System.Xml.XPath;
+using Formatting = Newtonsoft.Json.Formatting;
 
 namespace Helpline.WebAPI
 {
@@ -44,7 +47,8 @@ namespace Helpline.WebAPI
     {
         private readonly string swaggerXMLFileName = "SomeFile.XML";
 
-        private readonly List<Assembly> assemblies = [
+        private readonly List<Assembly> assemblies =
+        [
             UserServices.AssemblyReference.Assembly,
             EmailServices.AssemblyReference.Assembly,
             RvRentalHub.AssemblyReference.Assembly,
@@ -139,6 +143,8 @@ namespace Helpline.WebAPI
                         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
                         builder.Services.AddScoped<IRedisCacheService, RedisCacheService>();
 
+                        // Add Rate Limiting with RateLimiter
+
                         // Add Controllers
                         builder.Services.AddControllers(options =>
                         {
@@ -152,6 +158,8 @@ namespace Helpline.WebAPI
                             settings.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                             settings.SerializerSettings.DateFormatString = "yyyy-MM-dd";
                             settings.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                            settings.SerializerSettings.Converters.Add(new StringEnumConverter());
+                            settings.SerializerSettings.Formatting = Formatting.Indented;
                         })
                         .AddOData(opt => opt.Select().Filter().OrderBy().Expand())
                         .AddApplicationPart(Controller.AssemblyReference.Assembly);
@@ -249,6 +257,7 @@ namespace Helpline.WebAPI
 
                         builder.Services.AddSwaggerGen(c =>
                         {
+                            c.SchemaFilter<EnumSchemaFilter>();
                             c.SwaggerDoc("v1", new OpenApiInfo { Title = "JWT Auth API", Version = "v1" });
                             // c.IncludeXmlComments(SwaggerXMLCommentFileFactory);
 
@@ -271,7 +280,12 @@ namespace Helpline.WebAPI
 
                             var securityRequirement = new OpenApiSecurityRequirement
                             {
-                                { securitySchema, new[] { "Bearer" } }
+                                {
+                                    securitySchema, new[]
+                                    {
+                                        "Bearer"
+                                    }
+                                }
                             };
 
                             c.AddSecurityRequirement(securityRequirement);
@@ -284,6 +298,8 @@ namespace Helpline.WebAPI
                             .UseUrls(url);
 
                         var app = builder.Build();
+
+                        // Maybe inject UseEndpoints here, not sure, but do some digging on the advantages of using.
 
                         if (app.Environment.IsDevelopment())
                         {

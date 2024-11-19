@@ -1,11 +1,15 @@
 ﻿using Helpline.Common.Types;
-using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Helpline.Common.Models
 {
     public class DealershipContact : BaseModel
     {
+        [Required]
+        [JsonConverter(typeof(StringEnumConverter))]
         public DepartmentType Department { get; set; }
         public string? Title { get; set; }
         public string? PromoCode { get; set; }

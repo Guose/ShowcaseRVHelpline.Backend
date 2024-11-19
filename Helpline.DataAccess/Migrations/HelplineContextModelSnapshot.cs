@@ -368,7 +368,7 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Attachments")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("BedTypes")
+                    b.Property<string>("BedDetails")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -732,8 +732,8 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Attachments")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("BlackWater")
-                        .HasColumnType("int");
+                    b.Property<byte>("BlackWater")
+                        .HasColumnType("tinyint");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -741,14 +741,14 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("FreshWater")
-                        .HasColumnType("int");
+                    b.Property<byte>("FreshWater")
+                        .HasColumnType("tinyint");
 
-                    b.Property<int>("FuelLevel")
-                        .HasColumnType("int");
+                    b.Property<byte>("FuelLevel")
+                        .HasColumnType("tinyint");
 
-                    b.Property<int>("GrayWater")
-                        .HasColumnType("int");
+                    b.Property<byte>("GrayWater")
+                        .HasColumnType("tinyint");
 
                     b.Property<bool>("IsACChecked")
                         .HasColumnType("bit");
@@ -798,8 +798,8 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Propane")
-                        .HasColumnType("int");
+                    b.Property<byte>("Propane")
+                        .HasColumnType("tinyint");
 
                     b.Property<Guid>("RentalId")
                         .HasColumnType("uniqueidentifier");
@@ -845,8 +845,8 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<DateTime>("RentalStart")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("RentalStatus")
-                        .HasColumnType("int");
+                    b.Property<byte>("RentalStatus")
+                        .HasColumnType("tinyint");
 
                     b.Property<int?>("RenterId")
                         .HasColumnType("int");
@@ -940,8 +940,8 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Attachments")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("BlackWater")
-                        .HasColumnType("int");
+                    b.Property<byte>("BlackWater")
+                        .HasColumnType("tinyint");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -949,11 +949,14 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("FuelLevel")
-                        .HasColumnType("int");
+                    b.Property<byte>("FreshWater")
+                        .HasColumnType("tinyint");
 
-                    b.Property<int>("GrayWater")
-                        .HasColumnType("int");
+                    b.Property<byte>("FuelLevel")
+                        .HasColumnType("tinyint");
+
+                    b.Property<byte>("GrayWater")
+                        .HasColumnType("tinyint");
 
                     b.Property<string>("InsuranceClaimDefinition")
                         .HasColumnType("nvarchar(max)");
@@ -1015,8 +1018,8 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("PhotosReturn")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Propane")
-                        .HasColumnType("int");
+                    b.Property<byte>("Propane")
+                        .HasColumnType("tinyint");
 
                     b.Property<Guid>("RentalId")
                         .HasColumnType("uniqueidentifier");
@@ -1125,8 +1128,8 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Sev")
-                        .HasColumnType("int");
+                    b.Property<byte>("Sev")
+                        .HasColumnType("tinyint");
 
                     b.Property<int>("TechnicianId")
                         .HasColumnType("int");
@@ -1159,7 +1162,7 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Attachments")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte?>("CallType")
+                    b.Property<byte>("CallType")
                         .HasColumnType("tinyint");
 
                     b.Property<string>("Caller")
@@ -1195,10 +1198,11 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<byte>("ServiceType")
                         .HasColumnType("tinyint");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<byte>("Status")
+                        .HasColumnType("tinyint");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("PK_ServiceCaseCalls");
 
                     b.HasIndex("KnowledgeBaseLibraryId");
 
@@ -1233,8 +1237,8 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ServiceType")
-                        .HasColumnType("int");
+                    b.Property<byte>("ServiceType")
+                        .HasColumnType("tinyint");
 
                     b.HasKey("Id")
                         .HasName("PK_ServiceClasses");
@@ -1494,7 +1498,7 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Value")
+                    b.Property<string>("Quantity")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserId", "LoginProvider", "Name");
