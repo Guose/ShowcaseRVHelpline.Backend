@@ -1,6 +1,8 @@
-﻿using Helpline.Common.Models.Associations;
+﻿using Helpline.Common.Helpers;
+using Helpline.Common.Models.Associations;
 using Helpline.Common.Types;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -8,27 +10,49 @@ namespace Helpline.Common.Models
 {
     public class CustomerVehicle : BaseModel
     {
+        private readonly IBedTypeConvertable bedTypeDictionaryHelper;
+
+        public CustomerVehicle(IBedTypeConvertable bedTypeDictionaryHelper, string bedDetails)
+        {
+            this.bedTypeDictionaryHelper = bedTypeDictionaryHelper;
+            BedDetails = bedDetails;
+        }
+
         [Key]
         [Required]
         public new Guid Id { get; set; }
 
         [ForeignKey("CustomerId")]
         public int CustomerId { get; set; }
+
         [JsonIgnore]
         public Customer? Customer { get; set; }
 
         public ICollection<ServiceCase>? ServiceCases { get; set; }
         public ICollection<RVRental>? Rentals { get; set; }
         public ICollection<VehicleRvRenter>? VehicleRvRenters { get; set; }
-        public List<BedType> BedTypes { get; set; } = [];
+
+        [Required]
+        public string BedDetails { get; set; } = "[]";
+
+        [NotMapped]
+        public IDictionary<BedType, int> Beds
+        {
+            get => bedTypeDictionaryHelper.ConvertToDictionaryAsync(BedDetails).Result;
+            set => BedDetails = bedTypeDictionaryHelper.ConvertToJsonAsync(value).Result;
+        }
+
+        [Required]
+        [JsonConverter(typeof(StringEnumConverter))]
+        public RVClassType Class { get; set; }
 
         [Required]
         public int Year { get; set; }
-        [Required]
-        public RVClassType Class { get; set; }
         public string? Manufacture { get; set; }
+
         [Required]
         public string Make { get; set; } = string.Empty;
+
         [Required]
         public string Model { get; set; } = string.Empty;
         public string? Chassis { get; set; }

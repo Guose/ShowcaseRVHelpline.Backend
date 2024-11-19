@@ -2,10 +2,10 @@
 {
     public enum BedType
     {
-        King = 1,
-        Queen = 2,
-        Full = 3,
-        Twin = 4,
-        Single = 5,
+        King,
+        Queen,
+        Full,
+        Twin,
+        Single,
     }
 }

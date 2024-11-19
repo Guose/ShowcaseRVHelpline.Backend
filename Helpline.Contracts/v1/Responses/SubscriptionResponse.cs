@@ -13,7 +13,6 @@ namespace Helpline.Contracts.v1.Responses
 
         public string? Term { get; set; }
 
-
-        public ICollection<CustomerResponse> Customers => customers;
+        public IReadOnlyCollection<CustomerResponse> Customers => customers;
     }
 }

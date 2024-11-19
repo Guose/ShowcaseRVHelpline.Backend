@@ -13,8 +13,6 @@ namespace Helpline.DataAccess.Helpers
                 .HasIndex(t => t.TagName)
                 .IsUnique();
 
-
-
             // ONE-TO-ONE RELATIONSHIP
             modelBuilder.Entity<Dealership>()
                 .HasOne(a => a.Address)
@@ -108,7 +106,7 @@ namespace Helpline.DataAccess.Helpers
                 .HasForeignKey(e => e.EmployeeId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            // Service Case Call to ServiceClass Cases
+            // Service Case Call to Service Cases
             modelBuilder.Entity<ServiceCaseCall>()
                 .HasOne(scc => scc.ServiceCase)
                 .WithMany(sc => sc.ServiceCaseCalls)
@@ -151,20 +149,29 @@ namespace Helpline.DataAccess.Helpers
                 .HasKey(scc => new { scc.ServiceCaseCallId, scc.ServiceClassId })
                 .HasName("PK_ServiceCaseCallServiceClasses");
 
+            modelBuilder.Entity<ServiceCaseCall>()
+                .HasMany(sccsc => sccsc.ServiceCaseCallServiceClasses)
+                .WithOne(scc => scc.ServiceCaseCall)
+                .HasForeignKey(scc => scc.ServiceCaseCallId)
+                .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<ServiceCaseCall>()
+                .HasKey(scc => scc.Id)
+                .HasName("PK_ServiceCaseCalls");
+            modelBuilder.Entity<ServiceCaseCall>()
+                .Property(scc => scc.ServiceType)
+                .HasConversion<byte>();
+
             modelBuilder.Entity<ServiceClass>()
                 .HasMany(sc => sc.ServiceCaseCallServiceClasses)
                 .WithOne(sc => sc.ServiceClass)
                 .HasForeignKey(sc => sc.ServiceClassId)
                 .OnDelete(DeleteBehavior.NoAction);
-
             modelBuilder.Entity<ServiceClass>()
                 .HasKey(sc => sc.Id)
                 .HasName("PK_ServiceClasses");
-
-
             modelBuilder.Entity<ServiceClass>()
                 .Property(sc => sc.ServiceType)
-                .HasConversion<int>();
+                .HasConversion<byte>();
 
             modelBuilder.Entity<KnowledgeBaseLibrary>()
                 .Property(k => k.ServiceType)

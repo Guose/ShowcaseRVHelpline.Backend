@@ -1,6 +1,6 @@
 ﻿namespace Helpline.Common.Types
 {
-    public enum TankLevelType
+    public enum TankLevelType : byte
     {
         Empty = 1,
         Quarter = 2,

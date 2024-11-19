@@ -1,5 +1,7 @@
 ﻿using Helpline.Common.Models.Associations;
 using Helpline.Common.Types;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 namespace Helpline.Common.Models
@@ -7,6 +9,7 @@ namespace Helpline.Common.Models
     public class ServiceClass : BaseModel
     {
         [Required]
+        [JsonConverter(typeof(StringEnumConverter))]
         public ServiceType ServiceType { get; set; }
 
         public ICollection<EmployeeService>? EmployeeServices { get; set; }

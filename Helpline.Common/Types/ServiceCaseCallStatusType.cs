@@ -1,6 +1,6 @@
 ﻿namespace Helpline.Common.Types
 {
-    public enum ServiceCaseCallStatusType
+    public enum ServiceCaseCallStatusType : byte
     {
         None = 0,
         Active = 1,

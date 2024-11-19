@@ -15,9 +15,18 @@
         public bool IsW9OnFile { get; set; }
         public string? Website { get; set; }
 
-        public static TechnicianRequest Create(string company, string referralCode, bool isW9OnFile, string website)
+        public static TechnicianRequest Create(
+            string company,
+            string referralCode,
+            bool isW9OnFile,
+            string website)
         {
-            return new TechnicianRequest(company, referralCode, isW9OnFile, website);
+
+            return new TechnicianRequest(
+                company,
+                referralCode,
+                isW9OnFile,
+                website);
         }
     }
 }

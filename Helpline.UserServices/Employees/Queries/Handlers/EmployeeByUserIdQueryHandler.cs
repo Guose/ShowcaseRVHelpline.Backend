@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Helpline.Common.Errors;
 using Helpline.Common.Shared;
 using Helpline.Contracts.v1.Responses;
 using Helpline.Domain.Data;
@@ -20,6 +21,11 @@ namespace Helpline.UserServices.Employees.Queries.Handlers
         public async Task<Result<EmployeeResponse>> Handle(EmployeeByUserIdQuery request, CancellationToken cancellationToken)
         {
             var employee = await unitOfWork.EmployeeRepo.GetEmployeeByUserIdAsync(request.UserId.ToString(), cancellationToken);
+
+            if (employee is null)
+            {
+                return Result.Failure<EmployeeResponse>(CommonErrors.User.NotFound(request.UserId));
+            }
 
             return mapper.Map<EmployeeResponse>(employee);
         }

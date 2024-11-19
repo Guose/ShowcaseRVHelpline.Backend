@@ -32,7 +32,7 @@ namespace Helpline.DataAccess.Migrations
                 table: "ServiceCaseCallServiceClasses",
                 newName: "IX_ServiceCaseCallServiceClasses_ServiceClassId");
 
-            // Update Foreign Key: ServiceCaseCallServiceClasses.ServiceClassId references ServiceClasses.Id
+            // Update Foreign BedType: ServiceCaseCallServiceClasses.ServiceClassId references ServiceClasses.Id
             migrationBuilder.DropForeignKey(
                 name: "FK_ServiceCaseCallServiceTypes_ServiceTypes_ServiceTypeId",
                 table: "ServiceCaseCallServiceClasses");
@@ -71,7 +71,7 @@ namespace Helpline.DataAccess.Migrations
                 table: "ServiceCaseCallServiceTypes",
                 newName: "IX_ServiceCaseCallServiceTypes_ServiceTypeId");
 
-            // Update Foreign Key: ServiceCaseCallServiceTypes.ServiceTypeId references ServiceTypes.Id
+            // Update Foreign BedType: ServiceCaseCallServiceTypes.ServiceTypeId references ServiceTypes.Id
             migrationBuilder.DropForeignKey(
                 name: "FK_ServiceCaseCallServiceClasses_ServiceClasses_ServiceClassId",
                 table: "ServiceCaseCallServiceTypes");

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using Helpline.Common.Errors;
 using Helpline.Common.Models;
 using Helpline.Common.Shared;
@@ -12,15 +13,24 @@ namespace Helpline.UserServices.Technicians.Commands.Handlers
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
+        private readonly IValidator<TechnicianUpdateCommand> validator;
 
-        public TechnicianUpdateCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public TechnicianUpdateCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IValidator<TechnicianUpdateCommand> validator)
         {
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
+            this.validator = validator;
         }
 
         public async Task<Result> Handle(TechnicianUpdateCommand request, CancellationToken cancellationToken)
         {
+            var validateResult = await validator.ValidateAsync(request, cancellationToken);
+
+            if (!validateResult.IsValid)
+            {
+                return Result.Failure((Error)validateResult.Errors.Select(e => e.ErrorMessage));
+            }
+
             var technician = await unitOfWork.TechnicianRepo.GetTechnicianByUserIdAsync(request.UserId.ToString(), cancellationToken);
 
             if (technician is null)

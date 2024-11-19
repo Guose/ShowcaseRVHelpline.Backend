@@ -1,6 +1,6 @@
 ﻿namespace Helpline.Common.Types
 {
-    public enum RentalStatusType
+    public enum RentalStatusType : byte
     {
         None = 0,
         Booked = 1,

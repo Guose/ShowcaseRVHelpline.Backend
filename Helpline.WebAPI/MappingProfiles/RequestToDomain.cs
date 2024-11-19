@@ -37,7 +37,7 @@ namespace Helpline.WebAPI.MappingProfiles
 
         //private static string HashPassword(UserRequest src)
         //{
-        //    return new PasswordHasher<UserRequest>().HashPassword(src, src.Password!.Value);
+        //    return new PasswordHasher<UserRequest>().HashPassword(src, src.Password!.Quantity);
         //}
     }
 }

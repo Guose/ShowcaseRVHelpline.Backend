@@ -20,6 +20,6 @@ namespace Helpline.Contracts.v1.Responses
         public bool SubscriptionStatus { get; set; }
         public UserResponse? User { get; set; }
 
-        public ICollection<VehicleResponse> CustomerVehicles => vehicles;
+        public IReadOnlyCollection<VehicleResponse> CustomerVehicles => vehicles;
     }
 }
