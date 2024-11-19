@@ -6,5 +6,6 @@
         CertifiedTech = 1,
         RVRental = 2,
         Helpline = 3,
+        eConnect = 4,
     }
 }
