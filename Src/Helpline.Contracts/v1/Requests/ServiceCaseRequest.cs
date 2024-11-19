@@ -1,5 +1,5 @@
-﻿using Helpline.Common.Essentials;
-using Helpline.DataAccess.Models.Types;
+﻿using Helpline.Contracts.v1.Types;
+using Helpline.DataAccess.Models.CoreElements;
 
 namespace Helpline.Contracts.v1.Requests
 {

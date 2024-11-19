@@ -1,4 +1,4 @@
-﻿using Helpline.DataAccess.Models.Types;
+﻿using Helpline.Contracts.v1.Types;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Helpline.WebAPI.Controller.AuthorizationHelpers

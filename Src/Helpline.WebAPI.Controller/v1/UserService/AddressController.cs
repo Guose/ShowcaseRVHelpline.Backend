@@ -1,6 +1,6 @@
 ﻿using Helpline.Common.Constants;
-using Helpline.Common.Shared;
 using Helpline.Contracts.v1.Responses;
+using Helpline.Domain.Shared;
 using Helpline.UserServices.Addresses.Commands;
 using Helpline.UserServices.Addresses.Queries;
 using Helpline.WebAPI.Controller.v1.SubscriptionService.Contracts;

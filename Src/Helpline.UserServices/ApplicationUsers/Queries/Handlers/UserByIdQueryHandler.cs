@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Helpline.Common.Shared;
 using Helpline.Contracts.v1.Responses;
 using Helpline.Domain.Data;
 using Helpline.Domain.Messaging;
+using Helpline.Domain.Shared;
 
 namespace Helpline.UserServices.ApplicationUsers.Queries.Handlers
 {

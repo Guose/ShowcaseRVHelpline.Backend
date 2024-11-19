@@ -1,4 +1,4 @@
-﻿using Helpline.Common.Shared;
+﻿using Helpline.Domain.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

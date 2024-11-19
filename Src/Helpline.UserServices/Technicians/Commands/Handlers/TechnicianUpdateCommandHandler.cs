@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using Helpline.Common.Errors;
-using Helpline.Common.Shared;
 using Helpline.Contracts.v1.Requests;
 using Helpline.DataAccess.Models.Entities;
 using Helpline.Domain.Data;
+using Helpline.Domain.Errors;
 using Helpline.Domain.Messaging;
+using Helpline.Domain.Shared;
 
 namespace Helpline.UserServices.Technicians.Commands.Handlers
 {

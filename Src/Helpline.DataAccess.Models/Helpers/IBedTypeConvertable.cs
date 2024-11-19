@@ -4,7 +4,7 @@ namespace Helpline.DataAccess.Models.Helpers
 {
     public interface IBedTypeConvertable
     {
-        IDictionary<BedType, int> ConvertToDictionaryAsync(string bedDetails);
+        IDictionary<BedType, int> ConvertToDictionary(string bedDetails);
         Task<string> ConvertToJsonAsync(IDictionary<BedType, int> beds);
     }
 }

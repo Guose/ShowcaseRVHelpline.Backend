@@ -8,11 +8,6 @@ namespace Helpline.DataAccess.Models.Entities
 {
     public class Customer : BaseModel
     {
-        internal Customer(string userId)
-        {
-            UserId = userId;
-        }
-
         [Required]
         [JsonConverter(typeof(StringEnumConverter))]
         public SubscriptionType SubscriptionType { get; set; }
@@ -22,7 +17,7 @@ namespace Helpline.DataAccess.Models.Entities
 
 
         [ForeignKey("UserId")]
-        public string UserId { get; set; }
+        public string UserId { get; set; } = string.Empty;
         public ApplicationUser? User { get; set; }
 
         [ForeignKey("SubscriptionId")]

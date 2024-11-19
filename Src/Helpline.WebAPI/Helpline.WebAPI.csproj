@@ -38,6 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Helpline.DataAccess\Helpline.DataAccess.csproj" />
     <ProjectReference Include="..\Helpline.WebAPI.Controller\Helpline.WebAPI.Controller.csproj" />
   </ItemGroup>
 

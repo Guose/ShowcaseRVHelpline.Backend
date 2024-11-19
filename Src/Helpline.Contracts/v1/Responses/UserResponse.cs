@@ -1,4 +1,4 @@
-﻿using Helpline.DataAccess.Models.Types;
+﻿using Helpline.Contracts.v1.Types;
 
 namespace Helpline.Contracts.v1.Responses
 {

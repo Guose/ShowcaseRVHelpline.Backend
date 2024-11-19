@@ -1,7 +1,7 @@
-﻿using Helpline.Common.Errors;
-using Helpline.Common.Essentials;
-using Helpline.Common.Shared;
+﻿using Helpline.DataAccess.Models.CoreElements;
 using Helpline.DataAccess.Models.Entities;
+using Helpline.Domain.Errors;
+using Helpline.Domain.Shared;
 
 namespace Helpline.Domain.ValueObjects
 {

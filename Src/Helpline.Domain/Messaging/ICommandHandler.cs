@@ -1,4 +1,4 @@
-﻿using Helpline.Common.Shared;
+﻿using Helpline.Domain.Shared;
 using MediatR;
 
 namespace Helpline.Domain.Messaging
