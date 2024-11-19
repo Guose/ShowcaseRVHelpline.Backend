@@ -10,10 +10,10 @@
             Website = website;
         }
 
-        public string? Company { get; set; }
-        public string? ReferralCode { get; set; }
+        public string Company { get; set; }
+        public string ReferralCode { get; set; }
         public bool IsW9OnFile { get; set; }
-        public string? Website { get; set; }
+        public string Website { get; set; }
 
         public static TechnicianRequest Create(string company, string referralCode, bool isW9OnFile, string website)
         {

@@ -13,7 +13,13 @@
 
         // EmployeeRoutes
         public const string EmployeeRoute = "Employee";
+        public const string GetEmployeesRoute = "Employees";
         public const string EmployeeRouteById = "Employee/{userId}";
+
+        // EmployeeRoutes
+        public const string TechnicianRoute = "Technician";
+        public const string GetTechniciansRoute = "Technicians";
+        public const string TechnicianRouteById = "Technician/{userId}";
 
         // AddressRoutes
         public const string AddressesRoute = "Addresses";
