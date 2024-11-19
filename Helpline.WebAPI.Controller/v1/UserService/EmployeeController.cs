@@ -11,7 +11,7 @@ namespace Helpline.WebAPI.Controller.v1.UserService
     public partial class UserServicesController
     {
         [HttpGet]
-        [Route(HelplineRoutes.EmployeeRoute)]
+        [Route(HelplineRoutes.GetEmployeesRoute)]
         public async Task<IActionResult> GetAllEmployees(CancellationToken cancellationToken)
         {
             var query = new EmployeesAllQuery();
