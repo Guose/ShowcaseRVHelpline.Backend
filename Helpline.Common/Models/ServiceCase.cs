@@ -1,7 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using Helpline.Common.Models.Associations;
 using Helpline.Common.Types;
-using Helpline.Common.Models.Associations;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Helpline.Common.Models
 {
@@ -14,7 +16,9 @@ namespace Helpline.Common.Models
         [Required]
         public string Title { get; set; } = string.Empty;
         public DateTime DueDate { get; set; }
+
         [Required]
+        [JsonConverter(typeof(StringEnumConverter))]
         public ServiceCallSevType Sev { get; set; }
 
 

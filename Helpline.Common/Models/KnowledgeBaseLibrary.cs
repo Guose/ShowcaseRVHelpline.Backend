@@ -1,11 +1,17 @@
 ﻿using Helpline.Common.Models.Associations;
 using Helpline.Common.Types;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.ComponentModel.DataAnnotations;
 
 namespace Helpline.Common.Models
 {
     public class KnowledgeBaseLibrary : BaseModel
     {
         public string? Title { get; set; }
+
+        [Required]
+        [JsonConverter(typeof(StringEnumConverter))]
         public ServiceType ServiceType { get; set; }
         public string? VideoURL { get; set; }
         public string? VideoDIY { get; set; }

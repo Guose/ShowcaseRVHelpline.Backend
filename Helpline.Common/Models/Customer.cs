@@ -1,6 +1,7 @@
 ﻿using Helpline.Common.Types;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Helpline.Common.Models
@@ -12,6 +13,7 @@ namespace Helpline.Common.Models
             UserId = userId;
         }
 
+        [Required]
         [JsonConverter(typeof(StringEnumConverter))]
         public SubscriptionType SubscriptionType { get; set; }
         public DateTime SubscriptionStartDate { get; set; }

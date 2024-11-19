@@ -8,6 +8,7 @@ namespace Helpline.Contracts.v1.Responses
     {
         public string Title { get; set; } = string.Empty;
         public DateTime DueDate { get; set; }
+
         [JsonConverter(typeof(StringEnumConverter))]
         public ServiceCallSevType Sev { get; set; }
         public CustomerResponse? Customer { get; set; }

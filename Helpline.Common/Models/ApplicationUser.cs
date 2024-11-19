@@ -10,20 +10,24 @@ namespace Helpline.Common.Models
     public class ApplicationUser : IdentityUser
     {
         [Required]
-        public string FirstName { get; set; }
+        public string FirstName { get; set; } = string.Empty;
+
         [Required]
-        public string LastName { get; set; }
-        [Phone]
-        public string? SecondaryPhone { get; set; }
+        public string LastName { get; set; } = string.Empty;
+
         [Required]
         [JsonConverter(typeof(StringEnumConverter))]
         public RoleType Role { get; set; }
+
         [Required]
         [JsonConverter(typeof(StringEnumConverter))]
         public PermissionType Permissions { get; set; }
+
         public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
         public DateTime? ModifiedOn { get; set; }
 
+        [Phone]
+        public string? SecondaryPhone { get; set; }
         public bool IsRemembered { get; set; }
         public bool IsActive { get; set; }
 
@@ -38,11 +42,5 @@ namespace Helpline.Common.Models
 
         [NotMapped]
         public string? Password { get; set; }
-
-        public ApplicationUser()
-        {
-            FirstName = string.Empty;
-            LastName = string.Empty;
-        }
     }
 }

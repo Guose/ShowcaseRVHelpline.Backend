@@ -5,7 +5,7 @@ namespace Helpline.Domain.Validation
 {
     public static class UserValueObjectsValidation
     {
-        // Helper Method to Validate and Create Value Objects
+        // Helper Method to Validate and Create Quantity Objects
         public static Result<ValueObjectContainer> ValidateAndCreateValueObjects(
             string firstName, string lastName, string phoneNumber, string secondPhoneNumber)
         {

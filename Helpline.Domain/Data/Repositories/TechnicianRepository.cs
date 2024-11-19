@@ -22,10 +22,6 @@ namespace Helpline.Domain.Data.Repositories
             return await Context.Technicians
                 .Include(u => u.User)
                     .ThenInclude(a => a!.Address)
-                .Include(sc => sc.ServiceCases!)
-                    .ThenInclude(rv => rv.CustomerVehicle)
-                .Include(sc => sc.ServiceCases!)
-                    .ThenInclude(c => c.Customer)
                 .FirstOrDefaultAsync(u => u.UserId == userId);
         }
     }
