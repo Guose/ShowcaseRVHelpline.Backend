@@ -1,5 +1,4 @@
 ﻿using Helpline.DataAccess.Models.Entities.Associations;
-using Helpline.DataAccess.Models.Helpers;
 using Helpline.DataAccess.Models.Types;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -10,9 +9,9 @@ namespace Helpline.DataAccess.Models.Entities
 {
     public class CustomerVehicle : BaseModel
     {
-        private readonly IBedTypeConvertable? bedTypeDictionaryHelper;
+        private readonly IDictionaryConvertable? bedTypeDictionaryHelper;
 
-        public CustomerVehicle(IBedTypeConvertable bedTypeDictionaryHelper, string bedDetails)
+        public CustomerVehicle(IDictionaryConvertable bedTypeDictionaryHelper, string bedDetails)
         {
             this.bedTypeDictionaryHelper = bedTypeDictionaryHelper;
             BedDetails = bedDetails;
@@ -64,25 +63,28 @@ namespace Helpline.DataAccess.Models.Entities
         public double Odometer { get; set; }
         public int? Length { get; set; }
         public double? Height { get; set; }
+        public int Sleeps { get; set; }
+        public int SeatbeltsQty { get; set; }
         public string? VIN { get; set; }
         public string? Warranty { get; set; }
-        public bool HasGenerator { get; set; } = false;
-        public string? GeneratorDefinition { get; set; }
         public int GeneratorHours { get; set; }
-        public bool HasSlideout { get; set; } = false;
+        public bool IsBooked { get; set; } = false;
+        public string? GeneratorDefinition { get; set; }
         public string? SlideoutDefinition { get; set; }
-        public bool HasPropane { get; set; }
         public string? PropaneDefinition { get; set; }
-        public bool HasFurnace { get; set; }
         public string? FurnaceDefinition { get; set; }
-        public bool HasWaterHeater { get; set; }
         public string? WaterHeaterDefinition { get; set; }
-        public bool HasRange { get; set; }
         public string? RangeDefinition { get; set; }
-        public bool HasRefrigerator { get; set; }
         public string? RefrigeratorDefinition { get; set; }
-        public bool HasTV { get; set; }
         public string? TVDefinition { get; set; }
+        public bool HasGenerator { get; set; } = false;
+        public bool HasSlideout { get; set; } = false;
+        public bool HasPropane { get; set; }
+        public bool HasFurnace { get; set; }
+        public bool HasWaterHeater { get; set; }
+        public bool HasRange { get; set; }
+        public bool HasRefrigerator { get; set; }
+        public bool HasTV { get; set; }
         public bool HasMicrowave { get; set; }
         public bool HasCDPlayer { get; set; }
         public bool HasDVDPlayer { get; set; }
@@ -93,11 +95,8 @@ namespace Helpline.DataAccess.Models.Entities
         public bool HasExteriorShower { get; set; }
         public bool HasiPodDocking { get; set; }
         public bool HasNavigation { get; set; }
-        public int Sleeps { get; set; }
-        public int SeatbeltsQty { get; set; }
         public bool HasFireExtingusher { get; set; }
         public bool HasSnowChains { get; set; }
         public bool HasFireplace { get; set; }
-        public bool IsBooked { get; set; } = false;
     }
 }
