@@ -142,7 +142,7 @@ namespace Helpline.WebAPI
                         builder.Services.AddScoped<ILogging, Logging>();
                         builder.Services.AddScoped<ITokenConfiguration, TokenConfiguration>();
                         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-                        builder.Services.AddScoped<IBedTypeConvertable, BedTypeDictionaryHelper>();
+                        builder.Services.AddScoped(typeof(IDictionary<,>), typeof(DictionaryHelper<,>));
                         builder.Services.AddScoped<IRedisCacheService, RedisCacheService>();
 
                         // Add Rate Limiting with RateLimiter
