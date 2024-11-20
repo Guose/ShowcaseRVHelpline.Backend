@@ -1,6 +1,6 @@
 ﻿namespace Helpline.DataAccess.Models.Types
 {
-    public enum VehicleFeature
+    public enum VehicleFeaturesType
     {
         Generator,
         Slideout,

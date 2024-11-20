@@ -1,18 +1,12 @@
 using FluentValidation;
 using Helpline.Common.Constants;
-using Helpline.Common.Interfaces;
-using Helpline.Common.Logging;
 using Helpline.Contracts.v1.Types;
 using Helpline.DataAccess.Context;
-using Helpline.DataAccess.Data;
 using Helpline.DataAccess.Models.Entities;
-using Helpline.DataAccess.Models.Helpers;
-using Helpline.Domain.Data;
 using Helpline.WebAPI.Controller.AuthorizationHelpers;
-using Helpline.WebAPI.Controller.Configuration.JwtAuthenticationConfig;
 using Helpline.WebAPI.Controller.Filters;
 using Helpline.WebAPI.Controller.Validation;
-using Helpline.WebAPI.Services.Caching;
+using Helpline.WebAPI.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -138,12 +132,10 @@ namespace Helpline.WebAPI
                             options.InstanceName = "RVHelplineAPI_";
                         });
 
-                        // Add services to the container.
-                        builder.Services.AddScoped<ILogging, Logging>();
-                        builder.Services.AddScoped<ITokenConfiguration, TokenConfiguration>();
-                        builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-                        builder.Services.AddScoped(typeof(IDictionary<,>), typeof(DictionaryHelper<,>));
-                        builder.Services.AddScoped<IRedisCacheService, RedisCacheService>();
+                        // Add services to the container using extension method.
+                        builder.Services.AddCoreServices();
+                        builder.Services.AddFeatureServices();
+
 
                         // Add Rate Limiting with RateLimiter
 

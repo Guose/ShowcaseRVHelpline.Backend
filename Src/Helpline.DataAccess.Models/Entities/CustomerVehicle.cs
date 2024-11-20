@@ -68,6 +68,7 @@ namespace Helpline.DataAccess.Models.Entities
         public string? VIN { get; set; }
         public string? Warranty { get; set; }
         public int GeneratorHours { get; set; }
+        public bool IsBooked { get; set; } = false;
         public string? GeneratorDefinition { get; set; }
         public string? SlideoutDefinition { get; set; }
         public string? PropaneDefinition { get; set; }
@@ -97,6 +98,5 @@ namespace Helpline.DataAccess.Models.Entities
         public bool HasFireExtingusher { get; set; }
         public bool HasSnowChains { get; set; }
         public bool HasFireplace { get; set; }
-        public bool IsBooked { get; set; } = false;
     }
 }
