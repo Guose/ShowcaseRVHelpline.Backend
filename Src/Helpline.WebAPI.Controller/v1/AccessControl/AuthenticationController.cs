@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Helpline.Contracts.v1.Responses;
-using Helpline.DataAccess.Models.Entities;
 using Helpline.Domain.Data;
+using Helpline.Domain.Models.Entities;
+using Helpline.WebAPI.Controller.Config.JwtAuthenticationConfig;
 using Helpline.WebAPI.Controller.Configuration;
-using Helpline.WebAPI.Controller.Configuration.JwtAuthenticationConfig;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +11,7 @@ namespace Helpline.WebAPI.Controller.v1.Authentication
 {
     [ApiController]
     [Route("api/[controller]")]
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class AuthenticationController : BaseController
     {
         private readonly ITokenConfiguration tokenConfiguration;
@@ -18,7 +19,7 @@ namespace Helpline.WebAPI.Controller.v1.Authentication
         private readonly IUnitOfWork unitOfWork;
 
         public AuthenticationController(
-            ISender sender,
+            IMediator sender,
             ITokenConfiguration tokenConfiguration,
             IMapper mapper,
             IUnitOfWork unitOfWork) : base(sender)

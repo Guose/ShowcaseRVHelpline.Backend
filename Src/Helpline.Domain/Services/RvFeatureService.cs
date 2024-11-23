@@ -1,5 +1,5 @@
-﻿using Helpline.DataAccess.Models.Helpers;
-using Helpline.DataAccess.Models.Types;
+﻿using Helpline.Domain.Models.Helpers;
+using Helpline.Domain.Models.Types;
 
 namespace Helpline.Domain.Services
 {

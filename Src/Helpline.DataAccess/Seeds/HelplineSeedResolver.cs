@@ -1,6 +1,6 @@
-﻿using Helpline.DataAccess.Models.CoreElements;
-using Helpline.DataAccess.Models.Entities;
-using Helpline.DataAccess.Models.Types;
+﻿using Helpline.Domain.Models.CoreElements;
+using Helpline.Domain.Models.Entities;
+using Helpline.Domain.Models.Types;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using System.Text.Json;

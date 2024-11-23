@@ -1,6 +1,6 @@
-﻿using Helpline.DataAccess.Models.CoreElements;
-using Helpline.DataAccess.Models.Entities;
-using Helpline.Domain.Errors;
+﻿using Helpline.Domain.Errors;
+using Helpline.Domain.Models.CoreElements;
+using Helpline.Domain.Models.Entities;
 using Helpline.Domain.Shared;
 
 namespace Helpline.Domain.ValueObjects

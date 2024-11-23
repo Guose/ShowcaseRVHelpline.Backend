@@ -9,18 +9,18 @@
 
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
-    <PackageReference Include="FluentValidation" Version="11.10.0" />
+    <PackageReference Include="FluentValidation" Version="11.11.0" />
     <PackageReference Include="MediatR" Version="12.4.1" />
+    <PackageReference Include="MediatR.Extensions.Autofac.DependencyInjection" Version="12.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Helpline.EmailServices\Helpline.EmailServices.csproj" />
-    <ProjectReference Include="..\Helpline.RentalServices\Helpline.RvRentalHub.csproj" />
-    <ProjectReference Include="..\Helpline.ServiceCallHub\Helpline.ServiceCallHub.csproj" />
-    <ProjectReference Include="..\Helpline.SubscriptionServices\Helpline.SubscriptionServices.csproj" />
-    <ProjectReference Include="..\Helpline.UserServices\Helpline.UserServices.csproj" />
+    <ProjectReference Include="..\Helpline.Common\Helpline.Common.csproj" />
+    <ProjectReference Include="..\Helpline.Services.Subscriptions\Helpline.Services.Subscriptions.csproj" />
+    <ProjectReference Include="..\Helpline.Services.Users\Helpline.Services.Users.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,7 +1,7 @@
 ﻿using Helpline.Common.Interfaces;
 using Helpline.DataAccess.Context;
-using Helpline.DataAccess.Models.Entities;
 using Helpline.Domain.Data.Interfaces;
+using Helpline.Domain.Models.Entities;
 using Helpline.Domain.Shared;
 using Helpline.Domain.ValueObjects;
 using Microsoft.AspNetCore.Identity;
@@ -13,7 +13,7 @@ namespace Helpline.DataAccess.Data.Repositories
         BaseRepository<ApplicationUser, HelplineContext, string>(context, logging), IApplicationUserRepository
     {
 
-        public async Task<ApplicationUser?> GetUserByUsernameAsync(string username)
+        public async Task<ApplicationUser?> GetUserByUsernameAsync(string username, CancellationToken cancellationToken)
         {
             try
             {

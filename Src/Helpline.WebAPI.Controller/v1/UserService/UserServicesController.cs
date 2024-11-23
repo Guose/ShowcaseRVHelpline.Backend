@@ -1,8 +1,9 @@
 ﻿using Helpline.Common.Constants;
 using Helpline.Contracts.v1.Responses;
+using Helpline.Domain.Models.Entities;
 using Helpline.Domain.Shared;
-using Helpline.UserServices.ApplicationUsers.Commands;
-using Helpline.UserServices.ApplicationUsers.Queries;
+using Helpline.Services.Users.ApplicationUsers.Commands;
+using Helpline.Services.Users.ApplicationUsers.Queries;
 using Helpline.WebAPI.Controller.Configuration;
 using Helpline.WebAPI.Controller.v1.SubscriptionService.Contracts;
 using MediatR;
@@ -14,7 +15,7 @@ namespace Helpline.WebAPI.Controller.v1.UserService
     [Route($"{HelplineRoutes.UserControllerRoute}")]
     public partial class UserServicesController : BaseController
     {
-        public UserServicesController(ISender sender) : base(sender) { }
+        public UserServicesController(IMediator sender) : base(sender) { }
 
         [HttpGet]
         [Route(HelplineRoutes.GetUsersRoute)]
@@ -22,7 +23,7 @@ namespace Helpline.WebAPI.Controller.v1.UserService
         {
             var query = new UsersQuery();
 
-            Result<IEnumerable<UserResponse>> response = await Sender.Send(query, cancellationToken);
+            Result<IEnumerable<ApplicationUser>> response = await Sender.Send(query, cancellationToken);
 
             return response.IsSuccess ? Ok(response) : BadRequest(response.Error);
         }

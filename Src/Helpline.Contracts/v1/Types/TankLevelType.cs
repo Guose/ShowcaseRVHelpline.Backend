@@ -1,11 +1,11 @@
 ﻿namespace Helpline.Contracts.v1.Types
 {
-    public enum TankLevelType : byte
+    public enum TankLevelType
     {
-        Empty = 1,
-        Quarter = 2,
-        Half = 3,
-        ThreeQuarter = 4,
-        Full = 5,
+        Empty,
+        Quarter,
+        Half,
+        ThreeQuarter,
+        Full,
     }
 }

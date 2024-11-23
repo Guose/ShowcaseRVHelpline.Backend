@@ -12,10 +12,9 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
-    <PackageReference Include="FluentValidation" Version="11.10.0" />
-    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.10.0" />
+    <PackageReference Include="FluentValidation" Version="11.11.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />
     <PackageReference Include="MediatR" Version="12.4.1" />
-    <PackageReference Include="MediatR.Extensions.Autofac.DependencyInjection" Version="12.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.11" />
@@ -31,6 +30,7 @@
     <PackageReference Include="Microsoft.Identity.Web.UI" Version="3.2.2" />
     <PackageReference Include="Microsoft.ServiceFabric.AspNetCore.Kestrel" Version="7.1.2448" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+    <PackageReference Include="Quartz.Extensions.DependencyInjection" Version="3.13.1" />
     <PackageReference Include="Quartz.Extensions.Hosting" Version="3.13.1" />
     <PackageReference Include="Scrutor" Version="5.0.2" />
     <PackageReference Include="StackExchange.Redis" Version="2.8.16" />
@@ -38,7 +38,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Helpline.Core.Services\Helpline.Core.csproj" />
     <ProjectReference Include="..\Helpline.DataAccess\Helpline.DataAccess.csproj" />
+    <ProjectReference Include="..\Helpline.Services.Abstractions\Helpline.Services.Abstractions.csproj" />
     <ProjectReference Include="..\Helpline.WebAPI.Controller\Helpline.WebAPI.Controller.csproj" />
   </ItemGroup>
 

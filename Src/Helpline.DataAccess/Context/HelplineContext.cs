@@ -1,6 +1,7 @@
 ﻿using Helpline.DataAccess.Helpers;
-using Helpline.DataAccess.Models.Entities;
-using Helpline.DataAccess.Models.Entities.Associations;
+using Helpline.DataAccess.Outbox;
+using Helpline.Domain.Models.Entities;
+using Helpline.Domain.Models.Entities.Associations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,8 @@ namespace Helpline.DataAccess.Context
     {
         public HelplineContext(DbContextOptions options) : base(options) { }
 
+        public DbSet<OutboxMessage> OutboxMessages => Set<OutboxMessage>();
+        public DbSet<OutboxMessageConsumer> OutboxMessageConsumers => Set<OutboxMessageConsumer>();
         public DbSet<Address> Addresses => Set<Address>();
         public DbSet<ApplicationUser> ApplicationUsers => Set<ApplicationUser>();
         public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
@@ -51,9 +54,6 @@ namespace Helpline.DataAccess.Context
             modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims");
 
             modelBuilder.ModelCreator();
-
-            modelBuilder.Entity<ServiceClass>()
-                .HasKey(x => x.Id);
 
             // modelBuilder.ModelSeeds();
         }

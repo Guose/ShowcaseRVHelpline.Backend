@@ -1,11 +1,11 @@
 ﻿namespace Helpline.Contracts.v1.Types
 {
-    public enum SubscriptionType : byte
+    public enum SubscriptionType
     {
-        None = 0,
-        CertifiedTech = 1,
-        RVRental = 2,
-        Helpline = 3,
-        eConnect = 4,
+        None,
+        CertifiedTech,
+        RVRental,
+        Helpline,
+        eConnect,
     }
 }

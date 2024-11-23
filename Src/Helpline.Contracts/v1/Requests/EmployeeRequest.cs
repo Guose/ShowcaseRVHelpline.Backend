@@ -1,24 +1,24 @@
-﻿using Helpline.DataAccess.Models.CoreElements;
-
-namespace Helpline.Contracts.v1.Requests
+﻿namespace Helpline.Contracts.v1.Requests
 {
-    public class EmployeeRequest : AggregateRoot, IAuditableEntity
+    public class EmployeeRequest
     {
         private readonly List<string>? attachments = [];
 
-        private EmployeeRequest(Guid userId, int id, string company, string jobTitle) : base(userId, id)
+        private EmployeeRequest(Guid userId, string company, string jobTitle)
         {
+            UserId = userId;
             Company = company;
             JobTitle = jobTitle;
-            CreatedOn = DateTime.Now;
+            CreatedOn = DateTime.UtcNow;
         }
-        private EmployeeRequest(Guid userId, int id, bool isActive, List<string> attachments, DateTime? modifiedOn = null) : base(userId, id)
+        private EmployeeRequest(int id, bool isActive, List<string> attachments, DateTime? modifiedOn = null)
         {
             ModifiedOn = modifiedOn;
             IsActive = isActive;
             this.attachments = attachments;
         }
 
+        public Guid UserId { get; set; }
         public string? Company { get; private set; }
         public string? JobTitle { get; private set; }
         public bool IsActive { get; private set; }
@@ -26,28 +26,18 @@ namespace Helpline.Contracts.v1.Requests
         public DateTime? ModifiedOn { get; set; }
         public IReadOnlyCollection<string>? Attachments => attachments;
 
-        public static EmployeeRequest Create(
-            Guid userId,
-            int id,
-            string company,
-            string jobTitle)
+        public static EmployeeRequest Create(Guid userId, string company, string jobTitle)
         {
-            return new EmployeeRequest(
-                userId,
-                id,
-                company,
-                jobTitle);
+            return new EmployeeRequest(userId, company, jobTitle);
         }
 
         public static EmployeeRequest Update(
-            Guid userId,
             int id,
             bool isActive,
             List<string> attachments,
             DateTime modifiedOn)
         {
             return new EmployeeRequest(
-                userId,
                 id,
                 isActive,
                 attachments,

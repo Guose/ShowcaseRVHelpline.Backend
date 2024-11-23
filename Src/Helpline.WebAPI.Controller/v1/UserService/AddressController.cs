@@ -1,8 +1,8 @@
 ﻿using Helpline.Common.Constants;
 using Helpline.Contracts.v1.Responses;
 using Helpline.Domain.Shared;
-using Helpline.UserServices.Addresses.Commands;
-using Helpline.UserServices.Addresses.Queries;
+using Helpline.Services.Users.Addresses.Commands;
+using Helpline.Services.Users.Addresses.Queries;
 using Helpline.WebAPI.Controller.v1.SubscriptionService.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
