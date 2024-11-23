@@ -25,7 +25,7 @@ namespace Helpline.Services.Users.Employees.Commands.Handlers
 
             if (employee is null)
             {
-                return Result.Failure(CommonErrors.User.NotFound(request.UserId));
+                return Result.Failure(DomainErrors.User.NotFound(request.UserId));
             }
 
             var updatedEmployee = EmployeeRequest.Update(

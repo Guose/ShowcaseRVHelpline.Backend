@@ -20,12 +20,12 @@ namespace Helpline.Domain.ValueObjects
         {
             if (string.IsNullOrWhiteSpace(password))
             {
-                return Result.Failure<Password>(CommonErrors.Password.Empty);
+                return Result.Failure<Password>(DomainErrors.Password.Empty);
             }
 
             if (!CharacterValidationRegEx.Password.IsMatch(password))
             {
-                return Result.Failure<Password>(CommonErrors.Password.InvalidFormat);
+                return Result.Failure<Password>(DomainErrors.Password.InvalidFormat);
             }
 
             return new Password(password);

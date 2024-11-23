@@ -23,13 +23,13 @@ namespace Helpline.Services.Users.Addresses.Queries
             var user = await unitOfWork.UserRepo.GetEntityByIdAsync(request.UserId.ToString(), cancellationToken);
             if (user == null)
             {
-                return Result.Failure<AddressResponse>(CommonErrors.User.NotFound(request.UserId));
+                return Result.Failure<AddressResponse>(DomainErrors.User.NotFound(request.UserId));
             }
 
             var address = await unitOfWork.AddressRepo.GetEntityByIdAsync(user.AddressId!, cancellationToken);
             if (address == null)
             {
-                return Result.Failure<AddressResponse>(CommonErrors.Address.NotFound);
+                return Result.Failure<AddressResponse>(DomainErrors.Address.NotFound);
             }
 
             return mapper.Map<AddressResponse>(address);

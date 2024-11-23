@@ -24,7 +24,7 @@ namespace Helpline.Services.Users.ApplicationUsers.Commands.Handlers
             var user = await unitOfWork.UserRepo.GetEntityByIdAsync(request.UserId.ToString(), cancellationToken);
 
             if (user is null)
-                return Result.Failure(CommonErrors.User.NotFound(request.UserId));
+                return Result.Failure(DomainErrors.User.NotFound(request.UserId));
 
             var updatedUser = UserRequest.Update(
                 request.UserId,

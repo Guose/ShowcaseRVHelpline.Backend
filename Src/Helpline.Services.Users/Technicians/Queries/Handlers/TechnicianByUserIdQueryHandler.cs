@@ -24,7 +24,7 @@ namespace Helpline.Services.Users.Technicians.Queries.Handlers
 
             if (technician is null)
             {
-                return Result.Failure<TechnicianResponse>(CommonErrors.User.NotFound(request.UserId));
+                return Result.Failure<TechnicianResponse>(DomainErrors.User.NotFound(request.UserId));
             }
 
             return mapper.Map<TechnicianResponse>(technician);

@@ -13,11 +13,11 @@ namespace Helpline.Domain.ValueObjects
         {
             if (string.IsNullOrWhiteSpace(phonenumber))
             {
-                return Result.Failure<PhoneNumber>(CommonErrors.PhoneNumber.Empty);
+                return Result.Failure<PhoneNumber>(DomainErrors.PhoneNumber.Empty);
             }
             if (phonenumber.Length < 10 || phonenumber.Length > 10)
             {
-                return Result.Failure<PhoneNumber>(CommonErrors.PhoneNumber.InvalidFormat);
+                return Result.Failure<PhoneNumber>(DomainErrors.PhoneNumber.InvalidFormat);
             }
 
             return new PhoneNumber(phonenumber);

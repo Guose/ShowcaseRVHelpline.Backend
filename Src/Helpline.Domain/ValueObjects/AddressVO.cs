@@ -30,19 +30,19 @@ namespace Helpline.Domain.ValueObjects
         {
             if (string.IsNullOrWhiteSpace(address.Address1))
             {
-                return Result.Failure<AddressVO>(CommonErrors.Address.StreetEmpty);
+                return Result.Failure<AddressVO>(DomainErrors.Address.StreetEmpty);
             }
             else if (string.IsNullOrWhiteSpace(address.City))
             {
-                return Result.Failure<AddressVO>(CommonErrors.Address.CityEmpty);
+                return Result.Failure<AddressVO>(DomainErrors.Address.CityEmpty);
             }
             else if (string.IsNullOrWhiteSpace(address.State))
             {
-                return Result.Failure<AddressVO>(CommonErrors.Address.StateEmpty);
+                return Result.Failure<AddressVO>(DomainErrors.Address.StateEmpty);
             }
             else if (string.IsNullOrWhiteSpace(address.PostalCode) || address.PostalCode.Length < 5)
             {
-                return Result.Failure<AddressVO>(CommonErrors.Address.InvalidPostalCode);
+                return Result.Failure<AddressVO>(DomainErrors.Address.InvalidPostalCode);
             }
 
             return new AddressVO(address);

@@ -35,7 +35,7 @@ namespace Helpline.Services.Users.Technicians.Commands.Handlers
 
             if (technician is null)
             {
-                return Result.Failure(CommonErrors.User.NotFound(request.UserId));
+                return Result.Failure(DomainErrors.User.NotFound(request.UserId));
             }
 
             var updateTech = TechnicianRequest.Create(

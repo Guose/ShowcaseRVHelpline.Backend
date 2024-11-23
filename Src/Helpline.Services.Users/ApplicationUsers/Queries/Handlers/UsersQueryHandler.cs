@@ -24,7 +24,7 @@ namespace Helpline.Services.Users.ApplicationUsers.Queries.Handlers
 
             if (users is null)
             {
-                return Result.Failure<IEnumerable<ApplicationUser>>(CommonErrors.User.CollectionNotFound);
+                return Result.Failure<IEnumerable<ApplicationUser>>(DomainErrors.User.CollectionNotFound);
             }
 
             //var response = mapper.Map<IEnumerable<UserResponse>>(users);

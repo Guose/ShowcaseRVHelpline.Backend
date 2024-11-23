@@ -2,7 +2,7 @@
 
 namespace Helpline.Domain.Errors
 {
-    public class CommonErrors
+    public class DomainErrors
     {
         public static class User
         {

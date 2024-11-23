@@ -24,7 +24,7 @@ namespace Helpline.Services.Users.Employees.Queries.Handlers
 
             if (employee is null)
             {
-                return Result.Failure<EmployeeResponse>(CommonErrors.User.NotFound(request.UserId));
+                return Result.Failure<EmployeeResponse>(DomainErrors.User.NotFound(request.UserId));
             }
 
             return mapper.Map<EmployeeResponse>(employee);

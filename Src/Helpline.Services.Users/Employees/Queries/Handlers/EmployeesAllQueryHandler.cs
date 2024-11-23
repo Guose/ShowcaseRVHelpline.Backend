@@ -24,7 +24,7 @@ namespace Helpline.Services.Users.Employees.Queries.Handlers
 
             if (employees is null)
             {
-                return Result.Failure<IEnumerable<EmployeeResponse>>(CommonErrors.User.AreNull);
+                return Result.Failure<IEnumerable<EmployeeResponse>>(DomainErrors.User.AreNull);
             }
 
             var employeesDto = mapper.Map<IEnumerable<EmployeeResponse>>(employees);

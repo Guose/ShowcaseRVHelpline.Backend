@@ -25,7 +25,7 @@ namespace Helpline.Services.Users.Addresses.Commands
 
             if (userToUpdate == null)
             {
-                return Result.Failure(CommonErrors.User.NotFound(request.UserId));
+                return Result.Failure(DomainErrors.User.NotFound(request.UserId));
             }
 
             var address = AddressRequest.Create(
