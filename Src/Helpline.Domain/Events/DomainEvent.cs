@@ -1,6 +1,6 @@
-﻿using Helpline.DataAccess.Models.CoreElements;
+﻿using Helpline.Domain.Models.CoreElements;
 
 namespace Helpline.Domain.Events
 {
-    public abstract record DomainEvent(Guid Id) : ICommonEvent;
+    public abstract record DomainEvent(Guid Id) : IDomainEvent;
 }

@@ -9,7 +9,7 @@ namespace Helpline.WebAPI.Controller.v1.ServiceCallHub
     [Route(HelplineRoutes.ServiceCaseControllerRoute)]
     public class ServiceCaseController : BaseController
     {
-        public ServiceCaseController(ISender sender) : base(sender)
+        public ServiceCaseController(IMediator sender) : base(sender)
         {
         }
     }

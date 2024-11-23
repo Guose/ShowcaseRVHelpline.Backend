@@ -1,5 +1,5 @@
 ﻿using Helpline.Contracts.v1.Types;
-using Helpline.DataAccess.Models.CoreElements;
+using Helpline.Domain.Models.CoreElements;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -38,7 +38,7 @@ namespace Helpline.Contracts.v1.Requests
         public PermissionType Permissions { get; set; }
         public bool IsRemembered { get; set; }
         public bool IsActive { get; set; }
-        public DateTime CreatedOn { get; set; } = DateTime.Now;
+        public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
         public DateTime? ModifiedOn { get; set; }
 
         public static UserRequest Create(

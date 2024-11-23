@@ -17,12 +17,12 @@ namespace Helpline.DataAccess.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.10")
+                .HasAnnotation("ProductVersion", "8.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Helpline.Common.Models.Address", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.Address", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -61,7 +61,7 @@ namespace Helpline.DataAccess.Migrations
                     b.ToTable("Addresses");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.ApplicationUser", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -160,7 +160,7 @@ namespace Helpline.DataAccess.Migrations
                     b.ToTable("Users", (string)null);
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.Associations.EmployeeService", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.Associations.EmployeeService", b =>
                 {
                     b.Property<int?>("EmployeeId")
                         .HasColumnType("int");
@@ -175,7 +175,7 @@ namespace Helpline.DataAccess.Migrations
                     b.ToTable("EmployeeServices");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.Associations.KnowledgeBaseTag", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.Associations.KnowledgeBaseTag", b =>
                 {
                     b.Property<int?>("KnowledgeBaseId")
                         .HasColumnType("int");
@@ -190,7 +190,7 @@ namespace Helpline.DataAccess.Migrations
                     b.ToTable("KnowledgeBaseTags");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.Associations.ServiceCaseCallServiceClass", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.Associations.ServiceCaseCallServiceClass", b =>
                 {
                     b.Property<int?>("ServiceCaseCallId")
                         .HasColumnType("int");
@@ -206,7 +206,7 @@ namespace Helpline.DataAccess.Migrations
                     b.ToTable("ServiceCaseCallServiceClasses");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.Associations.ServiceCaseTag", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.Associations.ServiceCaseTag", b =>
                 {
                     b.Property<Guid?>("ServiceCaseId")
                         .HasColumnType("uniqueidentifier");
@@ -221,7 +221,7 @@ namespace Helpline.DataAccess.Migrations
                     b.ToTable("ServiceCaseTags");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.Associations.TechnicianService", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.Associations.TechnicianService", b =>
                 {
                     b.Property<int?>("TechnicianId")
                         .HasColumnType("int");
@@ -236,7 +236,7 @@ namespace Helpline.DataAccess.Migrations
                     b.ToTable("TechnicianServices");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.Associations.VehicleRvRenter", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.Associations.VehicleRvRenter", b =>
                 {
                     b.Property<int>("RenterId")
                         .HasColumnType("int");
@@ -251,7 +251,7 @@ namespace Helpline.DataAccess.Migrations
                     b.ToTable("VehicleRvRenters");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.AuditLog", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.AuditLog", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -304,7 +304,7 @@ namespace Helpline.DataAccess.Migrations
                     b.ToTable("AuditLogs");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.Customer", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.Customer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -359,7 +359,7 @@ namespace Helpline.DataAccess.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.CustomerVehicle", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.CustomerVehicle", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -387,6 +387,10 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("FeatureDetails")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FurnaceDefinition")
                         .HasColumnType("nvarchar(max)");
 
@@ -395,69 +399,6 @@ namespace Helpline.DataAccess.Migrations
 
                     b.Property<int>("GeneratorHours")
                         .HasColumnType("int");
-
-                    b.Property<bool>("HasAwning")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasCDPlayer")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasDVDPlayer")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasExteriorShower")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasFireExtingusher")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasFireplace")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasFurnace")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasGenerator")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasInteriorShower")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasMicrowave")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasNavigation")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasPropane")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasRange")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasRearVisionCamera")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasRefrigerator")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasRoofAC")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasSlideout")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasSnowChains")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasTV")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasWaterHeater")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasiPodDocking")
-                        .HasColumnType("bit");
 
                     b.Property<double?>("Height")
                         .HasColumnType("float");
@@ -531,7 +472,7 @@ namespace Helpline.DataAccess.Migrations
                     b.ToTable("CustomerVehicles");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.Dealership", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.Dealership", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -579,7 +520,7 @@ namespace Helpline.DataAccess.Migrations
                     b.ToTable("Dealerships");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.DealershipContact", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.DealershipContact", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -631,7 +572,7 @@ namespace Helpline.DataAccess.Migrations
                     b.ToTable("DealershipContacts");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.Employee", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.Employee", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -678,7 +619,7 @@ namespace Helpline.DataAccess.Migrations
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.KnowledgeBaseLibrary", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.KnowledgeBaseLibrary", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -721,7 +662,7 @@ namespace Helpline.DataAccess.Migrations
                     b.ToTable("KnowledgeBaseLibraries");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.RVCheckout", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.RVCheckout", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -809,7 +750,7 @@ namespace Helpline.DataAccess.Migrations
                     b.ToTable("Checkouts");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.RVRental", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.RVRental", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -876,7 +817,7 @@ namespace Helpline.DataAccess.Migrations
                     b.ToTable("RVRentals");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.RVRenter", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.RVRenter", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -929,7 +870,7 @@ namespace Helpline.DataAccess.Migrations
                     b.ToTable("RVRenters");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.RVReturn", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.RVReturn", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1029,7 +970,7 @@ namespace Helpline.DataAccess.Migrations
                     b.ToTable("Returns");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.RVService", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.RVService", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1092,7 +1033,7 @@ namespace Helpline.DataAccess.Migrations
                     b.ToTable("RVServices");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.ServiceCase", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.ServiceCase", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1151,7 +1092,7 @@ namespace Helpline.DataAccess.Migrations
                     b.ToTable("ServiceCases");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.ServiceCaseCall", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.ServiceCaseCall", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1211,7 +1152,7 @@ namespace Helpline.DataAccess.Migrations
                     b.ToTable("ServiceCaseCalls");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.ServiceClass", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.ServiceClass", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1246,7 +1187,7 @@ namespace Helpline.DataAccess.Migrations
                     b.ToTable("ServiceClasses");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.Subscription", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.Subscription", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1285,7 +1226,7 @@ namespace Helpline.DataAccess.Migrations
                     b.ToTable("Subscriptions");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.Tag", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.Tag", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1323,7 +1264,7 @@ namespace Helpline.DataAccess.Migrations
                     b.ToTable("Tags");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.Technician", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.Technician", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1371,6 +1312,47 @@ namespace Helpline.DataAccess.Migrations
                         .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("Technicians");
+                });
+
+            modelBuilder.Entity("Helpline.DataAccess.Outbox.OutboxMessage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Error")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("OccuredOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ProcessedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OutboxMessages");
+                });
+
+            modelBuilder.Entity("Helpline.DataAccess.Outbox.OutboxMessageConsumer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id", "Name");
+
+                    b.ToTable("OutboxMessageConsumers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -1498,7 +1480,7 @@ namespace Helpline.DataAccess.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Quantity")
+                    b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserId", "LoginProvider", "Name");
@@ -1506,9 +1488,9 @@ namespace Helpline.DataAccess.Migrations
                     b.ToTable("UserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.ApplicationUser", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.ApplicationUser", b =>
                 {
-                    b.HasOne("Helpline.Common.Models.Address", "Address")
+                    b.HasOne("Helpline.DataAccess.Models.Entities.Address", "Address")
                         .WithMany("Users")
                         .HasForeignKey("AddressId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -1517,15 +1499,15 @@ namespace Helpline.DataAccess.Migrations
                     b.Navigation("Address");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.Associations.EmployeeService", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.Associations.EmployeeService", b =>
                 {
-                    b.HasOne("Helpline.Common.Models.Employee", "Employee")
+                    b.HasOne("Helpline.DataAccess.Models.Entities.Employee", "Employee")
                         .WithMany("EmployeeServices")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Helpline.Common.Models.ServiceClass", "Service")
+                    b.HasOne("Helpline.DataAccess.Models.Entities.ServiceClass", "Service")
                         .WithMany("EmployeeServices")
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -1536,15 +1518,15 @@ namespace Helpline.DataAccess.Migrations
                     b.Navigation("Service");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.Associations.KnowledgeBaseTag", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.Associations.KnowledgeBaseTag", b =>
                 {
-                    b.HasOne("Helpline.Common.Models.KnowledgeBaseLibrary", "KnowledgeBaseLibrary")
+                    b.HasOne("Helpline.DataAccess.Models.Entities.KnowledgeBaseLibrary", "KnowledgeBaseLibrary")
                         .WithMany("KnowledgeBaseTags")
                         .HasForeignKey("KnowledgeBaseId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Helpline.Common.Models.Tag", "Tag")
+                    b.HasOne("Helpline.DataAccess.Models.Entities.Tag", "Tag")
                         .WithMany("KnowledgeBaseTags")
                         .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -1555,15 +1537,15 @@ namespace Helpline.DataAccess.Migrations
                     b.Navigation("Tag");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.Associations.ServiceCaseCallServiceClass", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.Associations.ServiceCaseCallServiceClass", b =>
                 {
-                    b.HasOne("Helpline.Common.Models.ServiceCaseCall", "ServiceCaseCall")
+                    b.HasOne("Helpline.DataAccess.Models.Entities.ServiceCaseCall", "ServiceCaseCall")
                         .WithMany("ServiceCaseCallServiceClasses")
                         .HasForeignKey("ServiceCaseCallId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Helpline.Common.Models.ServiceClass", "ServiceClass")
+                    b.HasOne("Helpline.DataAccess.Models.Entities.ServiceClass", "ServiceClass")
                         .WithMany("ServiceCaseCallServiceClasses")
                         .HasForeignKey("ServiceClassId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -1574,15 +1556,15 @@ namespace Helpline.DataAccess.Migrations
                     b.Navigation("ServiceClass");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.Associations.ServiceCaseTag", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.Associations.ServiceCaseTag", b =>
                 {
-                    b.HasOne("Helpline.Common.Models.ServiceCase", "ServiceCase")
+                    b.HasOne("Helpline.DataAccess.Models.Entities.ServiceCase", "ServiceCase")
                         .WithMany("ServiceCaseTags")
                         .HasForeignKey("ServiceCaseId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Helpline.Common.Models.Tag", "Tag")
+                    b.HasOne("Helpline.DataAccess.Models.Entities.Tag", "Tag")
                         .WithMany("ServiceCaseTags")
                         .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -1593,15 +1575,15 @@ namespace Helpline.DataAccess.Migrations
                     b.Navigation("Tag");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.Associations.TechnicianService", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.Associations.TechnicianService", b =>
                 {
-                    b.HasOne("Helpline.Common.Models.ServiceClass", "Service")
+                    b.HasOne("Helpline.DataAccess.Models.Entities.ServiceClass", "Service")
                         .WithMany("TechnicianServices")
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Helpline.Common.Models.Technician", "Technician")
+                    b.HasOne("Helpline.DataAccess.Models.Entities.Technician", "Technician")
                         .WithMany("TechnicianServices")
                         .HasForeignKey("TechnicianId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -1612,15 +1594,15 @@ namespace Helpline.DataAccess.Migrations
                     b.Navigation("Technician");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.Associations.VehicleRvRenter", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.Associations.VehicleRvRenter", b =>
                 {
-                    b.HasOne("Helpline.Common.Models.RVRenter", "Renter")
+                    b.HasOne("Helpline.DataAccess.Models.Entities.RVRenter", "Renter")
                         .WithMany("VehicleRvRenters")
                         .HasForeignKey("RenterId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Helpline.Common.Models.CustomerVehicle", "Vehicle")
+                    b.HasOne("Helpline.DataAccess.Models.Entities.CustomerVehicle", "Vehicle")
                         .WithMany("VehicleRvRenters")
                         .HasForeignKey("VehicleId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -1631,17 +1613,17 @@ namespace Helpline.DataAccess.Migrations
                     b.Navigation("Vehicle");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.Customer", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.Customer", b =>
                 {
-                    b.HasOne("Helpline.Common.Models.Subscription", "Subscription")
+                    b.HasOne("Helpline.DataAccess.Models.Entities.Subscription", "Subscription")
                         .WithMany("Customers")
                         .HasForeignKey("SubscriptionId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Helpline.Common.Models.ApplicationUser", "User")
+                    b.HasOne("Helpline.DataAccess.Models.Entities.ApplicationUser", "User")
                         .WithOne("Customer")
-                        .HasForeignKey("Helpline.Common.Models.Customer", "UserId")
+                        .HasForeignKey("Helpline.DataAccess.Models.Entities.Customer", "UserId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -1650,9 +1632,9 @@ namespace Helpline.DataAccess.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.CustomerVehicle", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.CustomerVehicle", b =>
                 {
-                    b.HasOne("Helpline.Common.Models.Customer", "Customer")
+                    b.HasOne("Helpline.DataAccess.Models.Entities.Customer", "Customer")
                         .WithMany("CustomerVehicles")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -1661,28 +1643,28 @@ namespace Helpline.DataAccess.Migrations
                     b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.Dealership", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.Dealership", b =>
                 {
-                    b.HasOne("Helpline.Common.Models.Address", "Address")
+                    b.HasOne("Helpline.DataAccess.Models.Entities.Address", "Address")
                         .WithOne("Dealership")
-                        .HasForeignKey("Helpline.Common.Models.Dealership", "AddressId")
+                        .HasForeignKey("Helpline.DataAccess.Models.Entities.Dealership", "AddressId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Address");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.DealershipContact", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.DealershipContact", b =>
                 {
-                    b.HasOne("Helpline.Common.Models.Dealership", "Dealership")
+                    b.HasOne("Helpline.DataAccess.Models.Entities.Dealership", "Dealership")
                         .WithMany("DealershipContacts")
                         .HasForeignKey("DealershipId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Helpline.Common.Models.ApplicationUser", "User")
+                    b.HasOne("Helpline.DataAccess.Models.Entities.ApplicationUser", "User")
                         .WithOne("DealershipContact")
-                        .HasForeignKey("Helpline.Common.Models.DealershipContact", "UserId")
+                        .HasForeignKey("Helpline.DataAccess.Models.Entities.DealershipContact", "UserId")
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Dealership");
@@ -1690,37 +1672,37 @@ namespace Helpline.DataAccess.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.Employee", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.Employee", b =>
                 {
-                    b.HasOne("Helpline.Common.Models.ApplicationUser", "User")
+                    b.HasOne("Helpline.DataAccess.Models.Entities.ApplicationUser", "User")
                         .WithOne("Employee")
-                        .HasForeignKey("Helpline.Common.Models.Employee", "UserId")
+                        .HasForeignKey("Helpline.DataAccess.Models.Entities.Employee", "UserId")
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.RVRental", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.RVRental", b =>
                 {
-                    b.HasOne("Helpline.Common.Models.RVCheckout", "Checkout")
+                    b.HasOne("Helpline.DataAccess.Models.Entities.RVCheckout", "Checkout")
                         .WithOne("Rental")
-                        .HasForeignKey("Helpline.Common.Models.RVRental", "CheckoutId")
+                        .HasForeignKey("Helpline.DataAccess.Models.Entities.RVRental", "CheckoutId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Helpline.Common.Models.Employee", "Employee")
+                    b.HasOne("Helpline.DataAccess.Models.Entities.Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeId");
 
-                    b.HasOne("Helpline.Common.Models.RVRenter", "Renter")
+                    b.HasOne("Helpline.DataAccess.Models.Entities.RVRenter", "Renter")
                         .WithMany()
                         .HasForeignKey("RenterId");
 
-                    b.HasOne("Helpline.Common.Models.RVReturn", "Return")
+                    b.HasOne("Helpline.DataAccess.Models.Entities.RVReturn", "Return")
                         .WithOne("Rental")
-                        .HasForeignKey("Helpline.Common.Models.RVRental", "ReturnId")
+                        .HasForeignKey("Helpline.DataAccess.Models.Entities.RVRental", "ReturnId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Helpline.Common.Models.CustomerVehicle", "Vehicle")
+                    b.HasOne("Helpline.DataAccess.Models.Entities.CustomerVehicle", "Vehicle")
                         .WithMany("Rentals")
                         .HasForeignKey("VehicleId");
 
@@ -1735,36 +1717,36 @@ namespace Helpline.DataAccess.Migrations
                     b.Navigation("Vehicle");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.RVRenter", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.RVRenter", b =>
                 {
-                    b.HasOne("Helpline.Common.Models.ApplicationUser", "User")
+                    b.HasOne("Helpline.DataAccess.Models.Entities.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.ServiceCase", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.ServiceCase", b =>
                 {
-                    b.HasOne("Helpline.Common.Models.Customer", "Customer")
+                    b.HasOne("Helpline.DataAccess.Models.Entities.Customer", "Customer")
                         .WithMany("ServiceCases")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Helpline.Common.Models.CustomerVehicle", "CustomerVehicle")
+                    b.HasOne("Helpline.DataAccess.Models.Entities.CustomerVehicle", "CustomerVehicle")
                         .WithMany("ServiceCases")
                         .HasForeignKey("CustomerVehicleId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Helpline.Common.Models.Employee", "Employee")
+                    b.HasOne("Helpline.DataAccess.Models.Entities.Employee", "Employee")
                         .WithMany("ServiceCases")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Helpline.Common.Models.Technician", "Technician")
+                    b.HasOne("Helpline.DataAccess.Models.Entities.Technician", "Technician")
                         .WithMany("ServiceCases")
                         .HasForeignKey("TechnicianId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -1779,15 +1761,15 @@ namespace Helpline.DataAccess.Migrations
                     b.Navigation("Technician");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.ServiceCaseCall", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.ServiceCaseCall", b =>
                 {
-                    b.HasOne("Helpline.Common.Models.KnowledgeBaseLibrary", "KnowledgeBaseLibrary")
+                    b.HasOne("Helpline.DataAccess.Models.Entities.KnowledgeBaseLibrary", "KnowledgeBaseLibrary")
                         .WithMany("ServiceCaseCalls")
                         .HasForeignKey("KnowledgeBaseLibraryId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Helpline.Common.Models.ServiceCase", "ServiceCase")
+                    b.HasOne("Helpline.DataAccess.Models.Entities.ServiceCase", "ServiceCase")
                         .WithMany("ServiceCaseCalls")
                         .HasForeignKey("ServiceCaseId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -1798,11 +1780,11 @@ namespace Helpline.DataAccess.Migrations
                     b.Navigation("ServiceCase");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.Technician", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.Technician", b =>
                 {
-                    b.HasOne("Helpline.Common.Models.ApplicationUser", "User")
+                    b.HasOne("Helpline.DataAccess.Models.Entities.ApplicationUser", "User")
                         .WithOne("Technician")
-                        .HasForeignKey("Helpline.Common.Models.Technician", "UserId")
+                        .HasForeignKey("Helpline.DataAccess.Models.Entities.Technician", "UserId")
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("User");
@@ -1819,7 +1801,7 @@ namespace Helpline.DataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Helpline.Common.Models.ApplicationUser", null)
+                    b.HasOne("Helpline.DataAccess.Models.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1828,7 +1810,7 @@ namespace Helpline.DataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Helpline.Common.Models.ApplicationUser", null)
+                    b.HasOne("Helpline.DataAccess.Models.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1843,7 +1825,7 @@ namespace Helpline.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Helpline.Common.Models.ApplicationUser", null)
+                    b.HasOne("Helpline.DataAccess.Models.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1852,21 +1834,21 @@ namespace Helpline.DataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Helpline.Common.Models.ApplicationUser", null)
+                    b.HasOne("Helpline.DataAccess.Models.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.Address", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.Address", b =>
                 {
                     b.Navigation("Dealership");
 
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.ApplicationUser", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.ApplicationUser", b =>
                 {
                     b.Navigation("Customer");
 
@@ -1877,14 +1859,14 @@ namespace Helpline.DataAccess.Migrations
                     b.Navigation("Technician");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.Customer", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.Customer", b =>
                 {
                     b.Navigation("CustomerVehicles");
 
                     b.Navigation("ServiceCases");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.CustomerVehicle", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.CustomerVehicle", b =>
                 {
                     b.Navigation("Rentals");
 
@@ -1893,53 +1875,53 @@ namespace Helpline.DataAccess.Migrations
                     b.Navigation("VehicleRvRenters");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.Dealership", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.Dealership", b =>
                 {
                     b.Navigation("DealershipContacts");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.Employee", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.Employee", b =>
                 {
                     b.Navigation("EmployeeServices");
 
                     b.Navigation("ServiceCases");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.KnowledgeBaseLibrary", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.KnowledgeBaseLibrary", b =>
                 {
                     b.Navigation("KnowledgeBaseTags");
 
                     b.Navigation("ServiceCaseCalls");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.RVCheckout", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.RVCheckout", b =>
                 {
                     b.Navigation("Rental");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.RVRenter", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.RVRenter", b =>
                 {
                     b.Navigation("VehicleRvRenters");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.RVReturn", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.RVReturn", b =>
                 {
                     b.Navigation("Rental");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.ServiceCase", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.ServiceCase", b =>
                 {
                     b.Navigation("ServiceCaseCalls");
 
                     b.Navigation("ServiceCaseTags");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.ServiceCaseCall", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.ServiceCaseCall", b =>
                 {
                     b.Navigation("ServiceCaseCallServiceClasses");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.ServiceClass", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.ServiceClass", b =>
                 {
                     b.Navigation("EmployeeServices");
 
@@ -1948,19 +1930,19 @@ namespace Helpline.DataAccess.Migrations
                     b.Navigation("TechnicianServices");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.Subscription", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.Subscription", b =>
                 {
                     b.Navigation("Customers");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.Tag", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.Tag", b =>
                 {
                     b.Navigation("KnowledgeBaseTags");
 
                     b.Navigation("ServiceCaseTags");
                 });
 
-            modelBuilder.Entity("Helpline.Common.Models.Technician", b =>
+            modelBuilder.Entity("Helpline.DataAccess.Models.Entities.Technician", b =>
                 {
                     b.Navigation("ServiceCases");
 

@@ -1,6 +1,7 @@
-﻿using Helpline.DataAccess.Models.Entities;
-using Helpline.DataAccess.Models.Entities.Associations;
+﻿using Helpline.DataAccess.Outbox;
 using Helpline.DataAccess.Seeds;
+using Helpline.Domain.Models.Entities;
+using Helpline.Domain.Models.Entities.Associations;
 using Microsoft.EntityFrameworkCore;
 
 namespace Helpline.DataAccess.Helpers
@@ -9,6 +10,19 @@ namespace Helpline.DataAccess.Helpers
     {
         public static void ModelCreator(this ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ServiceClass>()
+                .HasKey(x => x.Id);
+
+            modelBuilder.Entity<OutboxMessage>()
+                .HasKey(x => x.Id);
+
+            modelBuilder.Entity<OutboxMessageConsumer>()
+                .HasKey(outboxMessgaeConsumer => new
+                {
+                    outboxMessgaeConsumer.Id,
+                    outboxMessgaeConsumer.Name
+                });
+
             modelBuilder.Entity<Tag>()
                 .HasIndex(t => t.TagName)
                 .IsUnique();

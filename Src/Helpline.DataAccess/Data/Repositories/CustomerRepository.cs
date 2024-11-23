@@ -1,7 +1,7 @@
 ﻿using Helpline.Common.Interfaces;
 using Helpline.DataAccess.Context;
-using Helpline.DataAccess.Models.Entities;
 using Helpline.Domain.Data.Interfaces;
+using Helpline.Domain.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Helpline.DataAccess.Data.Repositories

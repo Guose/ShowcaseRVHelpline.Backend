@@ -1,11 +1,17 @@
 using FluentValidation;
 using Helpline.Common.Constants;
 using Helpline.Contracts.v1.Types;
+using Helpline.Core.BackgroundJobs;
+using Helpline.Core.Idempotence;
 using Helpline.DataAccess.Context;
-using Helpline.DataAccess.Models.Entities;
-using Helpline.WebAPI.Controller.AuthorizationHelpers;
-using Helpline.WebAPI.Controller.Filters;
-using Helpline.WebAPI.Controller.Validation;
+using Helpline.DataAccess.Data.CacheRepositories;
+using Helpline.DataAccess.Data.Repositories;
+using Helpline.Domain.Data;
+using Helpline.Domain.Data.Interfaces;
+using Helpline.Domain.Models.Entities;
+using Helpline.Services.Abstractions.Validation;
+using Helpline.WebAPI.Controller.Config.Access;
+using Helpline.WebAPI.Controller.Config.Filters;
 using Helpline.WebAPI.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.BearerToken;
@@ -24,6 +30,9 @@ using Microsoft.ServiceFabric.Services.Runtime;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
+using Quartz;
+using Quartz.Simpl;
+using Scrutor;
 using System.Fabric;
 using System.Net.WebSockets;
 using System.Reflection;
@@ -44,11 +53,8 @@ namespace Helpline.WebAPI
 
         private readonly List<Assembly> assemblies =
         [
-            UserServices.AssemblyReference.Assembly,
-            EmailServices.AssemblyReference.Assembly,
-            RvRentalHub.AssemblyReference.Assembly,
-            ServiceCallHub.AssemblyReference.Assembly,
-            Controller.AssemblyReference.Assembly,
+            Helpline.Services.Subscriptions.AssemblyReference.Assembly,
+            Helpline.Services.Users.AssemblyReference.Assembly,
         ];
 
         public WebAPI(StatelessServiceContext context)
@@ -80,9 +86,25 @@ namespace Helpline.WebAPI
                             .AddEnvironmentVariables()
                             .Build();
 
+                        builder.Services.AddSingleton(serviceContext);
+
+                        builder.Services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
+                        builder.Services.Decorate<IApplicationUserRepository, CachedUserRepository>();
+
+                        builder.Services.Scan(
+                            selector => selector
+                                .FromAssemblies(
+                                    Core.AssemblyReference.Assembly,
+                                    DataAccess.AssemblyReference.Assembly)
+                                .AddClasses(classes => classes.AssignableTo<IUnitOfWork>())
+                                .UsingRegistrationStrategy(RegistrationStrategy.Skip)
+                                .AsImplementedInterfaces()
+                                .WithScopedLifetime());
+
+                        builder.Services.AddMemoryCache();
+
                         var webApiControllerAssembly = typeof(Controller.AssemblyReference).Assembly;
 
-                        builder.Services.AddSingleton(serviceContext);
                         builder.Services.AddHttpContextAccessor();
                         int port = serviceContext.CodePackageActivationContext.GetEndpoint("ServiceEndpoint").Port;
 
@@ -91,11 +113,9 @@ namespace Helpline.WebAPI
                         {
                             opt.ListenAnyIP(port, httpOpts =>
                             {
-                                var certificate = GetCertificateFromStore(); // Ensure this is not null
-                                if (certificate == null)
-                                {
+                                var certificate = GetCertificateFromStore() ??
                                     throw new Exception("Certificate could not be loaded from the store.");
-                                }
+
                                 httpOpts.UseHttps(certificate);
                             });
                         });                        
@@ -104,21 +124,57 @@ namespace Helpline.WebAPI
                         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
                         // Injecting the MediatR into DI
-                        builder.Services.AddMediatR(config =>
+                        builder.Services.AddMediatR(opt =>
                         {
-                            config.RegisterServicesFromAssemblies(UserServices.AssemblyReference.Assembly);
-                            config.RegisterServicesFromAssemblies(SubscriptionServices.AssemblyReference.Assembly);
+                            opt.RegisterServicesFromAssemblies([.. assemblies]);
                         });
 
-                        // Add Pipeline Validation
+                        // Add Quartz
+                        builder.Services.AddQuartz(config =>
+                        {
+                            config.UseJobFactory<MicrosoftDependencyInjectionJobFactory>();
+
+                            var jobKey = new JobKey(nameof(ProcessOutboxMessageJob));
+
+                            config
+                            .AddJob<ProcessOutboxMessageJob>(jobKey)
+                            .AddTrigger(
+                                trigger =>
+                                    trigger.ForJob(jobKey)
+                                        .WithSimpleSchedule(
+                                            schedule =>
+                                                schedule.WithIntervalInSeconds(100)
+                                                    .RepeatForever()));
+                        });
+
+                        builder.Services.AddQuartzHostedService();
+
+                        // Add Pipeline Validation and Notification Handler
                         builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+
+                        builder.Services.AddScoped(typeof(INotificationHandler<>), typeof(IdempotentDomainEventHandler<>));
+
                         builder.Services.AddValidatorsFromAssemblies(assemblies, includeInternalTypes: true);
 
+                        // Add services to the container using extension method.
+                        builder.Services.AddCoreServices();
+                        builder.Services.AddFeatureServices();
+
                         // Add DBContext
-                        builder.Services.AddDbContext<HelplineContext>(options =>
+                        builder.Services.AddDbContext<HelplineContext>((sp, options) =>
+                        {
+                            //var interceptorHandler = sp.GetService<ConvertDomainEventsToOutboxMessageHandler>();
+                            var env = sp.GetRequiredService<IHostEnvironment>();
+
                             options.UseSqlServer(configuration.GetConnectionString("SqlServerConnection"))
-                            .EnableSensitiveDataLogging()
-                            .UseRootApplicationServiceProvider());
+                                //.AddInterceptors(interceptorHandler!)
+                                    .UseRootApplicationServiceProvider();
+
+                            if (env.IsDevelopment())
+                            {
+                                options.EnableSensitiveDataLogging();
+                            }
+                        });
 
                         // Add IdentityUser to User and DbContext
                         builder.Services.AddIdentityCore<ApplicationUser>()
@@ -131,11 +187,6 @@ namespace Helpline.WebAPI
                             options.Configuration = builder.Configuration.GetConnectionString("Redis");
                             options.InstanceName = "RVHelplineAPI_";
                         });
-
-                        // Add services to the container using extension method.
-                        builder.Services.AddCoreServices();
-                        builder.Services.AddFeatureServices();
-
 
                         // Add Rate Limiting with RateLimiter
 

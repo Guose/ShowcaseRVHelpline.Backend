@@ -12,8 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Helpline.DataAccess.Models\Helpline.DataAccess.Models.csproj" />
-    <ProjectReference Include="..\Helpline.Domain\Helpline.Domain.csproj" />
+    <ProjectReference Include="..\Helpline.Domain.Models\Helpline.Domain.Models.csproj" />
   </ItemGroup>
 
 </Project>

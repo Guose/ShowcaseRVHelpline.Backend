@@ -1,5 +1,5 @@
-﻿using Helpline.DataAccess.Models.CoreElements;
-using Helpline.Domain.Errors;
+﻿using Helpline.Domain.Errors;
+using Helpline.Domain.Models.CoreElements;
 using Helpline.Domain.Shared;
 
 namespace Helpline.Domain.ValueObjects
@@ -14,12 +14,12 @@ namespace Helpline.Domain.ValueObjects
         {
             if (string.IsNullOrWhiteSpace(email))
             {
-                return Result.Failure<Email>(CommonErrors.Email.Empty);
+                return Result.Failure<Email>(DomainErrors.Email.Empty);
             }
 
             if (email.Split('@').Length != 2)
             {
-                return Result.Failure<Email>(CommonErrors.Email.InvalidFormat);
+                return Result.Failure<Email>(DomainErrors.Email.InvalidFormat);
             }
 
             return new Email(email);

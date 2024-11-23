@@ -2,8 +2,8 @@
 using Helpline.Contracts.v1.Requests;
 using Helpline.Contracts.v1.Responses;
 using Helpline.Domain.Shared;
-using Helpline.SubscriptionServices.Customers.Commands;
-using Helpline.SubscriptionServices.Customers.Queries;
+using Helpline.Services.Subscriptions.Customers.Commands;
+using Helpline.Services.Subscriptions.Customers.Queries;
 using Helpline.WebAPI.Controller.Configuration;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +14,7 @@ namespace Helpline.WebAPI.Controller.v1.SubscriptionService
     [Route(HelplineRoutes.SubscriptionControllerRoute)]
     public class CustomerController : BaseController
     {
-        public CustomerController(ISender sender) : base(sender) { }
+        public CustomerController(IMediator sender) : base(sender) { }
 
         [HttpGet]
         [Route(HelplineRoutes.CustomerByIdRoute)]

@@ -2,8 +2,8 @@
 using Helpline.Contracts.v1.Requests;
 using Helpline.Contracts.v1.Responses;
 using Helpline.Domain.Shared;
-using Helpline.UserServices.Employees.Commands;
-using Helpline.UserServices.Employees.Queries;
+using Helpline.Services.Users.Employees.Commands;
+using Helpline.Services.Users.Employees.Queries;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Helpline.WebAPI.Controller.v1.UserService

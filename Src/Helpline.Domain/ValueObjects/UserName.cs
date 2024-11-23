@@ -1,5 +1,5 @@
-﻿using Helpline.DataAccess.Models.CoreElements;
-using Helpline.Domain.Errors;
+﻿using Helpline.Domain.Errors;
+using Helpline.Domain.Models.CoreElements;
 using Helpline.Domain.Shared;
 
 namespace Helpline.Domain.ValueObjects
@@ -14,11 +14,11 @@ namespace Helpline.Domain.ValueObjects
         {
             if (string.IsNullOrWhiteSpace(username))
             {
-                return Result.Failure<UserName>(CommonErrors.UserName.Empty);
+                return Result.Failure<UserName>(DomainErrors.UserName.Empty);
             }
             if (username.Length > 25)
             {
-                return Result.Failure<UserName>(CommonErrors.UserName.TooLong);
+                return Result.Failure<UserName>(DomainErrors.UserName.TooLong);
             }
 
             return new UserName(username);

@@ -1,5 +1,5 @@
 ﻿using Helpline.Common.Constants;
-using Helpline.WebAPI.Controller.AuthorizationHelpers;
+using Helpline.WebAPI.Controller.Config.Access;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

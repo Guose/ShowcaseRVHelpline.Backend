@@ -1,6 +1,6 @@
-﻿using Helpline.DataAccess.Models.CoreElements;
-using Helpline.Domain.Constants;
+﻿using Helpline.Domain.Constants;
 using Helpline.Domain.Errors;
+using Helpline.Domain.Models.CoreElements;
 using Helpline.Domain.Shared;
 
 namespace Helpline.Domain.ValueObjects
@@ -20,17 +20,17 @@ namespace Helpline.Domain.ValueObjects
         {
             if (string.IsNullOrWhiteSpace(firstName))
             {
-                return Result.Failure<FirstName>(CommonErrors.FirstName.Empty);
+                return Result.Failure<FirstName>(DomainErrors.FirstName.Empty);
             }
 
             if (firstName.Length > MaxLength)
             {
-                return Result.Failure<FirstName>(CommonErrors.FirstName.TooLong);
+                return Result.Failure<FirstName>(DomainErrors.FirstName.TooLong);
             }
 
             if (!CharacterValidationRegEx.LettersOnly.IsMatch(firstName))
             {
-                return Result.Failure<FirstName>(CommonErrors.LastName.LettersOnly);
+                return Result.Failure<FirstName>(DomainErrors.LastName.LettersOnly);
             }
 
             return new FirstName(firstName);

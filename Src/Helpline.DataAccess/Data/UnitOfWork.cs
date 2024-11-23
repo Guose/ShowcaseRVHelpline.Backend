@@ -1,10 +1,15 @@
 ﻿using Helpline.Common.Interfaces;
 using Helpline.DataAccess.Context;
 using Helpline.DataAccess.Data.Repositories;
-using Helpline.DataAccess.Models.Entities;
+using Helpline.DataAccess.Outbox;
 using Helpline.Domain.Data;
 using Helpline.Domain.Data.Interfaces;
+using Helpline.Domain.Models.CoreElements;
+using Helpline.Domain.Models.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Newtonsoft.Json;
 
 namespace Helpline.DataAccess.Data
 {
@@ -21,7 +26,10 @@ namespace Helpline.DataAccess.Data
         public IDealershipContactRepository DealershipContactRepo { get; }
         public IRVRenterRepository RVRenterRepo { get; }
 
-        public UnitOfWork(HelplineContext context, ILogging logger, UserManager<ApplicationUser> userManager)
+        public UnitOfWork(
+            HelplineContext context,
+            ILogging logger,
+            UserManager<ApplicationUser> userManager)
         {
             this.context = context;
             logging = logger;
@@ -40,7 +48,10 @@ namespace Helpline.DataAccess.Data
         {
             try
             {
-                var result = await context.SaveChangesAsync();
+                ConvertDomainEventsToOutboxMessages();
+                UpdateAuditableEntities();
+
+                var result = await context.SaveChangesAsync(cancellationToken);
                 return result > 0;
             }
             catch (Exception ex)
@@ -54,6 +65,54 @@ namespace Helpline.DataAccess.Data
         {
             context.Dispose();
             userManager.Dispose();
+        }
+
+        private void ConvertDomainEventsToOutboxMessages()
+        {
+            var outboxMessages = context.ChangeTracker
+                .Entries<AggregateRoot>()
+                .Select(x => x.Entity)
+                .SelectMany(aggregateRoot =>
+                {
+                    IReadOnlyCollection<IDomainEvent> domainEvents = aggregateRoot.GetDomainEvents();
+
+                    aggregateRoot.ClearDomainEvents();
+
+                    return domainEvents;
+                })
+                .Select(domainEvent => new OutboxMessage()
+                {
+                    Id = Guid.NewGuid(),
+                    OccuredOn = DateTime.UtcNow,
+                    Type = domainEvent.GetType().Name,
+                    Content = JsonConvert.SerializeObject(
+                        domainEvent,
+                        new JsonSerializerSettings
+                        {
+                            TypeNameHandling = TypeNameHandling.All,
+                        })
+                })
+                .ToList();
+        }
+
+        private void UpdateAuditableEntities()
+        {
+            IEnumerable<EntityEntry<IAuditableEntity>> entries = context.ChangeTracker.Entries<IAuditableEntity>();
+
+            foreach (EntityEntry<IAuditableEntity> entry in entries)
+            {
+                if (entry.State == EntityState.Added)
+                {
+                    entry.Property(a => a.CreatedOn)
+                        .CurrentValue = DateTime.UtcNow;
+                }
+
+                if (entry.State == EntityState.Modified)
+                {
+                    entry.Property(a => a.ModifiedOn)
+                        .CurrentValue = DateTime.UtcNow;
+                }
+            }
         }
     }
 }

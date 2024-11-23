@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Helpline.Contracts.v1.Requests;
-using Helpline.DataAccess.Models.Entities;
-using Helpline.UserServices.ApplicationUsers.Commands;
+using Helpline.Domain.Models.Entities;
+using Helpline.Services.Users.ApplicationUsers.Commands;
 
 namespace Helpline.WebAPI.MappingProfiles
 {

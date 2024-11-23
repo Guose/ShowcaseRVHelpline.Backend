@@ -1,12 +1,12 @@
 ﻿namespace Helpline.Contracts.v1.Types
 {
-    public enum ServiceCaseCallStatusType : byte
+    public enum ServiceCaseCallStatusType
     {
-        None = 0,
-        Active = 1,
-        PartsOrdered = 2,
-        Transferred = 3,
-        Resolved = 4,
-        Canceled = 5,
+        None,
+        Active,
+        PartsOrdered,
+        Transferred,
+        Resolved,
+        Canceled,
     }
 }

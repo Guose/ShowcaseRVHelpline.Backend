@@ -1,6 +1,6 @@
-﻿using Helpline.DataAccess.Models.CoreElements;
-using Helpline.Domain.Constants;
+﻿using Helpline.Domain.Constants;
 using Helpline.Domain.Errors;
+using Helpline.Domain.Models.CoreElements;
 using Helpline.Domain.Shared;
 
 namespace Helpline.Domain.ValueObjects
@@ -20,12 +20,12 @@ namespace Helpline.Domain.ValueObjects
         {
             if (string.IsNullOrWhiteSpace(password))
             {
-                return Result.Failure<Password>(CommonErrors.Password.Empty);
+                return Result.Failure<Password>(DomainErrors.Password.Empty);
             }
 
             if (!CharacterValidationRegEx.Password.IsMatch(password))
             {
-                return Result.Failure<Password>(CommonErrors.Password.InvalidFormat);
+                return Result.Failure<Password>(DomainErrors.Password.InvalidFormat);
             }
 
             return new Password(password);

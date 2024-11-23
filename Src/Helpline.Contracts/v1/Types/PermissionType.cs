@@ -1,11 +1,11 @@
 ﻿namespace Helpline.Contracts.v1.Types
 {
-    public enum PermissionType : byte
+    public enum PermissionType
     {
-        None = 0,
-        Admin = 1,
-        Limited = 2,
-        Guest = 3,
-        Contractor = 4,
+        None,
+        Admin,
+        Limited,
+        Guest,
+        Contractor,
     }
 }

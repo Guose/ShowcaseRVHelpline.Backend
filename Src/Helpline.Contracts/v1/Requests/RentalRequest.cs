@@ -1,5 +1,5 @@
 ﻿using Helpline.Contracts.v1.Types;
-using Helpline.DataAccess.Models.CoreElements;
+using Helpline.Domain.Models.CoreElements;
 
 namespace Helpline.Contracts.v1.Requests
 {

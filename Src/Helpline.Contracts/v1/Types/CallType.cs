@@ -1,11 +1,11 @@
 ﻿namespace Helpline.Contracts.v1.Types
 {
-    public enum CallType : byte
+    public enum CallType
     {
-        None = 0,
-        Unknown = 1,
-        ServiceIssue = 2,
-        Support = 3,
-        Maintenance = 4,
+        None,
+        Unknown,
+        ServiceIssue,
+        Support,
+        Maintenance,
     }
 }
