@@ -39,7 +39,7 @@ namespace Helpline.Services.Subscriptions.Customers.Commands.Handlers
             return await unitOfWork.CustomerRepo.UpdateEntityAsync(customer, cancellationToken) &&
             await unitOfWork.CompleteAsync(cancellationToken) ?
             Result.Success(Guid.Parse(customer.UserId)) :
-            Result.Failure<Guid>(new Error("Customer.Update", $"Could not update and save Customer with UserId: {request.UserId}"));
+            Result.Failure<Guid>(new Error("Customer.UpdateUserInfo", $"Could not update and save Customer with UserId: {request.UserId}"));
         }
     }
 }

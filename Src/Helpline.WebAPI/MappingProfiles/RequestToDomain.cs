@@ -9,7 +9,6 @@ namespace Helpline.WebAPI.MappingProfiles
     {
         public RequestToDomain()
         {
-
             // Base User to User Response mapping
             CreateMap<UserRequest, ApplicationUser>();
             CreateMap<UserUpdateCommand, ApplicationUser>()
@@ -18,6 +17,10 @@ namespace Helpline.WebAPI.MappingProfiles
                 .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.LastName))
                 .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.PhoneNumber))
                 .ForMember(dest => dest.SecondaryPhone, opt => opt.MapFrom(src => src.SecondaryPhone));
+            CreateMap<UserPermissionsUpdateCommand, ApplicationUser>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.UserId.ToString()))
+                .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role))
+                .ForMember(dest => dest.Permissions, opt => opt.MapFrom(src => src.Permissions));
 
             // Customer-specific mapping
             CreateMap<CustomerRequest, Customer>();
@@ -34,10 +37,5 @@ namespace Helpline.WebAPI.MappingProfiles
             // Service Case mapping
             CreateMap<ServiceCaseRequest, ServiceCase>();
         }
-
-        //private static string HashPassword(UserRequest src)
-        //{
-        //    return new PasswordHasher<UserRequest>().HashPassword(src, src.Password!.Quantity);
-        //}
     }
 }

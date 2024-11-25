@@ -3,7 +3,7 @@ using Helpline.Contracts.v1.Responses;
 using Helpline.Domain.Shared;
 using Helpline.Services.Users.Addresses.Commands;
 using Helpline.Services.Users.Addresses.Queries;
-using Helpline.WebAPI.Controller.v1.SubscriptionService.Contracts;
+using Helpline.WebAPI.Controller.Contracts.Users;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Helpline.WebAPI.Controller.v1.UserService

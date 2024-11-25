@@ -5,7 +5,7 @@ using Helpline.Domain.Shared;
 using Helpline.Services.Users.ApplicationUsers.Commands;
 using Helpline.Services.Users.ApplicationUsers.Queries;
 using Helpline.WebAPI.Controller.Configuration;
-using Helpline.WebAPI.Controller.v1.SubscriptionService.Contracts;
+using Helpline.WebAPI.Controller.Contracts.Users;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -37,6 +37,31 @@ namespace Helpline.WebAPI.Controller.v1.UserService
             Result<UserResponse> response = await Sender.Send(query, cancellationToken);
 
             return response.IsSuccess ? Ok(response) : BadRequest(response.Error);
+        }
+
+        [HttpPut]
+        [Route(HelplineRoutes.UserRoutePermissionsById)]
+        public async Task<IActionResult> UpdatePermissions(
+            Guid userId,
+            [FromBody] UpdateUserPermissionsRequest userRequest,
+            CancellationToken cancellationToken)
+        {
+            if (userRequest is null || !ModelState.IsValid)
+                return BadRequest("Invalid patch document.");
+
+            var command = new UserPermissionsUpdateCommand(
+                userId,
+                userRequest.RoleType,
+                userRequest.PermissionType);
+
+            Result result = await Sender.Send(command, cancellationToken);
+
+            if (result.IsFailure)
+            {
+                return HandleFailure(result);
+            }
+
+            return NoContent();
         }
 
         [HttpPost]

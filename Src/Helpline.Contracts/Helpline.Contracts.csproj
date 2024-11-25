@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Helpline.Domain.Models\Helpline.Domain.Models.csproj" />
+    <ProjectReference Include="..\Helpline.Domain\Helpline.Domain.csproj" />
   </ItemGroup>
 
 </Project>

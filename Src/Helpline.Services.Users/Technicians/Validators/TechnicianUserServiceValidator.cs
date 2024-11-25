@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
 using Helpline.Services.Users.Technicians.Commands;
 
-namespace Helpline.Services.Users.Validators
+namespace Helpline.Services.Users.Technicians.Validators
 {
-    public class UserServiceValidator : AbstractValidator<TechnicianUpdateCommand>
+    public class TechnicianUserServiceValidator : AbstractValidator<TechnicianUpdateCommand>
     {
-        public UserServiceValidator()
+        public TechnicianUserServiceValidator()
         {
             RuleFor(x => x.UserId)
                 .NotEmpty()

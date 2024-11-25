@@ -27,4 +27,10 @@
     <ProjectReference Include="..\Helpline.Services.Abstractions\Helpline.Services.Abstractions.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ApplicationUsers\Events\" />
+    <Folder Include="ApplicationUsers\Validators\" />
+    <Folder Include="Technicians\Events\" />
+  </ItemGroup>
+
 </Project>

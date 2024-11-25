@@ -39,7 +39,7 @@ namespace Helpline.Services.Users.Addresses.Commands
 
             return await unitOfWork.CompleteAsync(cancellationToken) ?
                 Result.Success(result) :
-                Result.Failure(new Error("Update.Address", "Couldn't save address to the database"));
+                Result.Failure(new Error("UpdateUserInfo.Address", "Couldn't save address to the database"));
         }
     }
 }
