@@ -32,14 +32,14 @@ namespace Helpline.Services.Users.Employees.Commands.Handlers
                 employee.Id,
                 request.IsActive,
                 new List<string>(request.Attachments),
-                DateTime.Now);
+                DateTime.UtcNow);
 
             var response = mapper.Map<Employee>(updatedEmployee);
 
             if (!await unitOfWork.EmployeeRepo.UpdateEntityAsync(response, cancellationToken) &&
                 !await unitOfWork.CompleteAsync(cancellationToken))
             {
-                return Result.Failure<Guid>(new Error("Employee.Update", $"Update to employee profile {request.UserId} could not be completed."));
+                return Result.Failure<Guid>(new Error("Employee.UpdateUserInfo", $"UpdateUserInfo to employee profile {request.UserId} could not be completed."));
             }
 
             return Result.Success();

@@ -10,6 +10,7 @@
         public const string GetUsersRoute = "Users";
         public const string UserRoute = "User";
         public const string UserRouteById = "User/{userId}";
+        public const string UserRoutePermissionsById = "User/Access/{userId}";
 
         // EmployeeRoutes
         public const string EmployeeRoute = "Employee";

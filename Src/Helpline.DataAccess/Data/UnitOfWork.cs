@@ -105,6 +105,9 @@ namespace Helpline.DataAccess.Data
                 {
                     entry.Property(a => a.CreatedOn)
                         .CurrentValue = DateTime.UtcNow;
+
+                    entry.Property(a => a.IsActive)
+                        .CurrentValue = true;
                 }
 
                 if (entry.State == EntityState.Modified)

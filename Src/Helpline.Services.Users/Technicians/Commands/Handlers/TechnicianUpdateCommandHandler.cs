@@ -49,7 +49,7 @@ namespace Helpline.Services.Users.Technicians.Commands.Handlers
             if (!await unitOfWork.TechnicianRepo.UpdateEntityAsync(response, cancellationToken) &&
                 !await unitOfWork.CompleteAsync(cancellationToken))
             {
-                return Result.Failure<Guid>(new Error("Technician.Update", $"Update to technician profile {request.UserId} could not be completed."));
+                return Result.Failure<Guid>(new Error("Technician.UpdateUserInfo", $"UpdateUserInfo to technician profile {request.UserId} could not be completed."));
             }
 
             return Result.Success();

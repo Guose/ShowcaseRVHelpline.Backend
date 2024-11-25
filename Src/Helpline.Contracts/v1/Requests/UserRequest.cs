@@ -1,7 +1,6 @@
 ﻿using Helpline.Contracts.v1.Types;
+using Helpline.Domain.Events;
 using Helpline.Domain.Models.CoreElements;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace Helpline.Contracts.v1.Requests
 {
@@ -10,31 +9,27 @@ namespace Helpline.Contracts.v1.Requests
     /// </summary>
     public sealed class UserRequest : AggregateRoot, IAuditableEntity
     {
-        private UserRequest(Guid id, string firstName, string lastName, string phoneNumber, DateTime date) : base(id)
+        private UserRequest(Guid id, string firstName, string lastName, string phoneNumber) : base(id)
         {
             FirstName = firstName;
             LastName = lastName;
             PhoneNumber = phoneNumber;
-            CreatedOn = date;
         }
 
-        private UserRequest(Guid id, string firstName, string lastName, string phoneNumber, string secondPhone, DateTime date) : base(id)
+        private UserRequest(Guid id, string firstName, string lastName, string phoneNumber, string secondPhone) : base(id)
         {
             FirstName = firstName;
             LastName = lastName;
             PhoneNumber = phoneNumber;
             SecondaryPhone = secondPhone;
-            ModifiedOn = date;
         }
-
         public UserRequest() { }
+
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public string PhoneNumber { get; set; } = string.Empty;
         public string? SecondaryPhone { get; set; }
-        [JsonConverter(typeof(StringEnumConverter))]
         public RoleType Role { get; set; }
-        [JsonConverter(typeof(StringEnumConverter))]
         public PermissionType Permissions { get; set; }
         public bool IsRemembered { get; set; }
         public bool IsActive { get; set; }
@@ -45,36 +40,43 @@ namespace Helpline.Contracts.v1.Requests
             Guid id,
             string firstName,
             string lastName,
-            string phoneNumber,
-            DateTime createdOn)
+            string phoneNumber)
         {
             var user = new UserRequest(
                 id,
                 firstName,
                 lastName,
-                phoneNumber,
-                createdOn);
+                phoneNumber);
 
             return user;
         }
 
-        public static UserRequest Update(
+        public static UserRequest UpdateUserInfo(
             Guid id,
             string firstName,
             string lastName,
             string phoneNumber,
-            string secondPhone,
-            DateTime modifiedOn)
+            string secondPhone)
         {
             var user = new UserRequest(
                 id,
                 firstName,
                 lastName,
                 phoneNumber,
-                secondPhone,
-                modifiedOn);
+                secondPhone);
 
             return user;
+        }
+
+        public void UpdateUserRoleAndPermission(RoleType role, PermissionType permissions)
+        {
+            if (Enum.IsDefined(typeof(RoleType), role) && Enum.IsDefined(typeof(PermissionType), permissions))
+            {
+                RaiseDomainEvent(new UserPermissionsChangedDomainEvent(Guid.NewGuid(), GuidId));
+            }
+
+            Role = role;
+            Permissions = permissions;
         }
     }
 }

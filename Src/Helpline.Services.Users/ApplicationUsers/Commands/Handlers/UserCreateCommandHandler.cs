@@ -7,7 +7,7 @@ using Helpline.Services.Abstractions.Messaging;
 
 namespace Helpline.Services.Users.ApplicationUsers.Commands.Handlers
 {
-    public sealed class UserCreateCommandHandler : ICommandHandler<UserCreateCommand, Guid>
+    internal sealed class UserCreateCommandHandler : ICommandHandler<UserCreateCommand, Guid>
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
@@ -31,8 +31,7 @@ namespace Helpline.Services.Users.ApplicationUsers.Commands.Handlers
                 Guid.NewGuid(),
                 request.FirstName,
                 request.LastName,
-                request.PhoneNumber,
-                DateTime.UtcNow);
+                request.PhoneNumber);
 
             await unitOfWork.UserRepo.CreateEntityAsync(mapper.Map<ApplicationUser>(user), cancellationToken);
 
