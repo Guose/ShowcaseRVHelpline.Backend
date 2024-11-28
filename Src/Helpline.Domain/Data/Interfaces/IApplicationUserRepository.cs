@@ -8,6 +8,6 @@ namespace Helpline.Domain.Data.Interfaces
         Task<ApplicationUser?> GetByIdWithNoTrackingToUpdateUserProfileAsync(Guid userId, CancellationToken cancellationToken = default);
         Task<bool> IsEmailUniqueAsync(Email email, CancellationToken cancellationToken = default);
         Task<bool> IsUserNameUniqueAsync(UserName userName, CancellationToken cancellationToken = default);
-        Task<ApplicationUser?> GetUserByUsernameAsync(string username, CancellationToken cancellationToken = default);
+        Task<ApplicationUser?> GetUserByUsernameAsync(UserName username, CancellationToken cancellationToken = default);
     }
 }

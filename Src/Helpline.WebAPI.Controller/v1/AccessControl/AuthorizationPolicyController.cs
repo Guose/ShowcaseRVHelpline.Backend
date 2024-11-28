@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Helpline.WebAPI.Controller.v1.Authentication
+namespace Helpline.WebAPI.Controller.v1.AccessControl
 {
     [Route("api/authpolicies")]
     [ApiExplorerSettings(IgnoreApi = true)]

@@ -14,7 +14,7 @@
         }
         protected Entity(Guid guidId)
         {
-            GuidId = guidId;
+            Id = guidId;
             IdType = IdType.Guid;
         }
         protected Entity(int intId)
@@ -27,12 +27,12 @@
             if (guidId == Guid.Empty || intId == 0)
                 throw new ArgumentException("Both GuidId and IntId must be valid values.");
 
-            GuidId = guidId;
+            Id = guidId;
             IntId = intId;
             IdType = IdType.Both;
         }
 
-        public Guid GuidId { get; private init; }
+        public Guid Id { get; private init; }
         public int IntId { get; private init; }
         public IdType IdType { get; private init; }
 
@@ -48,11 +48,11 @@
                 return false;
 
             if (IdType == IdType.Both || other.IdType == IdType.Both)
-                return GuidId == other.GuidId && IntId == other.IntId;
+                return Id == other.Id && IntId == other.IntId;
 
             return IdType == other.IdType &&
                 (IdType == IdType.Guid ?
-                GuidId == other.GuidId :
+                Id == other.Id :
                 IntId == other.IntId);
         }
 
@@ -68,9 +68,9 @@
         {
             return IdType switch
             {
-                IdType.Guid => GuidId.GetHashCode() * 41,
+                IdType.Guid => Id.GetHashCode() * 41,
                 IdType.Int => IntId.GetHashCode() * 41,
-                IdType.Both => HashCode.Combine(GuidId, IntId) * 41,
+                IdType.Both => HashCode.Combine(Id, IntId) * 41,
                 _ => base.GetHashCode()
             };
         }
@@ -79,9 +79,9 @@
         {
             return IdType switch
             {
-                IdType.Guid => $"Entity with GuidId: {GuidId}",
+                IdType.Guid => $"Entity with GuidId: {Id}",
                 IdType.Int => $"Entity with IntId: {IntId}",
-                IdType.Both => $"Entity with GuidId: {GuidId} and IntId: {IntId}",
+                IdType.Both => $"Entity with GuidId: {Id} and IntId: {IntId}",
                 _ => "Entity with unknown IdType"
             };
         }

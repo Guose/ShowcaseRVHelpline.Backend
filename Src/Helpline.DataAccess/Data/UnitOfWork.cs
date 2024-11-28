@@ -28,20 +28,20 @@ namespace Helpline.DataAccess.Data
 
         public UnitOfWork(
             HelplineContext context,
-            ILogging logger,
+            ILogging logging,
             UserManager<ApplicationUser> userManager)
         {
             this.context = context;
-            logging = logger;
-
-            AddressRepo = new AddressRepository(context, logger);
-            UserRepo = new ApplicationUserRepository(context, logger, userManager);
-            CustomerRepo = new CustomerRepository(context, logger);
-            EmployeeRepo = new EmployeeRepository(context, logger);
-            TechnicianRepo = new TechnicianRepository(context, logger);
-            DealershipContactRepo = new DealershipContactRepository(context, logger);
-            RVRenterRepo = new RVRenterRepository(context, logger);
+            this.logging = logging;
             this.userManager = userManager;
+
+            AddressRepo = new AddressRepository(context, logging);
+            UserRepo = new ApplicationUserRepository(context, logging, userManager);
+            CustomerRepo = new CustomerRepository(context, logging);
+            EmployeeRepo = new EmployeeRepository(context, logging);
+            TechnicianRepo = new TechnicianRepository(context, logging);
+            DealershipContactRepo = new DealershipContactRepository(context, logging);
+            RVRenterRepo = new RVRenterRepository(context, logging);
         }
 
         public async Task<bool> CompleteAsync(CancellationToken cancellationToken)

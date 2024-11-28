@@ -8,5 +8,6 @@
         Task<bool> DeleteEntityAsync(T model, CancellationToken cancellationToken);
         Task<bool> UpdateEntityAsync(T model, CancellationToken cancellationToken);
         bool HasChanges();
+        Task<int> SaveAsync(CancellationToken cancellationToken = default);
     }
 }

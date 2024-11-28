@@ -72,7 +72,7 @@ namespace Helpline.Contracts.v1.Requests
         {
             if (Enum.IsDefined(typeof(RoleType), role) && Enum.IsDefined(typeof(PermissionType), permissions))
             {
-                RaiseDomainEvent(new UserPermissionsChangedDomainEvent(Guid.NewGuid(), GuidId));
+                RaiseDomainEvent(new UserPermissionsChangedDomainEvent(Guid.NewGuid(), Id));
             }
 
             Role = role;

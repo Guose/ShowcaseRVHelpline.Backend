@@ -37,7 +37,7 @@ namespace Helpline.Services.Users.ApplicationUsers.Commands.Handlers
 
             await unitOfWork.CompleteAsync(cancellationToken);
 
-            return user.GuidId;
+            return user.Id;
         }
     }
 }
