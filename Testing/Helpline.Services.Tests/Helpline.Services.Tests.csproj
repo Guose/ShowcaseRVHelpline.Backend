@@ -27,6 +27,7 @@
     <ProjectReference Include="..\..\Src\Helpline.Domain\Helpline.Domain.csproj" />
     <ProjectReference Include="..\..\Src\Helpline.Services.Users\Helpline.Services.Users.csproj" />
     <ProjectReference Include="..\..\Src\Helpline.WebAPI\Helpline.WebAPI.csproj" />
+    <ProjectReference Include="..\Helpline.DataAccess.Tests\Helpline.DataAccess.Tests.csproj" />
   </ItemGroup>
 
   <ItemGroup>

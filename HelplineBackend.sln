@@ -33,11 +33,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{C27E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helpline.Domain.Tests", "Testing\Helpline.Domain.Tests\Helpline.Domain.Tests.csproj", "{04794418-EE28-4467-9A71-4D144ECFBAFF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helpline.DataAccess.Tests", "Testing\Helpline.DataAccess.Tests\Helpline.DataAccess.Tests.csproj", "{B672E520-C586-4DB5-AB01-2AF2836CADAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helpline.DataAccess.Tests", "Testing\Helpline.DataAccess.Tests\Helpline.DataAccess.Tests.csproj", "{B672E520-C586-4DB5-AB01-2AF2836CADAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helpline.WebAPI.Tests", "Testing\Helpline.WebAPI.Tests\Helpline.WebAPI.Tests.csproj", "{CCC0D202-991B-4811-BD36-0B66ACFA2AAE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helpline.WebAPI.Tests", "Testing\Helpline.WebAPI.Tests\Helpline.WebAPI.Tests.csproj", "{CCC0D202-991B-4811-BD36-0B66ACFA2AAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helpline.Services.Tests", "Testing\Helpline.Services.Tests\Helpline.Services.Tests.csproj", "{43C8B21C-AC1B-476F-A3C4-BFD939BD549D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helpline.Services.Tests", "Testing\Helpline.Services.Tests\Helpline.Services.Tests.csproj", "{43C8B21C-AC1B-476F-A3C4-BFD939BD549D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

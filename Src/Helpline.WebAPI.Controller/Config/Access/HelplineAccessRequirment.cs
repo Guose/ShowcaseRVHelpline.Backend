@@ -1,4 +1,4 @@
-﻿using Helpline.Contracts.v1.Types;
+﻿using Helpline.Domain.Models.Types;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Helpline.WebAPI.Controller.Config.Access
