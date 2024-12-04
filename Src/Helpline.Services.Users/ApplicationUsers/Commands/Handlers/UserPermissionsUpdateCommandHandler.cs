@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Helpline.Contracts.v1.Requests;
 using Helpline.Domain.Data;
+using Helpline.Domain.Data.Interfaces;
 using Helpline.Domain.Errors;
 using Helpline.Domain.Models.Entities;
 using Helpline.Domain.Shared;
@@ -10,10 +11,11 @@ using System.Security.Claims;
 
 namespace Helpline.Services.Users.ApplicationUsers.Commands.Handlers
 {
-    internal sealed class UserPermissionsUpdateCommandHandler : ICommandHandler<UserPermissionsUpdateCommand>
+    public sealed class UserPermissionsUpdateCommandHandler : ICommandHandler<UserPermissionsUpdateCommand>
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
+        private readonly IApplicationUserRepository userRepo;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
 
@@ -21,40 +23,51 @@ namespace Helpline.Services.Users.ApplicationUsers.Commands.Handlers
             IUnitOfWork unitOfWork,
             IMapper mapper,
             UserManager<ApplicationUser> userManager,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager,
+            IApplicationUserRepository userRepo)
         {
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
             this.userManager = userManager;
             this.roleManager = roleManager;
+            this.userRepo = userRepo;
         }
         public async Task<Result> Handle(UserPermissionsUpdateCommand request, CancellationToken cancellationToken)
         {
-            var user = await userManager.FindByIdAsync(request.UserId.ToString());
+            var user = await userRepo.GetByIdWithNoTrackingToUpdateUserProfileAsync(request.UserId, cancellationToken);
             if (user is null)
                 return Result.Failure(DomainErrors.User.NotFound(request.UserId));
 
-            await RemoveExistingUserRoles(user);
+            var result = await RemoveExistingUserRoles(user);
+            if (result.IsFailure) return result;
 
-            await RemoveExistingUserPermissions(request, user);
+            result = await RemoveExistingUserPermissions(request, user);
+            if (result.IsFailure) return result;
 
-            await CreateUserRole(request);
+            result = await CreateUserRole(request);
+            if (result.IsFailure) return result;
 
-            await AddUserRole(request, user);
+            result = await AddUserRole(request, user);
+            if (result.IsFailure) return result;
 
-            await AddUserClaim(request, user);
+            result = await AddUserClaim(request, user);
+            if (result.IsFailure) return result;
 
             // map domain changes
             var userRequest = new UserRequest();
             userRequest.UpdateUserRoleAndPermission(request.Role, request.Permissions);
-            var updatedUser = mapper.Map(userRequest, user);
+            var updatedUser = mapper.Map(request, user);
 
             // persist changes
-            if (!await unitOfWork.UserRepo.UpdateEntityAsync(updatedUser, cancellationToken))
-                return Result.Failure(new Error("User.UpdateAccess", $"Could not update user roles and permissions for Id {user.Id}."));
+            if (!await userRepo.UpdateEntityAsync(updatedUser, cancellationToken))
+                return Result.Failure(new Error(
+                    "User.UpdateAccess",
+                    $"Could not update user roles and permissions for Id {user.Id}."));
 
             if (!await unitOfWork.CompleteAsync(cancellationToken))
-                return Result.Failure(new Error("User.UpdateAccess", $"Could not save user roles and permissions for Id {user.Id}."));
+                return Result.Failure(new Error(
+                    "User.SaveAccess",
+                    $"Could not save user roles and permissions for Id {user.Id}."));
 
             return Result.Success();
         }
@@ -65,7 +78,10 @@ namespace Helpline.Services.Users.ApplicationUsers.Commands.Handlers
                             user, new Claim(request.Permissions.ToString(), request.Permissions.ToString()));
 
             if (!addPermissionResult.Succeeded)
-                return Result.Failure(new Error("User.AddPermissions", $"Could not add permissions for user {user.Id}"));
+                return Result.Failure(
+                    new Error(
+                    "User.AddPermissions",
+                    $"Could not add permissions for user {user.Id}"));
 
             return Result.Success();
         }
@@ -74,7 +90,10 @@ namespace Helpline.Services.Users.ApplicationUsers.Commands.Handlers
         {
             var addRoleResult = await userManager.AddToRoleAsync(user, request.Role.ToString());
             if (!addRoleResult.Succeeded)
-                return Result.Failure(new Error("User.AddRoles", $"Could not add role for user {user.Id}"));
+                return Result.Failure(
+                    new Error(
+                        "User.AddRoles",
+                        $"Could not add role for user {user.Id}"));
 
             return Result.Success();
         }
@@ -88,7 +107,10 @@ namespace Helpline.Services.Users.ApplicationUsers.Commands.Handlers
                 // If the role does not exist, create it
                 var createRoleResult = await roleManager.CreateAsync(new IdentityRole(request.Role.ToString()));
                 if (!createRoleResult.Succeeded)
-                    return Result.Failure(new Error("User.CreateRole", $"Could not create role {request.Role.ToString()}"));
+                    return Result.Failure(
+                        new Error(
+                            "User.CreateRole",
+                            $"Could not create user role {request.Role}"));
             }
 
             return Result.Success();
@@ -104,7 +126,10 @@ namespace Helpline.Services.Users.ApplicationUsers.Commands.Handlers
             {
                 var removePermissionResult = await userManager.RemoveClaimAsync(user, permissionClaim!);
                 if (!removePermissionResult.Succeeded)
-                    return Result.Failure(new Error("User.RemovePermissions", $"Could not remove permissions for user {user.Id}"));
+                    return Result.Failure(
+                        new Error(
+                            "User.RemovePermissions",
+                            $"Could not remove existing permissions for user {user.Id}"));
             }
 
             return Result.Success();
@@ -118,7 +143,10 @@ namespace Helpline.Services.Users.ApplicationUsers.Commands.Handlers
             {
                 var removeRoleResult = await userManager.RemoveFromRolesAsync(user, currentRoles);
                 if (!removeRoleResult.Succeeded)
-                    return Result.Failure(new Error("User.RemoveRoles", $"Could not remove roles for user {user.Id}"));
+                    return Result.Failure(
+                        new Error(
+                            "User.RemoveRoles",
+                            $"Could not remove existing roles for user {user.Id}"));
             }
 
             return Result.Success();

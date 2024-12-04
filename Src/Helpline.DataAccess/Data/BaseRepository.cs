@@ -11,14 +11,14 @@ namespace Helpline.DataAccess.Data
         protected TContext Context { get; } = context;
         protected ILogging Logging { get; } = logging;
 
-        public virtual async Task<bool> CreateEntityAsync(TEntity model, CancellationToken cancellationToken)
+        public virtual async Task<bool> CreateEntityAsync(TEntity model, CancellationToken cancellationToken = default)
         {
             try
             {
                 if (model == null)
                     return false;
 
-                await Context.Set<TEntity>().AddAsync(model);
+                await Context.Set<TEntity>().AddAsync(model, cancellationToken);
 
                 return true;
             }
@@ -29,14 +29,14 @@ namespace Helpline.DataAccess.Data
             }
         }
 
-        public virtual async Task<bool> UpdateEntityAsync(TEntity model, CancellationToken cancellationToken)
+        public virtual async Task<bool> UpdateEntityAsync(TEntity model, CancellationToken cancellationToken = default)
         {
             try
             {
                 if (model is null)
                     return false;
 
-                await Task.Run(() => Context.Set<TEntity>().Update(model));
+                await Task.Run(() => Context.Set<TEntity>().Update(model), cancellationToken);
 
                 return true;
             }
@@ -47,14 +47,14 @@ namespace Helpline.DataAccess.Data
             }
         }
 
-        public virtual async Task<bool> DeleteEntityAsync(TEntity model, CancellationToken cancellationToken)
+        public virtual async Task<bool> DeleteEntityAsync(TEntity model, CancellationToken cancellationToken = default)
         {
             try
             {
                 if (model == null)
                     return false;
 
-                await Task.Run(() => Context.Set<TEntity>().Remove(model));
+                await Task.Run(() => Context.Set<TEntity>().Remove(model), cancellationToken);
 
                 return true;
             }
@@ -65,11 +65,11 @@ namespace Helpline.DataAccess.Data
             }
         }
 
-        public virtual async Task<IEnumerable<TEntity>> GetAllEntitiesAsync(CancellationToken cancellationToken)
+        public virtual async Task<IEnumerable<TEntity>> GetAllEntitiesAsync(CancellationToken cancellationToken = default)
         {
             try
             {
-                return await Context.Set<TEntity>().AsNoTracking().ToListAsync();
+                return await Context.Set<TEntity>().AsNoTracking().ToListAsync(cancellationToken);
             }
             catch (Exception ex)
             {
@@ -78,11 +78,11 @@ namespace Helpline.DataAccess.Data
             }
         }
 
-        public virtual async Task<TEntity> GetEntityByIdAsync(TKey id, CancellationToken cancellationToken)
+        public virtual async Task<TEntity> GetEntityByIdAsync(TKey id, CancellationToken cancellationToken = default)
         {
             try
             {
-                var results = await Context.Set<TEntity>().FindAsync(id);
+                var results = await Context.Set<TEntity>().FindAsync(id, cancellationToken);
                 return results!;
             }
             catch (Exception ex)
@@ -97,11 +97,11 @@ namespace Helpline.DataAccess.Data
             return Context.ChangeTracker.HasChanges();
         }
 
-        public async Task<int> SaveAsync(CancellationToken cancellationToken)
+        public async Task<int> SaveAsync(CancellationToken cancellationToken = default)
         {
             try
             {
-                return await Context.SaveChangesAsync();
+                return await Context.SaveChangesAsync(cancellationToken);
             }
             catch (Exception ex)
             {

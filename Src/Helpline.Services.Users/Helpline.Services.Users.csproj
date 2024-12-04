@@ -27,6 +27,12 @@
     <ProjectReference Include="..\Helpline.Services.Abstractions\Helpline.Services.Abstractions.csproj" />
   </ItemGroup>
 
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+			<_Parameter1>Helpline.Services.Tests</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
+
   <ItemGroup>
     <Folder Include="ApplicationUsers\Events\" />
     <Folder Include="ApplicationUsers\Validators\" />

@@ -21,7 +21,7 @@ namespace Helpline.DataAccess.Data.CacheRepositories
             this.memoryCache = memoryCache;
         }
 
-        public Task<ApplicationUser?> GetUserByUsernameAsync(string username, CancellationToken cancellationToken = default)
+        public Task<ApplicationUser?> GetUserByUsernameAsync(UserName username, CancellationToken cancellationToken = default)
         {
             string key = $"user-{username}";
 

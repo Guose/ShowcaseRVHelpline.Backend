@@ -7,7 +7,7 @@ using Helpline.WebAPI.Controller.Configuration;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Helpline.WebAPI.Controller.v1.Authentication
+namespace Helpline.WebAPI.Controller.v1.AccessControl
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -39,7 +39,7 @@ namespace Helpline.WebAPI.Controller.v1.Authentication
                 return NotFound("Username does not exist");
             }
 
-            if (login.UserName != user.UserName && !BCrypt.Net.BCrypt.Verify(login.Password, user.PasswordHash))
+            if (login.UserName.Value != user.UserName && !BCrypt.Net.BCrypt.Verify(login.Password, user.PasswordHash))
             {
                 return Unauthorized();
             }
