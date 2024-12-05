@@ -6,6 +6,10 @@ namespace Helpline.Domain.Errors
     {
         public static class User
         {
+            public static readonly Func<Guid, Error> CreateError = id => new Error(
+                "User.CreateError",
+                $"A new user: {id}, could not be created.");
+
             public static readonly Error EmailAlreadyInUse = new(
                 "User.EmailAlreadyInUse",
                 "The specified email is already in use.");
@@ -25,6 +29,13 @@ namespace Helpline.Domain.Errors
             public static readonly Func<Guid, Error> UpdateError = id => new Error(
                 "User.UpdateError",
                 $"The user with the identifier {id} could not update.");
+        }
+
+        public static class Map
+        {
+            public static readonly Error MappingError = new(
+                "Entity.Mapping",
+                "Mapping could not be performed.");
         }
 
         public static class UserName

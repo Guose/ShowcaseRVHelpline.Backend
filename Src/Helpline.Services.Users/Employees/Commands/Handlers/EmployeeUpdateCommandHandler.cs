@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Helpline.Contracts.v1.Requests;
 using Helpline.Domain.Data;
+using Helpline.Domain.Data.Interfaces;
 using Helpline.Domain.Errors;
 using Helpline.Domain.Models.Entities;
 using Helpline.Domain.Shared;
@@ -11,36 +12,42 @@ namespace Helpline.Services.Users.Employees.Commands.Handlers
     public class EmployeeUpdateCommandHandler : ICommandHandler<EmployeeUpdateCommand>
     {
         private readonly IUnitOfWork unitOfWork;
+        private readonly IEmployeeRepository employeeRepo;
         private readonly IMapper mapper;
 
-        public EmployeeUpdateCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public EmployeeUpdateCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IEmployeeRepository employeeRepo)
         {
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
+            this.employeeRepo = employeeRepo;
         }
 
         public async Task<Result> Handle(EmployeeUpdateCommand request, CancellationToken cancellationToken)
         {
-            var employee = await unitOfWork.EmployeeRepo.GetEmployeeByUserIdAsync(request.UserId.ToString(), cancellationToken);
+            var employee = await employeeRepo.GetEmployeeByUserIdAsync(request.UserId.ToString(), cancellationToken);
 
             if (employee is null)
-            {
                 return Result.Failure(DomainErrors.User.NotFound(request.UserId));
-            }
 
             var updatedEmployee = EmployeeRequest.Update(
-                employee.Id,
                 request.IsActive,
-                new List<string>(request.Attachments),
+                request.ReferralCode,
                 DateTime.UtcNow);
 
             var response = mapper.Map<Employee>(updatedEmployee);
 
-            if (!await unitOfWork.EmployeeRepo.UpdateEntityAsync(response, cancellationToken) &&
-                !await unitOfWork.CompleteAsync(cancellationToken))
+            if (response is null)
+                return Result.Failure(new Error("Employee.Mapping", "Failed to map EmployeeRequest to Employee."));
+
+            if (!await employeeRepo.UpdateEntityAsync(response, cancellationToken))
             {
-                return Result.Failure<Guid>(new Error("Employee.UpdateUserInfo", $"UpdateUserInfo to employee profile {request.UserId} could not be completed."));
+                return Result.Failure<Guid>(
+                    new Error(
+                        "Employee.UpdateUserInfo",
+                        $"UpdateUserInfo to employee profile {request.UserId} could not be completed."));
             }
+
+            await unitOfWork.CompleteAsync(cancellationToken);
 
             return Result.Success();
         }

@@ -154,7 +154,7 @@ namespace Helpline.Services.Tests.Users.Commands
             var existingUser = new ApplicationUser()
             {
                 Id = command.UserId.ToString(),
-                FirstName = "Last",               // Existing values before update
+                FirstName = "Last",
                 LastName = "First",
                 PhoneNumber = "5555555555",
                 SecondaryPhone = "6664445555"

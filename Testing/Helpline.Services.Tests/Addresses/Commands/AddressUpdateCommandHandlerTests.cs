@@ -202,12 +202,12 @@ namespace Helpline.Services.Tests.Addresses.Commands
 
             // Act
             Result result = await handler.Handle(command, default);
+          
             // Assert
             _unitOfWorkMock.Verify(x =>
                 x.CompleteAsync(It.IsAny<CancellationToken>()), Times.Never());
 
             Assert.False(result.IsSuccess);
-
             Assert.NotNull(result.Error);
             Assert.Equal("Address.Create", result.Error.Code);
             Assert.Equal("Failed to create new Address for user.", result.Error.Message);

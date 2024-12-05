@@ -2,8 +2,9 @@
 
 namespace Helpline.Services.Users.Employees.Commands
 {
-    public sealed record EmployeeUpdateCommand(
+    public sealed record EmployeeCreateCommand(
         Guid UserId,
-        bool IsActive,
+        string Company,
+        string JobTitle,
         string ReferralCode) : ICommand;
 }

@@ -36,7 +36,7 @@ namespace Helpline.WebAPI.Controller.v1.UserService
         [Route(HelplineRoutes.EmployeeRouteById)]
         public async Task<IActionResult> UpdateEmployeeByUserId(Guid userId, [FromBody] EmployeeRequest request, CancellationToken cancellationToken)
         {
-            var command = new EmployeeUpdateCommand(userId, request.IsActive, request.Attachments!.ToList());
+            var command = new EmployeeUpdateCommand(userId, request.IsActive, request.ReferralCode!);
 
             Result result = await Sender.Send(command, cancellationToken);
 
