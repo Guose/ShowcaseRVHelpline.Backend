@@ -202,7 +202,7 @@ namespace Helpline.Services.Tests.Addresses.Commands
 
             // Act
             Result result = await handler.Handle(command, default);
-
+          
             // Assert
             _unitOfWorkMock.Verify(x =>
                 x.CompleteAsync(It.IsAny<CancellationToken>()), Times.Never());
