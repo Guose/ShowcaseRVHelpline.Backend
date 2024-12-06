@@ -34,11 +34,13 @@ namespace Helpline.Services.Tests.Users.Commands
         public async Task Handler_Should_ReturnFailureResult_WhenUserDoesNotExist()
         {
             // Arrange
-            var command = new UserUpdateCommand(Guid.Parse("F759B392-3461-48E7-A687-21499EFE0301"), "First", "Last", "5555555555", "6664445555");
+            var userId = Guid.NewGuid();
+            var command = new UserUpdateCommand(
+                userId, "First", "Last", "5555555555", "6664445555");
 
             _userRepoMock.Setup(
                 x => x.GetEntityByIdAsync(
-                    It.Is<string>(id => id != "F759B392-3461-48E7-A687-21499EFE0301"),
+                    It.Is<string>(id => id != userId.ToString()),
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(() => null!);
 
@@ -59,12 +61,13 @@ namespace Helpline.Services.Tests.Users.Commands
         public async Task Handler_Should_ReturnSuccessResult_WhenUserIsFound()
         {
             // Arrange
+            var userId = Guid.NewGuid();
             var command = new UserUpdateCommand(
-                Guid.Parse("F759B392-3461-48E7-A687-21499EFE0301"), "First", "Last", "5555555555", "6664445555");
+                userId, "First", "Last", "5555555555", "6664445555");
 
             var existingUser = new ApplicationUser()
             {
-                Id = "F759B392-3461-48E7-A687-21499EFE0301",
+                Id = userId.ToString(),
                 FirstName = "Last",               // Existing values before update
                 LastName = "First",
                 PhoneNumber = "5555555555",
@@ -72,8 +75,8 @@ namespace Helpline.Services.Tests.Users.Commands
             };
 
             _userRepoMock.Setup(
-                x => x.GetByIdWithNoTrackingToUpdateUserProfileAsync(
-                    It.Is<Guid>(id => id == command.UserId),
+                x => x.GetEntityByIdAsync(
+                    It.Is<string>(id => id == userId.ToString()),
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(existingUser);
 
@@ -101,12 +104,13 @@ namespace Helpline.Services.Tests.Users.Commands
         public async Task Handler_Should_CallUpdateOnRepository_WhenUserIsFound()
         {
             // Arrange
+            var userId = Guid.NewGuid();
             var command = new UserUpdateCommand(
-                Guid.Parse("F759B392-3461-48E7-A687-21499EFE0301"), "First", "Last", "5555555555", "6664445555");
+                userId, "First", "Last", "5555555555", "6664445555");
 
             var existingUser = new ApplicationUser()
             {
-                Id = command.UserId.ToString(),
+                Id = userId.ToString(),
                 FirstName = "Last",               // Existing values before update
                 LastName = "First",
                 PhoneNumber = "5555555555",
@@ -114,8 +118,8 @@ namespace Helpline.Services.Tests.Users.Commands
             };
 
             _userRepoMock.Setup(
-                x => x.GetByIdWithNoTrackingToUpdateUserProfileAsync(
-                    It.Is<Guid>(id => id == command.UserId),
+                x => x.GetEntityByIdAsync(
+                    It.Is<string>(id => id == userId.ToString()),
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(existingUser);
 
@@ -148,12 +152,13 @@ namespace Helpline.Services.Tests.Users.Commands
         public async Task Handle_Should_Not_CallUnitOfWork_WhenUpdateUserFails()
         {
             // Arrange
+            var userId = Guid.NewGuid();
             var command = new UserUpdateCommand(
-                Guid.Parse("F759B392-3461-48E7-A687-21499EFE0301"), "First", "Last", "5555555555", "6664445555");
+                userId, "First", "Last", "5555555555", "6664445555");
 
             var existingUser = new ApplicationUser()
             {
-                Id = command.UserId.ToString(),
+                Id = userId.ToString(),
                 FirstName = "Last",
                 LastName = "First",
                 PhoneNumber = "5555555555",
@@ -161,8 +166,8 @@ namespace Helpline.Services.Tests.Users.Commands
             };
 
             _userRepoMock.Setup(
-                x => x.GetByIdWithNoTrackingToUpdateUserProfileAsync(
-                    It.Is<Guid>(id => id == command.UserId),
+                x => x.GetEntityByIdAsync(
+                    It.Is<string>(id => id == userId.ToString()),
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(existingUser);
 
@@ -194,12 +199,13 @@ namespace Helpline.Services.Tests.Users.Commands
         public async Task Handler_Should_Not_CallUnitOfWork_WhenUserIsNull()
         {
             // Arrange
+            var userId = Guid.NewGuid();
             var command = new UserUpdateCommand(
-                Guid.Parse("F759B392-3461-48E7-A687-21499EFE0301"), "First", "Last", "5555555555", "6664445555");
+                userId, "First", "Last", "5555555555", "6664445555");
 
             var existingUser = new ApplicationUser()
             {
-                Id = command.UserId.ToString(),
+                Id = userId.ToString(),
                 FirstName = "Last",               // Existing values before update
                 LastName = "First",
                 PhoneNumber = "5555555555",
@@ -208,7 +214,7 @@ namespace Helpline.Services.Tests.Users.Commands
 
             _userRepoMock.Setup(
                 x => x.GetByIdWithNoTrackingToUpdateUserProfileAsync(
-                    It.Is<Guid>(id => id == command.UserId),
+                    It.Is<Guid>(id => id == userId),
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(() => null!);
 
@@ -221,7 +227,7 @@ namespace Helpline.Services.Tests.Users.Commands
             Result result = await handler.Handle(command, default);
 
             // Assert
-            result.Error.Should().Be(DomainErrors.User.NotFound(command.UserId));
+            result.Error.Should().Be(DomainErrors.User.NotFound(userId));
 
             _userRepoMock.Verify(x =>
                 x.UpdateEntityAsync(It.IsAny<ApplicationUser>(), It.IsAny<CancellationToken>()), Times.Never);
@@ -234,9 +240,11 @@ namespace Helpline.Services.Tests.Users.Commands
         public async Task Handle_Should_UserManager_ChangeExistingUserRoles()
         {
             // Arrange
+            var userId = Guid.NewGuid();
             var command = new UserPermissionsUpdateCommand(
-                Guid.Parse("F759B392-3461-48E7-A687-21499EFE0301"),
-                RoleType.None, PermissionType.None);
+                userId,
+                RoleType.None,
+                PermissionType.None);
 
             var existingUser = new ApplicationUser()
             {
@@ -288,13 +296,15 @@ namespace Helpline.Services.Tests.Users.Commands
         public async Task Handle_Should_Not_RoleManager_CreateUserRoleSuccessfully()
         {
             // Arrange
+            var userId = Guid.NewGuid();
             var command = new UserPermissionsUpdateCommand(
-                Guid.Parse("F759B392-3461-48E7-A687-21499EFE0301"),
-                RoleType.None, PermissionType.None);
+                userId,
+                RoleType.None,
+                PermissionType.None);
 
             var existingUser = new ApplicationUser()
             {
-                Id = command.UserId.ToString(),
+                Id = userId.ToString(),
                 FirstName = "Last",               // Existing values before update
                 LastName = "First",
                 PhoneNumber = "5555555555",
@@ -305,7 +315,7 @@ namespace Helpline.Services.Tests.Users.Commands
 
             _userRepoMock.Setup(
                 x => x.GetByIdWithNoTrackingToUpdateUserProfileAsync(
-                    It.Is<Guid>(id => id == command.UserId),
+                    It.Is<Guid>(id => id == userId),
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(existingUser);
 
@@ -341,14 +351,15 @@ namespace Helpline.Services.Tests.Users.Commands
                 RoleType.Contractor.ToString(),
             };
 
+            var userId = Guid.NewGuid();
             var command = new UserPermissionsUpdateCommand(
-                Guid.Parse("F759B392-3461-48E7-A687-21499EFE0301"),
+                userId,
                 RoleType.None, PermissionType.None);
 
             var existingUser = new ApplicationUser()
             {
-                Id = command.UserId.ToString(),
-                FirstName = "Last",               // Existing values before update
+                Id = userId.ToString(),
+                FirstName = "Last",
                 LastName = "First",
                 PhoneNumber = "5555555555",
                 SecondaryPhone = "6664445555",
@@ -358,7 +369,7 @@ namespace Helpline.Services.Tests.Users.Commands
 
             _userRepoMock.Setup(
                 x => x.GetByIdWithNoTrackingToUpdateUserProfileAsync(
-                    It.Is<Guid>(id => id == command.UserId),
+                    It.Is<Guid>(id => id == userId),
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(existingUser);
 
@@ -405,14 +416,15 @@ namespace Helpline.Services.Tests.Users.Commands
                 new(PermissionType.Contractor.ToString(), PermissionType.Contractor.ToString())
             };
 
+            var userId = Guid.NewGuid();
             var command = new UserPermissionsUpdateCommand(
-                Guid.Parse("F759B392-3461-48E7-A687-21499EFE0301"),
+                userId,
                 RoleType.None, PermissionType.None);
 
             var existingUser = new ApplicationUser()
             {
-                Id = command.UserId.ToString(),
-                FirstName = "Last",               // Existing values before update
+                Id = userId.ToString(),
+                FirstName = "Last",
                 LastName = "First",
                 PhoneNumber = "5555555555",
                 SecondaryPhone = "6664445555",
@@ -422,7 +434,7 @@ namespace Helpline.Services.Tests.Users.Commands
 
             _userRepoMock.Setup(
                 x => x.GetByIdWithNoTrackingToUpdateUserProfileAsync(
-                    It.Is<Guid>(id => id == command.UserId),
+                    It.Is<Guid>(id => id == userId),
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(existingUser);
 
@@ -454,13 +466,14 @@ namespace Helpline.Services.Tests.Users.Commands
         public async Task Handle_Should_Not_UserManager_AddUserRole()
         {
             // Arrange
+            var userId = Guid.NewGuid();
             var command = new UserPermissionsUpdateCommand(
-                Guid.Parse("F759B392-3461-48E7-A687-21499EFE0301"),
+                userId,
                 RoleType.None, PermissionType.None);
 
             var existingUser = new ApplicationUser()
             {
-                Id = command.UserId.ToString(),
+                Id = userId.ToString(),
                 FirstName = "Last",               // Existing values before update
                 LastName = "First",
                 PhoneNumber = "5555555555",
@@ -471,7 +484,7 @@ namespace Helpline.Services.Tests.Users.Commands
 
             _userRepoMock.Setup(
                 x => x.GetByIdWithNoTrackingToUpdateUserProfileAsync(
-                    It.Is<Guid>(id => id == command.UserId),
+                    It.Is<Guid>(id => id == userId),
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(existingUser);
 
@@ -500,13 +513,14 @@ namespace Helpline.Services.Tests.Users.Commands
         public async Task Handle_Should_Not_UserManager_AddUserClaim()
         {
             // Arrange
+            var userId = Guid.NewGuid();
             var command = new UserPermissionsUpdateCommand(
-                Guid.Parse("F759B392-3461-48E7-A687-21499EFE0301"),
+                userId,
                 RoleType.None, PermissionType.None);
 
             var existingUser = new ApplicationUser()
             {
-                Id = command.UserId.ToString(),
+                Id = userId.ToString(),
                 FirstName = "Last",               // Existing values before update
                 LastName = "First",
                 PhoneNumber = "5555555555",
@@ -517,7 +531,7 @@ namespace Helpline.Services.Tests.Users.Commands
 
             _userRepoMock.Setup(
                 x => x.GetByIdWithNoTrackingToUpdateUserProfileAsync(
-                    It.Is<Guid>(id => id == command.UserId),
+                    It.Is<Guid>(id => id == userId),
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(existingUser);
 

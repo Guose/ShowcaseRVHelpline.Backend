@@ -44,7 +44,6 @@ namespace Helpline.WebAPI.Controller.v1.AccessControl
         [Authorize(Policy = HelplinePolicies.DealershipLimitedPolicy)]
         [Authorize(Policy = HelplinePolicies.ContractorPolicy)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<AuthorizationPolicies>> GetPoliciesAuthorizationAllowanceAsync()
         {

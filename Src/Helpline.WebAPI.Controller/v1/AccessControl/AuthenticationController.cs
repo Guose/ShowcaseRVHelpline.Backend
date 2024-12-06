@@ -2,6 +2,7 @@
 using Helpline.Contracts.v1.Responses;
 using Helpline.Domain.Data;
 using Helpline.Domain.Models.Entities;
+using Helpline.Domain.ValueObjects;
 using Helpline.WebAPI.Controller.Config.JwtAuthenticationConfig;
 using Helpline.WebAPI.Controller.Configuration;
 using MediatR;
@@ -11,7 +12,7 @@ namespace Helpline.WebAPI.Controller.v1.AccessControl
 {
     [ApiController]
     [Route("api/[controller]")]
-    [ApiExplorerSettings(IgnoreApi = true)]
+    //[ApiExplorerSettings(IgnoreApi = true)]
     public class AuthenticationController : BaseController
     {
         private readonly ITokenConfiguration tokenConfiguration;
@@ -32,14 +33,14 @@ namespace Helpline.WebAPI.Controller.v1.AccessControl
         [HttpPost("AuthenticateUser")]
         public async Task<IActionResult> Login([FromBody] LoginUserDto login)
         {
-            ApplicationUser? user = await unitOfWork.UserRepo.GetUserByUsernameAsync(login.UserName);
+            ApplicationUser? user = await unitOfWork.UserRepo.GetUserByUsernameAsync(UserName.Create(login.UserNameDto).Value);
 
             if (user == null)
             {
                 return NotFound("Username does not exist");
             }
 
-            if (login.UserName.Value != user.UserName && !BCrypt.Net.BCrypt.Verify(login.Password, user.PasswordHash))
+            if (login.UserNameDto != user.UserName && !BCrypt.Net.BCrypt.Verify(login.Password, user.PasswordHash))
             {
                 return Unauthorized();
             }

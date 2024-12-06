@@ -1,4 +1,5 @@
 ﻿using Helpline.Domain.Models.Entities;
+using Helpline.Domain.Shared;
 using Helpline.Domain.ValueObjects;
 
 namespace Helpline.WebAPI.Controller.Config.JwtAuthenticationConfig
@@ -13,7 +14,7 @@ namespace Helpline.WebAPI.Controller.Config.JwtAuthenticationConfig
 
     public class LoginUserDto
     {
-        public required UserName UserName { get; set; }
+        public required string UserNameDto { get; set; }
         public required string Password { get; set; }
         public double AuthInterval { get; set; } = 1;
         public bool IsRemembered { get; set; }
@@ -29,7 +30,7 @@ namespace Helpline.WebAPI.Controller.Config.JwtAuthenticationConfig
 
             return await Task.Run(() => new LoginUserDto
             {
-                UserName = userNameValueObject.Value,
+                UserNameDto = userNameValueObject.Value.Value,
                 Password = user.Password!,
                 IsRemembered = user.IsRemembered,
             });
@@ -42,9 +43,10 @@ namespace Helpline.WebAPI.Controller.Config.JwtAuthenticationConfig
         /// <returns></returns>
         public static async Task<ApplicationUser> MapPlatformUserModel(LoginUserDto userDto)
         {
+            Result<UserName> userNameResult = UserName.Create(userDto.UserNameDto!);
             return await Task.Run(() => new ApplicationUser
             {
-                UserName = userDto.UserName.Value,
+                UserName = userDto.UserNameDto,
             });
         }
     }

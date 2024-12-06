@@ -3,7 +3,6 @@ using Helpline.Contracts.v1.Requests;
 using Helpline.Domain.Data;
 using Helpline.Domain.Data.Interfaces;
 using Helpline.Domain.Errors;
-using Helpline.Domain.Models.Entities;
 using Helpline.Domain.Shared;
 using Helpline.Services.Abstractions.Messaging;
 
@@ -27,7 +26,7 @@ namespace Helpline.Services.Users.ApplicationUsers.Commands.Handlers
 
         public async Task<Result> Handle(UserUpdateCommand request, CancellationToken cancellationToken)
         {
-            var user = await userRepo.GetByIdWithNoTrackingToUpdateUserProfileAsync(request.UserId, cancellationToken);
+            var user = await userRepo.GetEntityByIdAsync(request.UserId.ToString(), cancellationToken);
 
             if (user is null || string.IsNullOrEmpty(user.Id))
                 return Result.Failure(DomainErrors.User.NotFound(request.UserId));
@@ -39,7 +38,7 @@ namespace Helpline.Services.Users.ApplicationUsers.Commands.Handlers
                 request.PhoneNumber,
                 request.SecondaryPhone);
 
-            var result = mapper.Map<ApplicationUser>(updatedUser);
+            var result = mapper.Map(updatedUser, user);
 
             if (result is null)
             {

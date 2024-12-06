@@ -25,7 +25,7 @@ namespace Helpline.WebAPI.Middleware.AuditLogger
                 var ipAddress = context.Connection.RemoteIpAddress?.ToString() ?? "unknown IP";
 
                 // Log the incoming request
-                logger.LogInformation("Incoming request: {Method} {Path} from {IPAddress} by {UserName}",
+                logger.LogInformation("Incoming request: {Method} {Path} from {IPAddress} by {UserNameDto}",
                     request.Method, request.Path, ipAddress, user);
 
                 // Call the next middleware in the pipeline
@@ -36,7 +36,7 @@ namespace Helpline.WebAPI.Middleware.AuditLogger
 
                 // Log the response status code
                 var response = context.Response;
-                logger.LogInformation("Response: {StatusCode} for {Method} {Path} from {IPAddress} by {UserName}",
+                logger.LogInformation("Response: {StatusCode} for {Method} {Path} from {IPAddress} by {UserNameDto}",
                     response.StatusCode, request.Method, request.Path, ipAddress, user);
             }
             catch (Exception ex)

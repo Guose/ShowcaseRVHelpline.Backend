@@ -3,11 +3,8 @@ using Helpline.Common.Constants;
 using Helpline.Core.BackgroundJobs;
 using Helpline.Core.Idempotence;
 using Helpline.DataAccess.Context;
-using Helpline.DataAccess.Data.CacheRepositories;
-using Helpline.DataAccess.Data.Repositories;
 using Helpline.DataAccess.Handlers;
 using Helpline.Domain.Data;
-using Helpline.Domain.Data.Interfaces;
 using Helpline.Domain.Models.Entities;
 using Helpline.Domain.Models.Types;
 using Helpline.Services.Abstractions.Validation;
@@ -15,7 +12,6 @@ using Helpline.WebAPI.Controller.Config.Access;
 using Helpline.WebAPI.Controller.Config.Filters;
 using Helpline.WebAPI.Extensions;
 using MediatR;
-using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -24,6 +20,7 @@ using Microsoft.AspNetCore.OData;
 using Microsoft.AspNetCore.OData.Formatter;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Microsoft.ServiceFabric.Services.Communication.AspNetCore;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
@@ -89,8 +86,8 @@ namespace Helpline.WebAPI
 
                         builder.Services.AddSingleton(serviceContext);
 
-                        builder.Services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
-                        builder.Services.Decorate<IApplicationUserRepository, CachedUserRepository>();
+                        // builder.Services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
+                        // builder.Services.Decorate<IApplicationUserRepository, CachedUserRepository>();
 
                         builder.Services.Scan(
                             selector => selector
@@ -183,55 +180,26 @@ namespace Helpline.WebAPI
                             .AddDefaultTokenProviders()
                             .AddApiEndpoints();
 
-                        builder.Services.AddStackExchangeRedisCache(options =>
-                        {
-                            options.Configuration = builder.Configuration.GetConnectionString("Redis");
-                            options.InstanceName = "RVHelplineAPI_";
-                        });
-
-                        // Add Rate Limiting with RateLimiter
-
-                        // Add Controllers
-                        builder.Services.AddControllers(options =>
-                        {
-                            options.Filters.Add(typeof(ValidationActionFilter));
-
-                            AddODataSupportMedia(options);
-                        })
-                        .AddNewtonsoftJson(settings =>
-                        {
-                            settings.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                            settings.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                            settings.SerializerSettings.DateFormatString = "yyyy-MM-dd";
-                            settings.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
-                            settings.SerializerSettings.Converters.Add(new StringEnumConverter());
-                            settings.SerializerSettings.Formatting = Formatting.Indented;
-                        })
-                        .AddOData(opt => opt.Select().Filter().OrderBy().Expand())
-                        .AddApplicationPart(Controller.AssemblyReference.Assembly);
-
-                        builder.Services.AddCors(options =>
-                        {
-                            options.AddPolicy("CorsPolicy", corsBuilder =>
-                            {
-                                corsBuilder
-                                .WithOrigins("http://localhost:3001")
-                                .AllowAnyMethod()
-                                .AllowAnyHeader()
-                                .AllowCredentials();
-                            });
-                        });
-
                         // Add Authentication
-                        var key = Encoding.ASCII.GetBytes(builder.Configuration["JwtSettings:SecurityKey"]!);
-
                         builder.Services.AddAuthentication(options =>
                         {
-                            options.DefaultAuthenticateScheme = BearerTokenDefaults.AuthenticationScheme;
-                            options.DefaultChallengeScheme = BearerTokenDefaults.AuthenticationScheme;
+                            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                         })
-                        .AddCookie(IdentityConstants.ApplicationScheme)
-                        .AddBearerToken(IdentityConstants.BearerScheme);
+                        .AddJwtBearer(options =>
+                        {
+                            var key = Encoding.ASCII.GetBytes(builder.Configuration["JwtSettings:SecurityKey"]!);
+
+                            options.TokenValidationParameters = new TokenValidationParameters
+                            {
+                                ValidateIssuer = true,
+                                ValidateAudience = true,
+                                ValidateLifetime = true,
+                                ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+                                ValidAudience = builder.Configuration["JwtSettings:Audience"],
+                                IssuerSigningKey = new SymmetricSecurityKey(key)
+                            };
+                        });
 
                         builder.Services.AddSingleton<IAuthorizationHandler, AllowHelplineAccessHandler>();
 
@@ -297,6 +265,45 @@ namespace Helpline.WebAPI
                             authorizationPolicyBuilder = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme);
                             authorizationPolicyBuilder.Requirements.Add(contractorPolicyRequirement);
                             options.AddPolicy(HelplinePolicies.ContractorPolicy, authorizationPolicyBuilder.Build());
+                        });
+
+                        //builder.Services.AddStackExchangeRedisCache(options =>
+                        //{
+                        //    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+                        //    options.InstanceName = "RVHelplineAPI_";
+                        //});
+
+                        // Add Rate Limiting with RateLimiter
+
+                        // Add Controllers
+                        builder.Services.AddControllers(options =>
+                        {
+                            options.Filters.Add(typeof(ValidationActionFilter));
+
+                            AddODataSupportMedia(options);
+                        })
+                        .AddNewtonsoftJson(settings =>
+                        {
+                            settings.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                            settings.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                            settings.SerializerSettings.DateFormatString = "yyyy-MM-dd";
+                            settings.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                            settings.SerializerSettings.Converters.Add(new StringEnumConverter());
+                            settings.SerializerSettings.Formatting = Formatting.Indented;
+                        })
+                        .AddOData(opt => opt.Select().Filter().OrderBy().Expand())
+                        .AddApplicationPart(Controller.AssemblyReference.Assembly);
+
+                        builder.Services.AddCors(options =>
+                        {
+                            options.AddPolicy("CorsPolicy", corsBuilder =>
+                            {
+                                corsBuilder
+                                .WithOrigins("http://localhost:3001")
+                                .AllowAnyMethod()
+                                .AllowAnyHeader()
+                                .AllowCredentials();
+                            });
                         });
 
                         builder.Services.AddEndpointsApiExplorer();

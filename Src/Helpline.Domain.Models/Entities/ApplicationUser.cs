@@ -33,8 +33,7 @@ namespace Helpline.Domain.Models.Entities
 
         [ForeignKey("AddressId")]
         public int AddressId { get; set; }
-
-        public Address? Address { get; set; }
+        public Address Address { get; set; } = new();
         public Customer? Customer { get; set; }
         public Employee? Employee { get; set; }
         public Technician? Technician { get; set; }
