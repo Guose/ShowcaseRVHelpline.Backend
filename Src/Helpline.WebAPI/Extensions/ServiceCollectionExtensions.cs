@@ -1,10 +1,11 @@
 ﻿using Helpline.Common.Interfaces;
 using Helpline.Common.Logging;
+using Helpline.DataAccess.Data.Repositories;
 using Helpline.DataAccess.Handlers;
+using Helpline.Domain.Data.Interfaces;
 using Helpline.Domain.Models.Helpers;
 using Helpline.Domain.Services;
 using Helpline.WebAPI.Controller.Config.JwtAuthenticationConfig;
-using Helpline.WebAPI.Services.Caching;
 
 namespace Helpline.WebAPI.Extensions
 {
@@ -14,8 +15,8 @@ namespace Helpline.WebAPI.Extensions
         {
             return services
                 .AddScoped<ILogging, Logging>()
-                .AddScoped<ITokenConfiguration, TokenConfiguration>()
-                .AddScoped<IRedisCacheService, RedisCacheService>();
+                .AddScoped<ITokenConfiguration, TokenConfiguration>();
+            //.AddScoped<IRedisCacheService, RedisCacheService>();
         }
 
         public static IServiceCollection AddFeatureServices(this IServiceCollection services)
@@ -25,8 +26,11 @@ namespace Helpline.WebAPI.Extensions
                 .AddSingleton<UpdateAuditableEntitiesHandler>()
                 .AddScoped(typeof(IDictionaryConvertable<,>), typeof(DictionaryHelper<,>))
                 .AddScoped<BedTypeService>()
-                .AddScoped<RvFeatureService>();
+                .AddScoped<RvFeatureService>()
+                .AddTransient<IApplicationUserRepository, ApplicationUserRepository>()
+                .AddTransient<ITechnicianRepository, TechnicianRepository>()
+                .AddTransient<IEmployeeRepository, EmployeeRepository>()
+                .AddTransient<IAddressRepository, AddressRepository>();
         }
     }
-
 }
