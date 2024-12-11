@@ -1,6 +1,0 @@
-@Helpline.WebAPI_HostAddress = http://localhost:5202
-
-GET {{Helpline.WebAPI_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

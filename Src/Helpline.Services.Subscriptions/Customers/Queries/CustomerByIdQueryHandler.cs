@@ -24,7 +24,7 @@ namespace Helpline.Services.Subscriptions.Customers.Queries
 
             if (customer == null)
             {
-                Result.Failure(DomainErrors.User.NotFound(request.UserId));
+                return Result.Failure<CustomerResponse>(DomainErrors.User.NotFound(request.UserId));
             }
 
             var response = mapper.Map<CustomerResponse>(customer);

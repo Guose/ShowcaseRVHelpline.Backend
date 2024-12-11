@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentAssertions;
+using Helpline.API.Gateway.MappingProfiles;
 using Helpline.Contracts.v1.Types;
 using Helpline.Domain.Data;
 using Helpline.Domain.Data.Interfaces;
@@ -9,7 +10,6 @@ using Helpline.Domain.Shared;
 using Helpline.Services.Tests.Helpers;
 using Helpline.Services.Users.ApplicationUsers.Commands;
 using Helpline.Services.Users.ApplicationUsers.Commands.Handlers;
-using Helpline.WebAPI.MappingProfiles;
 using Microsoft.AspNetCore.Identity;
 using Moq;
 using System.Security.Claims;

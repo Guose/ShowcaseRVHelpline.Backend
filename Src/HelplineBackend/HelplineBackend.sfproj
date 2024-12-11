@@ -36,9 +36,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Helpline.API.UserIdentity\Helpline.API.UserIdentity.csproj" />
     <ProjectReference Include="..\Helpline.DataAccess\Helpline.DataAccess.csproj" />
     <ProjectReference Include="..\Helpline.Domain\Helpline.Domain.csproj" />
-    <ProjectReference Include="..\Helpline.WebAPI\Helpline.WebAPI.csproj">
+    <ProjectReference Include="..\Helpline.API.Gateway\Helpline.API.Gateway.csproj">
       <ServiceLaunchUrl>https://localhost:{ServicePort}/swagger</ServiceLaunchUrl>
     </ProjectReference>
   </ItemGroup>
