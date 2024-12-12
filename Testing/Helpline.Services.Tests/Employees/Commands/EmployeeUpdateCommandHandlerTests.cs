@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentAssertions;
+using Helpline.API.Gateway.MappingProfiles;
 using Helpline.Contracts.v1.Requests;
 using Helpline.Domain.Data;
 using Helpline.Domain.Data.Interfaces;
@@ -8,7 +9,6 @@ using Helpline.Domain.Models.Entities;
 using Helpline.Domain.Shared;
 using Helpline.Services.Users.Employees.Commands;
 using Helpline.Services.Users.Employees.Commands.Handlers;
-using Helpline.WebAPI.MappingProfiles;
 using Moq;
 
 namespace Helpline.Services.Tests.Employees.Commands

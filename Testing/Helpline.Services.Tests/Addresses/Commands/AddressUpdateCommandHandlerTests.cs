@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using FluentAssertions;
+using Helpline.API.Gateway.MappingProfiles;
 using Helpline.Domain.Data;
 using Helpline.Domain.Data.Interfaces;
 using Helpline.Domain.Errors;
 using Helpline.Domain.Models.Entities;
 using Helpline.Domain.Shared;
 using Helpline.Services.Users.Addresses.Commands;
-using Helpline.WebAPI.MappingProfiles;
 using Moq;
 
 namespace Helpline.Services.Tests.Addresses.Commands
@@ -202,7 +202,7 @@ namespace Helpline.Services.Tests.Addresses.Commands
 
             // Act
             Result result = await handler.Handle(command, default);
-          
+
             // Assert
             _unitOfWorkMock.Verify(x =>
                 x.CompleteAsync(It.IsAny<CancellationToken>()), Times.Never());
