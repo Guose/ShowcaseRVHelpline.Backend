@@ -39,7 +39,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helpline.API.Gateway", "Src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helpline.API.Controller", "Src\Helpline.API.Controller\Helpline.API.Controller.csproj", "{9804BDAD-7B03-4B4B-B140-F53B0CC26505}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helpline.API.UserIdentity", "Helpline.API.UserIdentity\Helpline.API.UserIdentity.csproj", "{32FAD804-E3AB-46C1-86E3-7C4D54AC1ECC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helpline.API.UserIdentity", "Src\Helpline.API.UserIdentity\Helpline.API.UserIdentity.csproj", "{32FAD804-E3AB-46C1-86E3-7C4D54AC1ECC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
