@@ -7,6 +7,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{9A4987D1-F61
 EndProject
 Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "HelplineBackend", "Src\HelplineBackend\HelplineBackend.sfproj", "{470825A3-6C49-4180-9A9F-6F41BD4F3674}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helpline.API.Gateway", "Src\Helpline.API.Gateway\Helpline.API.Gateway.csproj", "{19B13AC1-AB82-438E-82DD-123F6187D3AA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helpline.API.Controller", "Src\Helpline.API.Controller\Helpline.API.Controller.csproj", "{9804BDAD-7B03-4B4B-B140-F53B0CC26505}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helpline.API.UserIdentity", "Src\Helpline.API.UserIdentity\Helpline.API.UserIdentity.csproj", "{32FAD804-E3AB-46C1-86E3-7C4D54AC1ECC}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helpline.DataAccess", "Src\Helpline.DataAccess\Helpline.DataAccess.csproj", "{5D705965-0A9D-42F0-8645-C39FBA299553}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helpline.Domain", "Src\Helpline.Domain\Helpline.Domain.csproj", "{C38DEEBC-70F8-4FE6-8F16-9DF79E091A9D}"
@@ -34,12 +40,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helpline.WebAPI.Tests", "Testing\Helpline.WebAPI.Tests\Helpline.WebAPI.Tests.csproj", "{CCC0D202-991B-4811-BD36-0B66ACFA2AAE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helpline.Services.Tests", "Testing\Helpline.Services.Tests\Helpline.Services.Tests.csproj", "{43C8B21C-AC1B-476F-A3C4-BFD939BD549D}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helpline.API.Gateway", "Src\Helpline.API.Gateway\Helpline.API.Gateway.csproj", "{19B13AC1-AB82-438E-82DD-123F6187D3AA}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helpline.API.Controller", "Src\Helpline.API.Controller\Helpline.API.Controller.csproj", "{9804BDAD-7B03-4B4B-B140-F53B0CC26505}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helpline.API.UserIdentity", "Src\Helpline.API.UserIdentity\Helpline.API.UserIdentity.csproj", "{32FAD804-E3AB-46C1-86E3-7C4D54AC1ECC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
