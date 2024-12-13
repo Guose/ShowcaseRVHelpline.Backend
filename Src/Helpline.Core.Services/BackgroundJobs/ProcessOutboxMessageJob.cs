@@ -27,8 +27,7 @@ namespace Helpline.Core.BackgroundJobs
         {
             try
             {
-                List<OutboxMessage> messages = await dbContext
-                .Set<OutboxMessage>()
+                List<OutboxMessage> messages = await dbContext.OutboxMessages
                 .Where(m => m.ProcessedOn == null)
                 .Take(20)
                 .ToListAsync(context.CancellationToken);

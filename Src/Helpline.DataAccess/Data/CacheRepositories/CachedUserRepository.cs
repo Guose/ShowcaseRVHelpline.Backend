@@ -2,6 +2,7 @@
 using Helpline.DataAccess.Context;
 using Helpline.Domain.Data.Interfaces;
 using Helpline.Domain.Models.Entities;
+using Helpline.Domain.Shared;
 using Helpline.Domain.ValueObjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -48,13 +49,15 @@ namespace Helpline.DataAccess.Data.CacheRepositories
             CancellationToken cancellationToken = default) =>
             await Context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == userId.ToString(), cancellationToken) ?? null;
 
-        public override async Task<bool> UpdateEntityAsync(ApplicationUser updatedUser, CancellationToken cancellationToken = default)
+        public override async Task<Result> UpdateEntityAsync(ApplicationUser updatedUser, CancellationToken cancellationToken = default)
         {
             try
             {
                 var user = await userManager.FindByIdAsync(updatedUser.Id);
                 if (user is null)
-                    return false;
+                    return Result.Failure(new Error(
+                        "Entity.Update",
+                        "Entity Update Failed"));
 
                 user.ConcurrencyStamp = Guid.NewGuid().ToString();
                 var result = await userManager.UpdateAsync(user);
@@ -67,7 +70,7 @@ namespace Helpline.DataAccess.Data.CacheRepositories
 
                 Context.Users.Update(updatedUser);
 
-                return true;
+                return Result.Success();
             }
             catch (DbUpdateConcurrencyException ex)
             {

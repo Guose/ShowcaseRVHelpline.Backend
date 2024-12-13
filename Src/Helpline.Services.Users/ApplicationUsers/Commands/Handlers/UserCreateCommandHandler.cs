@@ -43,7 +43,9 @@ namespace Helpline.Services.Users.ApplicationUsers.Commands.Handlers
             if (response is null)
                 return Result.Failure<Guid>(DomainErrors.Map.MappingError);
 
-            if (!await userRepo.CreateEntityAsync(response, cancellationToken))
+            var result = await userRepo.CreateEntityAsync(response, cancellationToken);
+
+            if (result.IsFailure)
                 return Result.Failure<Guid>(DomainErrors.User.CreateError(id));
 
             await unitOfWork.CompleteAsync(cancellationToken);

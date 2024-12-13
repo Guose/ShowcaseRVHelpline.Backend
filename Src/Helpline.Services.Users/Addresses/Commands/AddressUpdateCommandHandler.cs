@@ -46,7 +46,7 @@ namespace Helpline.Services.Users.Addresses.Commands
 
             var result = await addressRepo.CreateEntityAsync(mapper.Map<Address>(address), cancellationToken);
 
-            if (!result)
+            if (!result.IsSuccess)
             {
                 return Result.Failure(new Error("Address.Create", "Failed to create new Address for user."));
             }

@@ -46,7 +46,9 @@ namespace Helpline.Services.Users.Technicians.Commands.Handlers
                         "Technician.Mapping",
                         "Failed to map TechnicianRequest to Technician."));
 
-            if (!await techRepo.UpdateEntityAsync(result, cancellationToken))
+            var updateResult = await techRepo.UpdateEntityAsync(result, cancellationToken);
+
+            if (updateResult.IsFailure)
                 return Result.Failure<Guid>(
                     new Error(
                         "Technician.UpdateUserInfo",

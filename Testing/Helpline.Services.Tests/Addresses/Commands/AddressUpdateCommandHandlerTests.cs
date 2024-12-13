@@ -67,7 +67,7 @@ namespace Helpline.Services.Tests.Addresses.Commands
             _addressRepoMock.Setup(u => u.CreateEntityAsync(
                 It.IsAny<Address>(),
                 It.IsAny<CancellationToken>()))
-                .ReturnsAsync(true);
+                .ReturnsAsync(Result.Success());
 
             _unitOfWorkMock.Setup(u => u.CompleteAsync(It.IsAny<CancellationToken>()))
                    .ReturnsAsync(true);
@@ -125,7 +125,7 @@ namespace Helpline.Services.Tests.Addresses.Commands
             _addressRepoMock.Setup(u => u.CreateEntityAsync(
                 It.IsAny<Address>(),
                 It.IsAny<CancellationToken>()))
-                .ReturnsAsync(true);
+                .ReturnsAsync(Result.Success());
 
             _unitOfWorkMock.Setup(u => u.CompleteAsync(It.IsAny<CancellationToken>()))
                    .ReturnsAsync(true);
@@ -192,7 +192,7 @@ namespace Helpline.Services.Tests.Addresses.Commands
             _addressRepoMock.Setup(u => u.CreateEntityAsync(
                 It.IsAny<Address>(),
                 It.IsAny<CancellationToken>()))
-                .ReturnsAsync(false);
+                .ReturnsAsync(Result.Failure(new Error("", "")));
 
             var handler = new AddressUpdateCommandHandler(
                 _unitOfWorkMock.Object,

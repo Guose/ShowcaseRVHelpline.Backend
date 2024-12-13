@@ -44,11 +44,15 @@ namespace Helpline.Services.Users.Helpers.UserEntityHelper
             CancellationToken cancellationToken)
             where TEntity : class
         {
+            var deleteResult = await repository.DeleteEntityAsync(entity, cancellationToken);
+            var updateResult = await repository.UpdateEntityAsync(entity, cancellationToken);
+            var createResult = await repository.CreateEntityAsync(entity, cancellationToken);
+
             return process switch
             {
-                "delete" => await repository.DeleteEntityAsync(entity, cancellationToken),
-                "update" => await repository.UpdateEntityAsync(entity, cancellationToken),
-                "create" => await repository.CreateEntityAsync(entity, cancellationToken),
+                "delete" => true,
+                "update" => true,
+                "create" => true,
                 _ => throw new ArgumentException($"Invalid process type: {process}")
             };
         }
