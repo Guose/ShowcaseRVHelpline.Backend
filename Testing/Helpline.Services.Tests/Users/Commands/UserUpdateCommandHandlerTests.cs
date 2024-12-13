@@ -83,7 +83,7 @@ namespace Helpline.Services.Tests.Users.Commands
             _userRepoMock.Setup(u => u.UpdateEntityAsync(
                 It.IsAny<ApplicationUser>(),
                 It.IsAny<CancellationToken>()))
-                .ReturnsAsync(true);
+                .ReturnsAsync(Result.Success());
 
             _unitOfWorkMock.Setup(u => u.CompleteAsync(It.IsAny<CancellationToken>()))
                    .ReturnsAsync(true);
@@ -126,7 +126,7 @@ namespace Helpline.Services.Tests.Users.Commands
             _userRepoMock.Setup(u => u.UpdateEntityAsync(
                 It.IsAny<ApplicationUser>(),
                 It.IsAny<CancellationToken>()))
-                .ReturnsAsync(true);
+                .ReturnsAsync(Result.Success());
 
             _unitOfWorkMock.Setup(u => u.CompleteAsync(It.IsAny<CancellationToken>()))
                    .ReturnsAsync(true);
@@ -174,7 +174,7 @@ namespace Helpline.Services.Tests.Users.Commands
             _userRepoMock.Setup(u => u.UpdateEntityAsync(
                 It.IsAny<ApplicationUser>(),
                 It.IsAny<CancellationToken>()))
-                .ReturnsAsync(false);
+                .ReturnsAsync(Result.Failure(new Error("", "")));
 
             var handler = new UserUpdateCommandHandler(
                 _unitOfWorkMock.Object,
@@ -266,7 +266,7 @@ namespace Helpline.Services.Tests.Users.Commands
             _userRepoMock.Setup(u => u.UpdateEntityAsync(
                 It.IsAny<ApplicationUser>(),
                 It.IsAny<CancellationToken>()))
-                .ReturnsAsync(true);
+                .ReturnsAsync(Result.Success());
 
             _unitOfWorkMock.Setup(u => u.CompleteAsync(It.IsAny<CancellationToken>()))
                    .ReturnsAsync(true);

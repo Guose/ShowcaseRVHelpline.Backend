@@ -59,7 +59,9 @@ namespace Helpline.Services.Users.ApplicationUsers.Commands.Handlers
             var updatedUser = mapper.Map(request, user);
 
             // persist changes
-            if (!await userRepo.UpdateEntityAsync(updatedUser, cancellationToken))
+            var updateResult = await userRepo.UpdateEntityAsync(updatedUser, cancellationToken);
+
+            if (updateResult.IsFailure)
                 return Result.Failure(new Error(
                     "User.UpdateAccess",
                     $"Could not update user roles and permissions for Id {user.Id}."));

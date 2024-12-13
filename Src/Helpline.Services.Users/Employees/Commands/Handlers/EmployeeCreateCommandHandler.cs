@@ -37,17 +37,19 @@ namespace Helpline.Services.Users.Employees.Commands.Handlers
                 request.JobTitle,
                 DateTime.UtcNow);
 
-            var result = mapper.Map<Employee>(employee);
+            var mapResult = mapper.Map<Employee>(employee);
 
-            if (result is null)
+            if (mapResult is null)
                 return Result.Failure(DomainErrors.Map.MappingError);
 
-            if (!await employeeRepo.CreateEntityAsync(result, cancellationToken))
+            var result = await employeeRepo.CreateEntityAsync(mapResult, cancellationToken);
+
+            if (result.IsFailure)
                 return Result.Failure(DomainErrors.User.CreateError(Guid.Parse(user.Id)));
 
             await unitOfWork.CompleteAsync(cancellationToken);
 
-            return Result.Success(result);
+            return Result.Success(mapResult);
         }
     }
 }

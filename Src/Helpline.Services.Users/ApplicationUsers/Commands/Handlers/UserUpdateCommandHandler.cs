@@ -38,14 +38,16 @@ namespace Helpline.Services.Users.ApplicationUsers.Commands.Handlers
                 request.PhoneNumber,
                 request.SecondaryPhone);
 
-            var result = mapper.Map(updatedUser, user);
+            var mapResult = mapper.Map(updatedUser, user);
 
-            if (result is null)
+            if (mapResult is null)
             {
                 return Result.Failure(new Error("User.Mapping", "Failed to map UserRequest to ApplicationUser."));
             }
 
-            if (!await userRepo.UpdateEntityAsync(result, cancellationToken))
+            var result = await userRepo.UpdateEntityAsync(mapResult, cancellationToken);
+
+            if (result.IsFailure)
                 return Result.Failure(new Error("User.Updated", "User could not be updated."));
 
             await unitOfWork.CompleteAsync(cancellationToken);

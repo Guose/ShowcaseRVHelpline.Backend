@@ -86,8 +86,8 @@ namespace Helpline.API.Gateway
 
                         builder.Services.AddSingleton(serviceContext);
 
-                        // builder.Services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
-                        // builder.Services.Decorate<IApplicationUserRepository, CachedUserRepository>();
+                        builder.Services.AddReverseProxy()
+                            .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 
                         builder.Services.Scan(
                             selector => selector
@@ -175,7 +175,8 @@ namespace Helpline.API.Gateway
                         });
 
                         // Add IdentityUser to User and DbContext
-                        builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+                        builder.Services
+                            .AddIdentity<ApplicationUser, IdentityRole>()
                             .AddEntityFrameworkStores<HelplineContext>()
                             .AddDefaultTokenProviders()
                             .AddApiEndpoints();
@@ -394,6 +395,8 @@ namespace Helpline.API.Gateway
                         app.UseAuthorization();
 
                         app.MapIdentityApi<ApplicationUser>();
+
+                        app.MapReverseProxy();
 
                         app.MapControllers();
 

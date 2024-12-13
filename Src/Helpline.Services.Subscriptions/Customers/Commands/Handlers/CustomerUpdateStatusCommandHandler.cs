@@ -36,7 +36,9 @@ namespace Helpline.Services.Subscriptions.Customers.Commands.Handlers
             customer.SubscriptionStatus = request.SubscriptionStatus;
             customer.IsActive = request.IsActive;
 
-            return await unitOfWork.CustomerRepo.UpdateEntityAsync(customer, cancellationToken) &&
+            var result = await unitOfWork.CustomerRepo.UpdateEntityAsync(customer, cancellationToken);
+
+            return result.IsSuccess &&
             await unitOfWork.CompleteAsync(cancellationToken) ?
             Result.Success(Guid.Parse(customer.UserId)) :
             Result.Failure<Guid>(new Error("Customer.UpdateUserInfo", $"Could not update and save Customer with UserId: {request.UserId}"));

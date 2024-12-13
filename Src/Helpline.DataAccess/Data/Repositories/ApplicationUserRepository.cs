@@ -2,6 +2,7 @@
 using Helpline.DataAccess.Context;
 using Helpline.Domain.Data.Interfaces;
 using Helpline.Domain.Models.Entities;
+using Helpline.Domain.Shared;
 using Helpline.Domain.ValueObjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -25,15 +26,17 @@ namespace Helpline.DataAccess.Data.Repositories
             CancellationToken cancellationToken = default) =>
             await Context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == userId.ToString(), cancellationToken) ?? null;
 
-        public override async Task<bool> UpdateEntityAsync(ApplicationUser updatedUser, CancellationToken cancellationToken = default)
+        public override async Task<Result> UpdateEntityAsync(ApplicationUser updatedUser, CancellationToken cancellationToken = default)
         {
             var existingUser = await userManager.FindByIdAsync(updatedUser.Id);
             if (existingUser is null)
-                return false;
+                return Result.Failure(new Error(
+                        "Entity.Update",
+                        "Entity Update Failed"));
 
-            existingUser.UserName = existingUser.UserName; // Ensure UserName remains valid
-            existingUser.Email = existingUser.Email; // Preserve Email if it's unchanged
-            existingUser.FirstName = updatedUser.FirstName; // Update allowed fields
+            existingUser.UserName = existingUser.UserName;
+            existingUser.Email = existingUser.Email;
+            existingUser.FirstName = updatedUser.FirstName;
             existingUser.LastName = updatedUser.LastName;
             existingUser.PhoneNumber = updatedUser.PhoneNumber;
             existingUser.SecondaryPhone = updatedUser.SecondaryPhone;
@@ -44,7 +47,7 @@ namespace Helpline.DataAccess.Data.Repositories
             if (!result.Succeeded)
                 throw new Exception(string.Join(", ", result.Errors.Select(e => e.Description)));
 
-            return true;
+            return Result.Success();
         }
     }
 }

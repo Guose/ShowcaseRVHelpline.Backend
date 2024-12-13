@@ -1,5 +1,6 @@
 ﻿using Helpline.Common.Interfaces;
 using Helpline.Domain.Data;
+using Helpline.Domain.Shared;
 using Microsoft.EntityFrameworkCore;
 
 namespace Helpline.DataAccess.Data
@@ -11,16 +12,18 @@ namespace Helpline.DataAccess.Data
         protected TContext Context { get; } = context;
         protected ILogging Logging { get; } = logging;
 
-        public virtual async Task<bool> CreateEntityAsync(TEntity model, CancellationToken cancellationToken = default)
+        public virtual async Task<Result> CreateEntityAsync(TEntity model, CancellationToken cancellationToken = default)
         {
             try
             {
                 if (model == null)
-                    return false;
+                    return Result.Failure(new Error(
+                        "Entity.Creation",
+                        "Entity Creation Failed"));
 
                 await Context.Set<TEntity>().AddAsync(model, cancellationToken);
 
-                return true;
+                return Result.Success();
             }
             catch (Exception ex)
             {
@@ -29,16 +32,18 @@ namespace Helpline.DataAccess.Data
             }
         }
 
-        public virtual async Task<bool> UpdateEntityAsync(TEntity model, CancellationToken cancellationToken = default)
+        public virtual async Task<Result> UpdateEntityAsync(TEntity model, CancellationToken cancellationToken = default)
         {
             try
             {
                 if (model is null)
-                    return false;
+                    return Result.Failure(new Error(
+                        "Entity.Update",
+                        "Entity Update Failed"));
 
                 await Task.Run(() => Context.Set<TEntity>().Update(model), cancellationToken);
 
-                return true;
+                return Result.Success();
             }
             catch (Exception ex)
             {
@@ -47,16 +52,18 @@ namespace Helpline.DataAccess.Data
             }
         }
 
-        public virtual async Task<bool> DeleteEntityAsync(TEntity model, CancellationToken cancellationToken = default)
+        public virtual async Task<Result> DeleteEntityAsync(TEntity model, CancellationToken cancellationToken = default)
         {
             try
             {
                 if (model == null)
-                    return false;
+                    return Result.Failure(new Error(
+                        "Entity.Deletion",
+                        "Entity Deletion Failed"));
 
                 await Task.Run(() => Context.Set<TEntity>().Remove(model), cancellationToken);
 
-                return true;
+                return Result.Success();
             }
             catch (Exception ex)
             {

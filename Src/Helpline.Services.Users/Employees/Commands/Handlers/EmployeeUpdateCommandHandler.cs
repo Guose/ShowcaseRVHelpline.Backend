@@ -39,7 +39,9 @@ namespace Helpline.Services.Users.Employees.Commands.Handlers
             if (response is null)
                 return Result.Failure(new Error("Employee.Mapping", "Failed to map EmployeeRequest to Employee."));
 
-            if (!await employeeRepo.UpdateEntityAsync(response, cancellationToken))
+            var result = await employeeRepo.UpdateEntityAsync(response, cancellationToken);
+
+            if (result.IsFailure)
             {
                 return Result.Failure<Guid>(
                     new Error(
